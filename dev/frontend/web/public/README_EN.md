@@ -45,22 +45,6 @@ The XCORE Framework is a modular, extensible Python framework that enables centr
 
 ---
 
-## Key Features
-
-**Modular Structure**: The framework organizes functionalities into various module categories like Scanner, AI, Utilities, OSINT, System, Monitor, Exploitation, Helper, Persistence, Creative, and Transfer.
-
-**Multiple Operating Modes**:
-- **CLI Mode**: An interactive command line for executing modules
-- **GUI Mode**: A graphical user interface for ease of use
-- **Web Mode**: A web interface for remote access
-- **Setpoint Mode**: A configuration editor with CLI, GUI, or web interface
-
-**Multilingualism**: Support for multiple languages (currently German and English) with a flexible internationalization structure.
-
-**Extensibility**: New modules can be added easily to extend functionality.
-
----
-
 ## Installation
 
 ### Requirements
@@ -93,9 +77,24 @@ pip install -r requirements.txt
 ```bash
 pip install -e .
 ```
-or
+
+### Building the Package
+
+If you want to build the package and install it from the wheel file:
+
+1. Install the build package:
 ```bash
-python setup.py install
+pip install build
+```
+
+2. Build the package:
+```bash
+python -m build
+```
+
+3. Install the wheel file:
+```bash
+pip install dist/*.whl
 ```
 
 ---

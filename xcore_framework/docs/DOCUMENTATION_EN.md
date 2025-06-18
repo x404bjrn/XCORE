@@ -104,9 +104,24 @@ pip install xcore_framework
    ```bash
    pip install -e .
    ```
-   or
+
+### Building the Package
+
+If you want to build the package and install it from the wheel file:
+
+1. Install the build package:
    ```bash
-   python setup.py install
+   pip install build
+   ```
+
+2. Build the package:
+   ```bash
+   python -m build
+   ```
+
+3. Install the wheel file:
+   ```bash
+   pip install dist/*.whl
    ```
 
 ## Project Structure

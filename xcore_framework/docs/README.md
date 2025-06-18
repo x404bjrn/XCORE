@@ -47,25 +47,6 @@ Das XCORE Framework ist ein modulares, erweiterbares Framework für Python, das 
 
 ---
 
-## Hauptmerkmale
-
-- **Modularer Aufbau**: Das Framework organisiert Funktionalitäten in verschiedene Modulkategorien wie Scanner, KI, Utilities, OSINT, System, Monitor, Exploitation, Helper, Persistence, Creative und Transfer.
-  
-
-- **Mehrere Betriebsmodi**: 
-  - **CLI-Modus**: Eine interaktive Kommandozeile für die Ausführung von Modulen
-  - **GUI-Modus**: Eine grafische Benutzeroberfläche für die einfache Bedienung
-  - **Web-Modus**: Eine Webschnittstelle für den Fernzugriff
-  - **Setpoint-Modus**: Ein Konfigurationseditor mit CLI-, GUI- oder Web-Interface
-
-
-- **Mehrsprachigkeit**: Unterstützung für mehrere Sprachen (aktuell Deutsch und Englisch) mit einer flexiblen Internationalisierungsstruktur.
-
-
-- **Erweiterbarkeit**: Neue Module können einfach hinzugefügt werden, um die Funktionalität des Frameworks zu erweitern.
-
----
-
 ## Installation
 
 ### Voraussetzungen
@@ -100,9 +81,24 @@ pip install xcore_framework
    ```bash
    pip install -e .
    ```
-   oder
+
+### Paket erstellen
+
+Wenn Sie das Paket erstellen und aus der Wheel-Datei installieren möchten:
+
+1. Build-Paket installieren:
    ```bash
-   python setup.py install
+   pip install build
+   ```
+
+2. Paket erstellen:
+   ```bash
+   python -m build
+   ```
+
+3. Wheel-Datei installieren:
+   ```bash
+   pip install dist/*.whl
    ```
 
 ---
