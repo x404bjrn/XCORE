@@ -1,6 +1,6 @@
 {
   "name": "xcore-framework",
-  "version": "0.1.0",
+  "version": "0.1.0a1",
   "scripts": {
     "release": "standard-version",
     "postrelease": "node scripts/update-setup-version.js",
