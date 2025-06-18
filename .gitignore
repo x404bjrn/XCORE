@@ -1,0 +1,13 @@
+/node_modules/
+/package-lock.json
+/.idea/
+/.venv
+/xcore_framework/.env
+/build/
+/dist/
+/xcore_framework.egg-info/
+/.tox/
+/.pypirc
+/dev/frontend/web/node_modules
+/dev/frontend/web/package-lock.json
+__pycache__/

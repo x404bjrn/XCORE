@@ -1,0 +1,12 @@
+{
+  "header": "# 📦 Changelog\n\n",
+  "types": [
+    { "type": "feat", "section": "✨ Features" },
+    { "type": "fix", "section": "🐛 Bugfixes" },
+    { "type": "docs", "section": "📝 Dokumentation" },
+    { "type": "style", "section": "🎨 Formatierung" },
+    { "type": "refactor", "section": "🧹 Refactoring" },
+    { "type": "chore", "section": "🔧 Wartung" },
+    { "type": "test", "section": "✅ Tests" }
+  ]
+}

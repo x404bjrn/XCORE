@@ -1,0 +1,62 @@
+# ════════════════════════════════════════════════════════════════════ XCORE ══
+# Copyright (C) 2025, Xeniorn | x404bjrn
+# Lizenziert - siehe LICENSE Datei für Details
+# ─────────────────────────────────────────────────────────────────────────────
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xcore_framework"
+version = "0.0.0"
+description = "CLI- und Webframework für modulare Anwendungen mit interaktiver Shell, GUI und Webinterface."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [
+  { name = "x404bjrn (Björn Häusermann)", email = "void@insomnialegion.xyz" }
+]
+urls = { Homepage = "https://github.com/x404bjrn/XCORE" }
+dependencies = [
+    "setuptools~=78.1.0",
+    "python-dotenv~=1.1.0",
+    "googletrans~=4.0.0rc1",
+    "Flask~=3.1.1",
+    "Flask-Login~=0.6.3",
+    "Werkzeug~=3.1.3",
+    "flask-cors~=6.0.0",
+    "colorama~=0.4.6",
+    "pytest~=8.4.0",
+    "qrcode~=8.2",
+    "pillow~=11.2.1",
+    "cryptography~=45.0.4",
+    "flask-sqlalchemy~=3.1.1"
+]
+classifiers=[
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Framework :: Flask",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "flake8", "black", "mypy"]
+
+[project.scripts]
+xcore = "xcore_framework.__main__:main"
+
+[tool.setuptools]
+packages = ['xcore_framework', 'xcore_framework.config', 'xcore_framework.core', 'xcore_framework.gui', 'xcore_framework.modules', 'xcore_framework.setpoint', 'xcore_framework.web', 'xcore_framework.config.i18n', 'xcore_framework.modules.ai', 'xcore_framework.modules.creative', 'xcore_framework.modules.exploitation', 'xcore_framework.modules.helper', 'xcore_framework.modules.monitor', 'xcore_framework.modules.osint', 'xcore_framework.modules.persistence', 'xcore_framework.modules.scanner', 'xcore_framework.modules.system', 'xcore_framework.modules.template', 'xcore_framework.modules.transfer', 'xcore_framework.modules.utilities', 'xcore_framework.web.app']
+include-package-data = true
+
+[tool.mypy]
+ignore_missing_imports = true
+strict_optional = true
+# plugins = ["sqlalchemy.ext.mypy.plugin"]
+
+[tool.setuptools.package-data]
+"xcore_framework" = ["**/*.md", "**/*.txt", "**/*.json", "**/*.yaml", "**/*.ttf", "**/*.db"]

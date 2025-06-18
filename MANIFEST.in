@@ -1,0 +1,10 @@
+# ════════════════════════════════════════════════════════════════════ XCORE ══
+# Copyright (C) 2025, Xeniorn | x404bjrn
+# Lizenziert - siehe LICENSE Datei für Details
+# ─────────────────────────────────────────────────────────────────────────────
+include requirements.txt
+recursive-include xcore_framework *
+
+# Markdown, Text, Konfigurationsdateien, Datenbanken
+recursive-include docs *
+recursive-include xcore_framework *.md *.txt *.json *.yaml *.db *.ttf
