@@ -1,0 +1,62 @@
+/* ══════════════════════════════════════════════════════════════════ XCORE ══
+ Copyright (C) 2025, Xeniorn | x404bjrn
+ Lizenziert - siehe LICENSE Datei für Details
+ ───────────────────────────────────────────────────────────────────────────── */
+.navbar {
+  background-color: #060606FF;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  box-shadow: 0 2px 4px rgba(219, 194, 71, 0.73);
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 7px;
+  }
+
+  .navbar-actions {
+    list-style: none;
+    margin-right: 10px;
+
+    a {
+      padding: 10px;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      color: white;
+      border: 1px solid rgba(219, 194, 71, 0);
+      transition: background-color, border 0.3s;
+
+      &:hover {
+        background-color: #EE2F53;
+        border: 1px solid #dbc247;
+      }
+    }
+  }
+
+  .navbar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+
+    li {
+      margin: 0;
+
+      .navbar-link {
+        text-decoration: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+
+        &:hover {
+          background-color: #dbc247;
+        }
+      }
+    }
+  }
+}

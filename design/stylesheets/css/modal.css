@@ -1,0 +1,138 @@
+/* ══════════════════════════════════════════════════════════════════ XCORE ══
+ Copyright (C) 2025, Xeniorn | x404bjrn
+ Lizenziert - siehe LICENSE Datei für Details
+ ───────────────────────────────────────────────────────────────────────────── */
+.modal {
+    border: 2px solid gray;
+    border-radius: 12px;
+    background-color: #0B0D0B;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.50);
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+
+    .logo {
+        width: 130px;
+        height: auto;
+    }
+}
+
+.logo-container-xl {
+    margin-bottom: 20px;
+
+    .logo {
+        width: 250px;
+        height: auto;
+    }
+}
+
+.modal h1 {
+    font-family: "Russo One", sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #F8F9FAFF;
+    text-align: center;
+}
+
+.modal h2 {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+    label {
+        font-family: "Russo One", sans-serif;
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: white;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        background-color: #f9f9f9;
+
+        &:focus {
+            outline: none;
+            border-color: #2db232;
+            background-color: #fff;
+        }
+    }
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.modal input,
+.modal button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.modal button {
+    font-family: "Orbitron", sans-serif;
+    display: block;
+    width: 100%;
+    background-color: #167336;
+    color: white;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: 2px solid #167336;
+    transition: background-color, border-color 0.3s ease;
+
+    &:hover {
+        background-color: #21BF58;
+        border-color: #dbc247;
+    }
+}
+
+.modal .link {
+    margin-top: 1rem;
+    text-align: center;
+
+    a {
+        color: #dbc247;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-family: "Orbitron", sans-serif;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.hover-zoom {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(39,242,110, 0.50);
+        transform: scale(1.05);
+        border: 2px solid #dbc247;
+    }
+}
