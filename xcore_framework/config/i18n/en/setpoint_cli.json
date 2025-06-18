@@ -1,0 +1,9 @@
+{
+  "current_config": "\n{LYW}Current configuration{X}:\n",
+  "which_index": "Which variable do you want to change? ({LYW}Enter index{X}) >> ",
+  "new_value": "Enter the new value for '{LYW}{key1}{X}' >> ",
+  "value_change_success": "\n{SUCCESS} '{LGN}{key1}{X}' was set to '{LBE}{new_value}{X}'.",
+  "invalid_index": "\n{FAIL} Invalid index.",
+  "invalid_input": "\n{FAIL} Invalid input.",
+  "config_completed": "\n{SUCCESS} Configuration completed."
+}

@@ -1,0 +1,5 @@
+{
+  "init": "\n{NEUTRAL} {LYW}Initialisiere System{X}...\n",
+  "init_error": "{FAIL} {LYW}Initialisierung {LRD}fehlgeschlagen{X}...",
+  "init_success": "{SUCCESS} {LYW}Initialisierung {LGN}erfolgreich{X}..."
+}

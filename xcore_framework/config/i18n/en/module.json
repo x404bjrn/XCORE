@@ -1,0 +1,14 @@
+{
+  "loaded": "\n{SUCCESS} Module loaded: {module}\n",
+  "found": "{SUCCESS} {module}",
+  "not_found": "\n{FAIL} Module not found.\n",
+  "no_module": "\n{FAIL} No module loaded.\n",
+  "invalid_option": "\n{FAIL} Invalid option.\n",
+  "set_success": "\n{SUCCESS} '{parameter}' set to '{value}'\n",
+  "set_usage": "\n{FAIL} Usage: set <option> <value>\n",
+  "missing_fields": "\n{FAIL} Missing required fields: {fields}\n",
+  "invalid_show": "\n{FAIL} No module loaded or invalid show command.\n",
+  "module_closed": "\n{NEUTRAL} The module '{module}' has been closed.\n",
+  "no_active_module": "\n{NEUTRAL} No module is active.\n",
+  "execution_started": "{NEUTRAL} Module {module} is starting.."
+}

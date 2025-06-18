@@ -1,0 +1,12 @@
+{
+  "modul_name": "{LGN}helper/gilbert_reminder{X}",
+  "modul_desc": "Lässt 'Gilbert' charmant-nervige Nachrichten ausgeben, um dich bei Laune zu halten.",
+  "modul_headline": "\n{LBE}GILBERT REMINDER{X}",
+  "say": "🐀 Gilbert sagt:\n",
+  "say_01": "Hast du eigentlich heute schon genug Code geschrieben, Menschlein?",
+  "say_02": "Ich könnte das besser. Aber du darfst´s gern weiter versuchen.",
+  "say_03": "Nur zur Erinnerung: Der Kaffee ist leer. Wie deine Ausreden.",
+  "say_04": "Gilbert empfiehlt: Speicher. Deine. Arbeit.",
+  "say_05": "🤖 Fehler 404: Motivation nicht gefunden.",
+  "say_06": "Warte... arbeitest du gerade produktiv? Unwahrscheinlich."
+}

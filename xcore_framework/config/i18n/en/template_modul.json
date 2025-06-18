@@ -1,0 +1,11 @@
+{
+  "modul_name": "{LGN}template/modul{X}",
+  "modul_desc": "Template for new modules with CLI and web support.",
+  "modul_option_example_desc": "An example parameter for demonstration.",
+  "modul_option_verbose_desc": "Outputs additional intermediate steps.",
+  "modul_modul_headline": "\n{LBE}TEMPLATE HEADLINE{X}\n",
+  "modul_start_message": "Starting template module with value: {example_value}",
+  "modul_progress_message": "Processing step {step}...",
+  "modul_done_message": "Done - Module completed.",
+  "modul_modul_error": "ERROR: {error}"
+}

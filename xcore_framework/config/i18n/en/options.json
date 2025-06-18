@@ -1,0 +1,9 @@
+{
+  "header": "\n{LBE}MODULE OPTIONS{X}\n",
+  "label": "🧾 Option: {LYW}{name}{X}",
+  "required": "   ┐\n   ├─ Required:      {required}",
+  "default": "   ├─ Default:       {default}",
+  "current": "   ├─ Current Value: {space}{current}",
+  "desc": "   └─ Description:   {desc}",
+  "divider": "------------------------------------------------------------"
+}

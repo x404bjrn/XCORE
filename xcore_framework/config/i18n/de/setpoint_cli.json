@@ -1,0 +1,9 @@
+{
+  "current_config": "\n{LYW}Aktuelle Konfiguration{X}:\n",
+  "which_index": "Welche Variable möchtest du ändern? ({LYW}Index eingeben{X}) >> ",
+  "new_value": "Gib den neuen Wert für '{LYW}{key1}{X}' ein >> ",
+  "value_change_success": "\n{SUCCESS} '{LGN}{key1}{X}' wurde auf '{LBE}{new_value}{X}' gesetzt.",
+  "invalid_index": "\n{FAIL} Ungültiger Index.",
+  "invalid_input": "\n{FAIL} Ungültige Eingabe.",
+  "config_completed": "\n{SUCCESS} Konfiguration abgeschlossen."
+}

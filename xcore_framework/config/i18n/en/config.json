@@ -1,0 +1,7 @@
+{
+  "init_new_env": "\n{FAIL} No .env found – Create default configuration ...",
+  "init_new_env_success": "{SUCCESS} New configurations were created: {path}\n",
+  "init_new_db": "\n{FAIL} No database.db found – Create new database ...",
+  "init_new_db_success": "{SUCCESS} New database was created: {path}\n",
+  "db_file_exists": "{SUCCESS} Database available."
+}

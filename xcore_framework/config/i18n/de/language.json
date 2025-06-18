@@ -1,0 +1,4 @@
+{
+  "changed": "\n{SUCCESS} Sprache geändert zu: {LYW}{lang}{X}\n",
+  "not_supported": "\n{FAIL} Sprache {LRD}nicht{X} unterstützt.\n"
+}
