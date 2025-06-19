@@ -16,7 +16,7 @@
 ---
 
 ![DE](https://img.shields.io/badge/DE-green?style=for-the-badge)
-[![EN](https://img.shields.io/badge/EN-blue?style=for-the-badge)](res/README_EN.md)
+[![EN](https://img.shields.io/badge/EN-blue?style=for-the-badge)](docs/README_EN.md)
 
 ## Übersicht
 
