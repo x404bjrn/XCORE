@@ -1,12 +1,13 @@
 <br/>
 <p align="center">
-  <img src="../design/graphics/svg/xcore_full_green.svg" width=350px alt="">
+  <img src="https://raw.githubusercontent.com/x404bjrn/XCORE/8c500187b66eb3122b3b0193a8e903b6f270c766/design/graphics/svg/xcore_full_green.svg" width=350px alt="">
     <br/><br/>
-    <b>Eine einfache modulare Anwendung, die verschiedene Funktionalitäten in Form von Modulen bereitstellt</b>
+    <b>ein flexibles Framework zur Entwicklung und Ausführung modularer Funktionen – nutzbar über Konsole (CLI), grafische Oberfläche (GUI) oder Webinterface</b>
 </p>
 
 <p align="center">
     <a href="../LICENSE"><img src="https://img.shields.io/badge/Code-MIT-yellow.svg" alt=""></a>
+    <a href="https://pypi.org/project/xcore_framework/"><img src="https://img.shields.io/pypi/v/xcore_framework.svg" alt=""></a>
     <a href=""><img src="https://img.shields.io/badge/powered%20by-Xeniorn-4770DB" alt=""></a>
     <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/Media-CC%20BY%204.0-lightgrey.svg" alt=""></a>
     <a href="https://github.com/x404bjrn"><img src="https://img.shields.io/badge/written%20by-x404bjrn-8A2BE2" alt=""></a>
@@ -211,7 +212,7 @@ xcore --cli
 
 ### GUI-Modus
 
-Der Grafische Benutzeroberflächen-Modus (GUI) bietet eine Desktop-Anwendungsschnittstelle für das XCORE Framework. Er ist für Benutzer konzipiert, die eine visuelle Schnittstelle mit Formularen, Schaltflächen und grafischen Elementen bevorzugen.
+Der grafische Benutzeroberflächen-Modus (GUI) bietet eine Desktop-Anwendungsschnittstelle für das XCORE Framework. Er ist für Benutzer konzipiert, die eine visuelle Schnittstelle mit Formularen, Schaltflächen und grafischen Elementen bevorzugen.
 
 #### GUI-Modus starten
 
@@ -527,7 +528,7 @@ Um Übersetzungen für ein neues Modul hinzuzufügen:
 2. Fügen Sie Übersetzungsschlüssel und -werte für jede Sprache hinzu
 3. Verwenden Sie die Schlüssel in Ihrem Modulcode
 
-Das Module Creator-Tool kann diesen Prozess für neue Module automatisieren.
+Das Module-Creator-Tool kann diesen Prozess für neue Module automatisieren.
 
 ## Konfiguration
 
@@ -642,10 +643,10 @@ Beiträge zum XCORE Framework sind willkommen! Hier sind einige Möglichkeiten, 
 
 ## Lizenz
 
-- **Code**: MIT-Lizenz – siehe [LICENSE](../LICENSE) für Details
+- **Code**: MIT-Lizenz – siehe [LICENSE](https://github.com/x404bjrn/XCORE/blob/main/LICENSE) für Details
 - **Medieninhalte**: CC BY 4.0 – siehe [Creative Commons](https://creativecommons.org/licenses/by/4.0/) für Details
 
 ---
 
 ## written on the dark side of toast 🍞🌚  
-#### © 2025, [Xeniorn](https://xeniorn.de) | [`x404bjrn`](https://github.com/x404bjrn)
+#### © 2025, Xeniorn | [`x404bjrn`](https://github.com/x404bjrn)

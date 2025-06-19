@@ -1,19 +1,21 @@
-# XCORE Framework Documentation
-
+<br/>
 <p align="center">
-  <img src="../design/graphics/svg/xcore_full_green.svg" width=350px alt="">
+  <img src="https://raw.githubusercontent.com/x404bjrn/XCORE/8c500187b66eb3122b3b0193a8e903b6f270c766/design/graphics/svg/xcore_full_green.svg" width=350px alt="">
     <br/><br/>
-    <b>A simple modular application that provides various functionalities in the form of modules</b>
+    <b>a flexible framework for developing and executing modular functions – usable via console (CLI), graphical user interface (GUI) or web interface</b>
 </p>
 
 <p align="center">
     <a href="../LICENSE"><img src="https://img.shields.io/badge/Code-MIT-yellow.svg" alt=""></a>
+    <a href="https://pypi.org/project/xcore_framework/"><img src="https://img.shields.io/pypi/v/xcore_framework.svg" alt=""></a>
     <a href=""><img src="https://img.shields.io/badge/powered%20by-Xeniorn-4770DB" alt=""></a>
     <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/Media-CC%20BY%204.0-lightgrey.svg" alt=""></a>
     <a href="https://github.com/x404bjrn"><img src="https://img.shields.io/badge/written%20by-x404bjrn-8A2BE2" alt=""></a>
 </p>
 
 ---
+
+# Documentation
 
 ## Table of Contents
 
@@ -641,10 +643,10 @@ Contributions to the XCORE Framework are welcome! Here are some ways you can con
 
 ## License
 
-- **Code**: MIT License – see [LICENSE](../LICENSE) for details
+- **Code**: MIT License – see [LICENSE](https://github.com/x404bjrn/XCORE/blob/main/LICENSE) for details
 - **Media Content**: CC BY 4.0 – see [Creative Commons](https://creativecommons.org/licenses/by/4.0/) for details
 
 ---
 
 ## written on the dark side of toast 🍞🌚  
-#### © 2025, [Xeniorn](https://xeniorn.de) | [`x404bjrn`](https://github.com/x404bjrn)
+#### © 2025, Xeniorn | [`x404bjrn`](https://github.com/x404bjrn)
