@@ -1,20 +1,17 @@
 {
-  "header": "Dokumentierte Befehle (geben Sie '{YW}help{X} <{LGN}thema{X}>' ein):",
   "exit": "\nBeendet das Programm.\n",
   "lang": "\nÄndert die Anzeigesprache der CLI.\nÜbergibt einen Sprachcode (z. B. 'de' oder 'en'), um die Sprache umzustellen.\n",
   "run": "\nFührt das aktuell geladene Modul mit den gesetzten Parametern aus.\nVor der Ausführung wird geprüft, ob alle Pflichtparameter gesetzt sind.\n",
   "search": "\nDurchsucht verfügbare Module nach einem Suchbegriff.\nGibt eine Liste aller Module aus, deren Name den übergebenen Begriff enthält.\n",
   "set": "\nSetzt einen Parameterwert für das aktuelle Modul.\n{LBE}Syntax{X}: {LYW}set{X} <{LGN}Parameter{X}> <{YW}Wert{X}>\n",
-  "show": "\nZeigt Informationen zum aktuellen Modul.\nMit '{LYW}show options{X}' werden alle konfigurierbaren Parameter des geladenen Moduls angezeigt.\n",
+  "show": "\nZeigt Informationen.\nMit '{LYW}show options{X}' werden alle konfigurierbaren Parameter des geladenen Moduls angezeigt.\nMit '{LYW}show users{X}' werden alle registrierten Benutzer angezeigt.\n",
   "use": "\nLädt ein Modul anhand seines Pfads.\nNach dem Laden wird das Modul aktiviert und seine Optionen stehen zur Verfügung.\n",
   "back": "\nSchließt das aktive Modul und kehrt zum Hauptmenü zurück.\n",
   "list": "\nZeigt eine Übersicht aller verfügbaren Module mit Kurzbeschreibung.\n",
   "info": "\nZeigt Metadaten ({LBE}Autor{X}, {LBE}Version{X}, {LBE}Beschreibung{X} etc.) eines Moduls an.\nBei leerem Argument wird das aktuell geladene Modul verwendet.\n",
-  "user_create": "\nLegt einen Benutzer an.\nSyntax: user_create <name> <passwort>\n",
-  "user_delete": "\nEntfernt (Löscht) einen Benutzer.\nSyntax: user_delete <name> <passwort>\n",
-  "user_login": "\nLogin für einen Benutzer.\nSyntax: user_login <name> <passwort>\n",
-  "user_logout": "\nLoggt den aktuellen Benutzer aus.\n",
-  "user_status": "\nZeigt den aktuellen Login-Status.\n",
+
+  "user": "\n'{LYW}user create{X}' Legt einen Benutzer an. Syntax: user create <name> <passwort>\n'{LYW}user delete{X}' Entfernt (Löscht) einen Benutzer. Syntax: user delete <name> <passwort>\n'{LYW}user login{X}' Login für einen Benutzer. Syntax: user login <name> <passwort>\n'{LYW}user logout{X}' Loggt den aktuellen Benutzer aus.\n'{LYW}user status{X}' Zeigt den aktuellen Login-Status.\n",
+
   "save_options": "\nSpeichert die aktuellen Moduloptionen für den eingeloggten Benutzer.\n",
   "load_options": "\nLädt gespeicherte Moduloptionen für den eingeloggten Benutzer.\n"
 }

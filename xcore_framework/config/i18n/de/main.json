@@ -1,29 +1,44 @@
 {
+  "banner_dialog": "Wähle einen Betriebsmodi um {LGN}X{GN}CORE{X} zu starten.\n[ {BE}CLI{X} | {LMA}GUI{X} | {YW}WEB{X} ]\noder verwende '{LBE}--help{X}' um Hilfe zu erhalten.",
+
+
+  "help_title": "{LGN}X{GN}CORE {LYW}Hilfefunktion{X}:",
+  "help_desc": "Übersicht über Befehle und Modi der {LGN}X{GN}CORE{X} Anwendung.\nFür einen {LYW}einfachen ersten Start{X} verwenden Sie den Befehl '{LBE}xcore --cli{X}'.\nFür {LYW}detailliertere Hilfe{X} verwenden sie die XCORE-Dokumentation.\n",
+
+
+  "arg_group_mode_title": "{LBE}Betriebsmodi{X}",
+  "arg_group_mode_desc": "Verfügbare Ausführungsmodi",
+
+  "arg_group_web_title": "{LBE}Web-Optionen{X}",
+  "arg_group_web_desc": "Einstellungen für den Web-Modus",
+
+  "arg_group_setpoint_title": "{LBE}Setpoint-Optionen{X}",
+  "arg_group_setpoint_desc": "Einstellungen für den Setpoint-Modus",
+
+
   "start_cli_msg": "{NEUTRAL} Starte {BE}CLI{X}-Modus ...",
   "start_web_msg": "{NEUTRAL} \uD83D\uDE80 {LGN}XCORE{X} {YW}Web{X}-Interface gestartet auf http://{LRD}{host}{X}:{LBE}{port}{X} ...",
   "start_gui_msg": "{NEUTRAL} Starte {LMA}GUI{X}-Modus ...",
-  "start_setpoint_msg": "{NEUTRAL} Starte {LBE}SET{LYW}PO{LMA}INT{X}-Modus mit {mode}-Interface ...",
+  "start_setpoint_msg": "{NEUTRAL} Starte {LBE}SET{LYW}PO{LMA}INT{X}-Modus mit {interface}-Interface ...",
+
+  "fail_start_cli_msg": "{FAIL} Keine weiteren Optionen erlaubt mit --{BE}cli{X}.",
+  "fail_start_web_msg": "{FAIL} --{LYW}interface{X} ist nur mit --{LBE}set{LYW}po{LMA}int{X} erlaubt.",
+  "fail_start_gui_msg": "{FAIL} Keine weiteren Optionen erlaubt mit --{LMA}gui{X}.",
+  "fail_start_setpoint_msg": "{FAIL} Nur --{LYW}interface{X} ist mit --{LBE}set{LYW}po{LMA}int{X} erlaubt.",
+
+
   "arg_cli_desc": "Startet das {BE}CLI{X}-Interface",
   "arg_web_desc": "Startet das {YW}Web{X}-Interface (Flask)",
+  "arg_setpoint_desc": "Startet den {LBE}SET{LYW}PO{LMA}INT{X}-Modus über die ausgewählte Interface Variante",
+  "arg_gui_desc": "Startet das {LMA}GUI{X}-Interface",
+
   "arg_host_desc": "Webserver Host ({LYW}Default{X}: 127.0.0.1)",
   "arg_port_desc": "Webserver Port ({LYW}Default{X}: 5000)",
   "arg_debug_desc": "Flask Debug-Mode aktivieren",
-  "arg_open_browser_desc": "Kein Browser öffnen beim Webserver Host",
-  "arg_gui_desc": "Startet das {LMA}GUI{X}-Interface",
-  "arg_setpoint_desc": "Startet den {LBE}SET{LYW}PO{LMA}INT{X}-Modus über die ausgewählte Interface Variante",
-  "arg_interface_desc": "Interface Variante [{LMA}gui{X}, {BE}cli{X}, {YW}web{X}] für den {LBE}SET{LYW}PO{LMA}INT{X} Modus. ({LYW}Default{X}: gui)",
-  "fail_start_cli_msg": "{FAIL} Keine weiteren Optionen erlaubt mit --{BE}cli{X}.",
-  "fail_start_web_msg": "{FAIL} --{LYW}interface{X} ist nur mit --{LBE}set{LYW}po{LMA}int{X} erlaubt.",
-  "fail_start_setpoint_msg": "{FAIL} Nur --{LYW}interface{X} ist mit --{LBE}set{LYW}po{LMA}int{X} erlaubt.",
-  "invalid_mode": "{FAIL} Ungültiger Modus: {RD}{mode}{X}",
-  "help_title": "{LGN}X{GN}CORE {LYW}Hilfefunktion{X}:\n",
-  "help_desc": "Übersicht über Befehle und Modi der {LGN}X{GN}CORE{X} Anwendung.\nFür einen {LYW}einfachen ersten Start{X} verwenden Sie den Befehl '{LBE}xcore --cli{X}'.\nFür {LYW}detailliertere Hilfe{X} verwenden sie die XCORE-Dokumentation.\n",
-  "arg_mode_group_title": "{LBE}Betriebsmodi{X}",
-  "arg_mode_group_desc": "Verfügbare Ausführungsmodi",
-  "arg_web_group_title": "{LBE}Web-Optionen{X}",
-  "arg_web_group_desc": "Einstellungen für den Web-Modus",
-  "arg_setpoint_group_title": "{LBE}Setpoint-Optionen{X}",
-  "arg_setpoint_group_desc": "Einstellungen für den Setpoint-Modus",
-  "banner_dialog": "Wähle einen Betriebsmodi um {LGN}X{GN}CORE{X} zu starten.\n[ {BE}CLI{X} | {LMA}GUI{X} | {YW}WEB{X} ]\noder verwende '{LBE}--help{X}' um Hilfe zu erhalten."
-}
+  "arg_open_browser_desc": "Browser öffnen beim Webserver Host",
 
+  "arg_interface_desc": "Interface Variante [{LMA}gui{X}, {BE}cli{X}, {YW}web{X}] für den {LBE}SET{LYW}PO{LMA}INT{X} Modus. ({LYW}Default{X}: cli)",
+
+
+  "invalid_interface": "{FAIL} Ungültige Interface Variante: {RD}{interface}{X}"
+}

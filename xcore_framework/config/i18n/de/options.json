@@ -1,9 +1,7 @@
 {
-  "header": "\n{LBE}MODULOPTIONEN{X}\n",
-  "label": "🧾 Option: {LYW}{name}{X}",
-  "required": "   ┐\n   ├─ Pflichtfeld:    {required}",
-  "default": "   ├─ Standardwert:   {default}",
-  "current": "   ├─ Aktueller Wert: {space}{current}",
-  "desc": "   └─ Beschreibung:   {desc}",
-  "divider": "------------------------------------------------------------"
+  "label": "{LYW}{name}{X}",
+  "required": "Pflichtfeld:    {required}",
+  "default": "Standardwert:   {default}",
+  "current": "Aktueller Wert: {space}{current}",
+  "desc": "Beschreibung:   {desc}"
 }

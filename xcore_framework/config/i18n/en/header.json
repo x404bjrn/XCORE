@@ -1,0 +1,6 @@
+{
+  "module_options": "\n{LBE}MODULE OPTIONS{X}\n",
+  "user_list": "{LGN}REGISTERED USERS{X}",
+  "module_info": "{LBE}MODULE INFORMATION{X}",
+  "help": "Documented commands (type '{YW}help{X} <{LGN}topic{X}>'):"
+}

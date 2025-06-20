@@ -1,20 +1,15 @@
 {
-  "header": "Documented commands (type '{YW}help{X} <{LGN}topic{X}>'):",
   "exit": "\nExits the program.\n",
   "lang": "\nChanges the display language of the CLI.\nPasses a language code (e.g. 'de' or 'en') to change the language.\n",
   "run": "\nExecutes the currently loaded module with the set parameters.\nBefore execution, it is checked whether all required parameters are set.\n",
   "search": "\nSearches available modules for a search term.\nOutputs a list of all modules whose name contains the specified term.\n",
   "set": "\nSets a parameter value for the current module.\n{LBE}Syntax{X}: {LYW}set{X} <{LGN}parameter{X}> <{YW}value{X}>\n",
-  "show": "\nShows information about the current module.\n'{LYW}show options{X}' displays all configurable parameters of the loaded module.\n",
+  "show": "Displays information.\n'{LYW}show options{X}' displays all configurable parameters of the loaded module.\n'{LYW}show users{X}' displays all registered users.\n",
   "use": "\nLoads a module based on its path.\nAfter loading, the module is activated and its options are available.\n",
   "back": "\nCloses the active module and returns to the main menu.\n",
   "list": "\nShows an overview of all available modules with a short description.\n",
   "info": "\nDisplays metadata ({LBE}author{X}, {LBE}version{X}, {LBE}description{X}, etc.) of a module.\nIf the argument is empty, the currently loaded module is used.\n",
-  "user_create": "\nCreates a user.\nSyntax: user_create <name> <passwort>\n",
-  "user_delete": "\nRemoves (deletes) a user.\nSyntax: user_delete <name> <password>\n",
-  "user_login": "\nLogin for user.\nSyntax: user_login <name> <passwort>\n",
-  "user_logout": "\nLogs out the current user.\n",
-  "user_status": "\nShows the current login status.\n",
+  "user": "'{LYW}user create{X}' Creates a user. Syntax: user create <name> <password>\n'{LYW}user delete{X}' Removes (deletes) a user. Syntax: user delete <name> <password>\n'{LYW}user login{X}' Login for a user. Syntax: user login <name> <password>\n'{LYW}user logout{X}' Logs out the current user.\n'{LYW}user status{X}' Displays the current login status.\n",
   "save_options": "\nSaves the current module options for the logged in user.\n",
   "load_options": "\nLoads saved module options for the logged in user.\n"
 }
