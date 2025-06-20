@@ -2,12 +2,13 @@
   "name": "xcore-framework",
   "version": "0.1.0a2",
   "scripts": {
-    "release": "standard-version",
-    "postrelease": "node scripts/update-setup-version.js",
+    "version:patch": "standard-version --release-as patch --skip.commit --skip.tag && node scripts/update-setup-version.js",
+    "version:minor": "standard-version --release-as minor --skip.commit --skip.tag && node scripts/update-setup-version.js",
+    "version:major": "standard-version --release-as major --skip.commit --skip.tag && node scripts/update-setup-version.js",
+    "version:alpha": "standard-version --prerelease alpha --skip.commit --skip.tag && node scripts/update-setup-version.js",
+    "version:beta": "standard-version --prerelease beta --skip.commit --skip.tag && node scripts/update-setup-version.js",
     "changelog": "standard-version --skip.bump --skip.commit --skip.tag",
-    "release:patch": "standard-version --release-as patch --skip.commit --skip.tag",
-    "release:minor": "standard-version --release-as minor --skip.commit --skip.tag",
-    "release:major": "standard-version --release-as major --skip.commit --skip.tag"
+    "sync:version": "node scripts/update-setup-version.js"
   },
   "devDependencies": {
     "standard-version": "^9.5.0"

@@ -5,25 +5,23 @@
 const fs = require("fs");
 const path = require("path");
 
-// Navigiere aus dem `scripts`-Unterverzeichnis zum Wurzelverzeichnis
 const rootDir = path.join(__dirname, "..");
 
-// Pfade zur package.json und pyproject.toml
 const packageJsonPath = path.join(rootDir, "package.json");
-const setupPyPath = path.join(rootDir, "pyproject.toml");
+const pyprojectPath = path.join(rootDir, "pyproject.toml");
+const initFilePath = path.join(rootDir, "xcore_framework", "__init__.py");
 
-// Lade Version aus package.json
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 const newVersion = packageJson.version;
 
-// Lies und aktualisiere pyproject.toml
-const setupContent = fs.readFileSync(setupPyPath, "utf8");
-const updatedSetupContent = setupContent.replace(
-  /version="(\d+\.\d+\.\d+)"/,
-  `version="${newVersion}"`
-);
+// pyproject.toml aktualisieren
+let pyproject = fs.readFileSync(pyprojectPath, "utf8");
+pyproject = pyproject.replace(/version\s*=\s*"[^\"]+"/, `version = "${newVersion}"`);
+fs.writeFileSync(pyprojectPath, pyproject);
+console.log(`✅ pyproject.toml aktualisiert: ${newVersion}`);
 
-// Schreibe die Änderung zurück in pyproject.toml
-fs.writeFileSync(setupPyPath, updatedSetupContent);
-
-console.log(`Updated pyproject.toml to version ${newVersion}`);
+// __init__.py aktualisieren
+let initContent = fs.readFileSync(initFilePath, "utf8");
+initContent = initContent.replace(/__version__\s*=\s*"[^\"]+"/, `__version__ = "${newVersion}"`);
+fs.writeFileSync(initFilePath, initContent);
+console.log(`✅ __init__.py aktualisiert: ${newVersion}`);
