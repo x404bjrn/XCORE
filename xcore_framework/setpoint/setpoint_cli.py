@@ -11,7 +11,7 @@ from xcore_framework.config.banner import show_banner
 from xcore_framework.setpoint.setpoint_logic import save_config
 
 
-def start_cli_setpoint():
+def start_setpoint_cli():
     """
     Startet das interaktive Command-Line-Interface (CLI) für
     die Verwaltung der Setpoint-Konfiguration.

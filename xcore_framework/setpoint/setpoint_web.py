@@ -9,7 +9,7 @@ from dotenv import dotenv_values, set_key
 from xcore_framework.config.env import DIRECTORY_ENV
 
 
-def start_web_setpoint():
+def start_setpoint_web():
     """
     Startet eine Flask-Web-Anwendung zur Konfiguration und Bearbeitung von Umgebungsvariablen
     basierend auf einer .env-Datei des XCORE-Frameworks. Nutzer können Konfigurationsschlüssel

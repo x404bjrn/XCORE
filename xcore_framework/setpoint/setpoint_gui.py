@@ -11,7 +11,7 @@ from xcore_framework.config.env import DIRECTORY_ENV
 from xcore_framework.setpoint.setpoint_logic import save_config
 
 
-def start_gui_setpoint():
+def start_setpoint_gui():
     """
     Startet eine grafische Benutzeroberfläche (GUI) zur Verwaltung von
     Konfigurationswerten in einer .env-Datei.
