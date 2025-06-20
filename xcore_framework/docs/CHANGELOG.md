@@ -6,7 +6,6 @@
 
 ### 📝 Dokumentation
 
-* füge umfassende Dokumentation in Deutsch und Englisch hinzu ([4d65363](https://github.com/x404bjrn/XCORE/commit/4d6536322b7c7b2cc1f0317c4a0aacbde4de4315))
 * README.md aktualisiert ([8c50018](https://github.com/x404bjrn/XCORE/commit/8c500187b66eb3122b3b0193a8e903b6f270c766))
 * verlinkungen in README und DOCUMENTATION optimiert ([f9745ed](https://github.com/x404bjrn/XCORE/commit/f9745edd7e74c297327346a8cf5a9df2f245a076))
 

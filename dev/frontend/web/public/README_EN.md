@@ -160,6 +160,8 @@ Contributions to the XCORE Framework are welcome! Here are some ways you can con
 3. **Contribute code**: Fork the repository, make your changes, and create a pull request.
 4. **Create modules**: Create new modules to extend the framework's functionality.
 
+- [How you can contribute](https://github.com/x404bjrn/XCORE/blob/main/docs/CONTRIBUTING_EN.md)  
+- [Code of Conduct for Contributors](https://github.com/x404bjrn/XCORE/blob/main/docs/CODE_OF_CONDUCT_EN.md)
 ---
 
 ## License
