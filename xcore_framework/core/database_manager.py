@@ -489,3 +489,19 @@ class DatabaseManager:
         :rtype: object
         """
         return self.logged_in_user
+
+    def get_all_users(self) -> list:
+        """
+        Ruft alle Benutzer aus der Datenbank ab.
+
+        Diese Methode verbindet sich mit der Datenbank (falls noch nicht verbunden)
+        und führt eine Abfrage auf die Tabelle 'users' aus, um alle Benutzernamen
+        zurückzugeben.
+
+        Returns:
+            list: Eine Liste aller Benutzernamen als Strings.
+        """
+        self.connect()
+        self.cursor.execute("SELECT username FROM users ORDER BY username ASC")
+        rows = self.cursor.fetchall()
+        return [row[0] for row in rows]
