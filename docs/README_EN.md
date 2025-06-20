@@ -12,12 +12,18 @@
     <a href=""><img src="https://img.shields.io/badge/powered%20by-Xeniorn-4770DB" alt=""></a>
     <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/Media-CC%20BY%204.0-lightgrey.svg" alt=""></a>
     <a href="https://github.com/x404bjrn"><img src="https://img.shields.io/badge/written%20by-x404bjrn-8A2BE2" alt=""></a>
+    <a href=""><img src="https://img.shields.io/badge/Status-Alpha-red?style=round-square" alt=""></a>
+    <a href=""><img src="https://img.shields.io/badge/Features-incomplete-lightgrey?style=round-square" alt=""></a>
 </p>
 
 ---
 
 [![DE](https://img.shields.io/badge/DE-blue?style=for-the-badge)](https://github.com/x404bjrn/XCORE/blob/main/README.md)
 ![EN](https://img.shields.io/badge/EN-green?style=for-the-badge)
+  
+---
+> ⚠️ **Attention**  
+> This is an **alpha version** and does not yet include all planned features.
 
 ## Overview
 
