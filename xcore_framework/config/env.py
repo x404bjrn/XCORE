@@ -8,6 +8,7 @@ from dotenv import load_dotenv, set_key
 
 from xcore_framework.config.i18n import i18n
 
+
 # Basisverzeichnis definieren
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DOTENV_PATH = os.path.join(BASE_DIR, ".env")
@@ -17,16 +18,17 @@ def set_env_key(key, value):
     """
     Eine Funktion, die einen spezifischen Umgebungsvariablen-Schlüssel und dessen
     Wert in einer .env-Datei speichert oder aktualisiert. Sie stellt sicher, dass
-    die Datei existiert, bevor sie den Schlüssel setzt. Falls die Datei nicht existiert,
-    wird sie erstellt.
+    die Datei existiert, bevor sie den Schlüssel setzt.
+    Falls die Datei nicht existiert, wird sie erstellt.
 
     Args:
         key (str): Der Name des Umgebungsvariablen-Schlüssels, der gesetzt oder
-            aktualisiert werden soll.
+                   aktualisiert werden soll.
         value (str): Der Wert, der dem Schlüssel zugewiesen werden soll.
 
     Returns:
-        bool: TRUE, wenn erfolgreich, FALSE, wenn ein Fehler aufgetreten ist
+        bool: TRUE, wenn erfolgreich,
+              FALSE, wenn ein Fehler aufgetreten ist
     """
     try:
         if not os.path.exists(DOTENV_PATH):

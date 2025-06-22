@@ -5,6 +5,7 @@
 import colorama
 import re
 
+
 # Regex-Pattern für ANSI-Escape-Sequenzen
 ANSI_ESCAPE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 

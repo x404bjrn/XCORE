@@ -428,7 +428,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_save_options():
-        """Dynamischen Hilfetext für `save_options` bereitstellen."""
+        """ Dynamischen Hilfetext für `save_options` bereitstellen. """
         print(i18n.t("help.save_options"))
 
     def do_load_options(self, arg):
@@ -466,7 +466,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_load_options():
-        """Dynamischen Hilfetext für `load_options` bereitstellen."""
+        """ Dynamischen Hilfetext für `load_options` bereitstellen. """
         print(i18n.t("help.load_options"))
 
     @staticmethod

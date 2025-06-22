@@ -4,34 +4,20 @@
 # ─────────────────────────────────────────────────────────────────────────────
 import os
 import sqlite3
-from werkzeug.security import check_password_hash, generate_password_hash
 import base64
+
+from werkzeug.security import check_password_hash, generate_password_hash
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
-
 
 from xcore_framework.config.env import DIRECTORY_DATABASE
 from xcore_framework.config.i18n import i18n
 
 
 class DatabaseManager:
-    """
-    Verwalten einer SQLite-Datenbank mit Benutzer- und Inhaltstabellen.
-
-    Die Klasse `DatabaseManager` bietet grundlegende Methoden zur Initialisierung,
-    Verwaltung und Sicherung von Benutzerdaten und Inhalten in einer SQLite-Datenbank.
-    Sie ermöglicht das Erstellen, Verschlüsseln, Entschlüsseln, Speichern und Löschen
-    von Benutzerdaten sowie den zugehörigen Verschlüsselungsinhalten.
-
-    Die Klasse enthält Methoden zur Verwaltung der Verbindung zur Datenbank, zum
-    Verschlüsselungsmanagement sowie zur Benutzeridentifikation. Sie bietet außerdem
-    Funktionen zum Erstellen und Initialisieren von Datenbanktabellen und zur
-    Handhabung von Metadaten für Benutzer und Inhalte.
-
-    Eigenschaften der Klasse werden nicht dokumentiert.
-    """
+    """ Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen. """
 
     def __init__(self, db_path=DIRECTORY_DATABASE):
         """
@@ -135,21 +121,20 @@ class DatabaseManager:
         definiert ist. Nach der erfolgreichen Verbindung wird ein Cursor-Objekt erstellt.
         Dieses ermöglicht die Ausführung von SQL-Abfragen.
 
-        :raises FileNotFoundError: Falls der Pfad zur Datenbank ungültig ist oder
-            nicht erstellt werden kann.
         :raises sqlite3.Error: Falls es während der Verbindung zur SQLite-Datenbank
             zu einem Problem kommt.
-
-        :return: Es gibt nichts zurück.
         """
         if not self.conn:
-            dir_path = os.path.dirname(self.db_path)
-            if not os.path.exists(dir_path):
-                os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
-            self.conn = sqlite3.connect(self.db_path)
-            self.cursor = self.conn.cursor()
-            # TODO: Absätze bei der Ausgabe hinzufügen
-            print(i18n.t("database.connected", path=self.db_path))
+            try:
+                dir_path = os.path.dirname(self.db_path)
+                if not os.path.exists(dir_path):
+                    os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+                self.conn = sqlite3.connect(self.db_path)
+                self.cursor = self.conn.cursor()
+                print(i18n.t("database.connected", path=self.db_path))
+
+            except sqlite3.Error:
+                print(i18n.t("database.connection_error"))
 
     def close(self):
         """
