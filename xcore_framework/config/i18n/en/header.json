@@ -1,9 +1,9 @@
 {
-  "module_options": "\n{LBE}MODULE OPTIONS{X}\n",
+  "module_options": "M O D U L E   O P T I O N S",
 
   "user_list": "R E G I S T E R E D   U S E R S",
 
-  "module_info": "{LBE}MODULE INFORMATION{X}",
+  "module_info": "M O D U L E   I N F O R M A T I O N",
 
   "help": "Documented commands (type '{YW}help{X} <{LGN}topic{X}>'):",
 

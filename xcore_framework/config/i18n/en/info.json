@@ -1,5 +1,5 @@
 {
-  "name": "Name: {LYW}{name}{X}",
+  "name": "Name: {name}",
   "description": "Description: {desc}",
   "author": "Author: {author}",
   "version": "Version: {version}",

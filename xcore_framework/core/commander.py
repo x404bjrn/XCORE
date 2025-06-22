@@ -136,7 +136,7 @@ class XCoreShell(cmd.Cmd):
             mod = self.loader.load_module(mod_path)
             if mod:
                 print("  {LBE}▶{X} {name}\n    - {desc}".format(
-                    name=f"{mod.name:<30}", desc=f"{mod.description[:51]}...", **formatter))
+                    name=f"{mod.name:<30}", desc=f"{mod.description[:49]}...", **formatter))
 
         print("╚" + ("═" * 58) + "╝\n")
 
@@ -191,7 +191,9 @@ class XCoreShell(cmd.Cmd):
         'show users' - alle registrierten Benutzer werden angezeigt.
         """
         if arg.strip() == "options" and self.current_module:
-            print(i18n.t("header.module_options"))
+            # Ausgabe der Moduloptionen (Banner)
+            show_basic_banner(i18n.t("header.module_options"))
+
             for name, meta in self.current_module.options.items():
                 current_value = self.options.get(name, "")
                 default_value = meta.get("default", "")

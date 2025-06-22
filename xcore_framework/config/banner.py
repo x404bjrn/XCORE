@@ -2,7 +2,7 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
-from .formatting import formatter
+from .formatting import formatter, strip_ansi
 from .i18n import i18n
 
 from xcore_framework import __version__
@@ -56,9 +56,9 @@ default_banner = r"""
 
 cli_module_info_banner = r"""
 ╔══════════════════════════════════════════════════════════╗
-║ {header} ║
-╠══════════════════════════════════════════════════════════╝
-║ {LYW}{mod_name}{X} ║
+║ {LBE}{header}{X} ║
+╠══════════════════════════════════════════════════════════╣
+║ {mod_name} ║
 ║ {mod_desc} ║
 ║ {mod_author} ║
 ║ {mod_version} ║
@@ -67,7 +67,7 @@ cli_module_info_banner = r"""
 """
 
 cli_module_options_banner = r"""╔══════════════════════════════════════════════════════════╗
-║🧾 Option: {option_label} ║
+║ {option_label} ║
 ╚┳─────────────────────────────────────────────────────────┘
  ├─ {option_required}
  ├─ {option_default}
@@ -76,24 +76,14 @@ cli_module_options_banner = r"""╔═══════════════
 """
 
 
-def show_basic_banner(text, chars=56, color=formatter["BE"]):
-    """
-    Formatiert und zeigt ein grundlegendes Banner in der Konsole an.
-    Der Text wird linksbündig mit Leerzeichen ergänzt, um auf die festgelegte
-    Zeichenlänge zu kommen. Zusätzlich wird eine Farboption angewendet,
-    die über den 'color'-Parameter gesteuert wird.
+def fit_text_to_frame(text, frame_chars=56):
+    new_text = text + (frame_chars - len(strip_ansi(text))) * " "
+    return str(new_text)
 
-    Args:
-        text (str): Der anzuzeigende Text des Banners.
-        chars (int, optional): Die Gesamtanzahl an Zeichen,
-                               die das Banner umfassen soll.
-                               Standartwert ist 56.
-        color (str, optional): Die Farboption des Textes,
-                               entsprechend der Werte aus dem `formatter`-Dictionary.
-                               Standardwert ist `formatter["X"]`.
-    """
-    formatted_text = text + (chars - len(text)) * " "
-    print(default_banner.format(header=formatted_text, color=color, **formatter))
+
+def show_basic_banner(text, chars=56, color=formatter["BE"]):
+    print(default_banner.format(header=fit_text_to_frame(text, chars),
+                                color=color, **formatter))
 
 
 def show_banner(banner="xcore_banner", **kwargs):
@@ -110,19 +100,31 @@ def show_banner(banner="xcore_banner", **kwargs):
     elif banner == "cli_module_info_banner":
         # Modulinformationen Banner des CLI-Modus
         print(cli_module_info_banner.format(
-            header=i18n.t("header.module_info"),
-            mod_name=i18n.t("info.name", name=kwargs.get("name", "")),
-            mod_desc=i18n.t("info.description", desc=kwargs.get("desc", "")),
-            mod_author=i18n.t("info.author", author=kwargs.get("author", "")),
-            mod_version=i18n.t("info.version", version=kwargs.get("version", "")),
-            mod_created=i18n.t("info.created", created=kwargs.get("created", "")),
+            header=fit_text_to_frame(
+                i18n.t("header.module_info")
+            ),
+            mod_name=fit_text_to_frame(
+                i18n.t("info.name", name=kwargs.get("name", ""))
+            ),
+            mod_desc=(fit_text_to_frame(
+                i18n.t("info.description", desc=kwargs.get("desc", ""))[:52]+ "...")
+            ),
+            mod_author=fit_text_to_frame(
+                i18n.t("info.author", author=kwargs.get("author", ""))
+            ),
+            mod_version=fit_text_to_frame(
+                i18n.t("info.version", version=kwargs.get("version", ""))
+            ),
+            mod_created=fit_text_to_frame(
+                i18n.t("info.created", created=kwargs.get("created", ""))
+            ),
             **formatter)
         )
 
     elif banner == "cli_module_options_banner":
         # Moduloptionen Banner des CLI-Modus
         print(cli_module_options_banner.format(
-            option_label=i18n.t("options.label", name=kwargs.get("label", "")),
+            option_label=fit_text_to_frame(i18n.t("options.label", name=kwargs.get("label", ""))),
             option_required=i18n.t("options.required", required=kwargs.get("required", "")),
             option_default=i18n.t("options.default", default=kwargs.get("default", "")),
             option_current=i18n.t("options.current", current=kwargs.get("current", ""),
