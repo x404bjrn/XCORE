@@ -1,14 +1,25 @@
 {
   "loaded": "\n{SUCCESS} Modul geladen: {module}\n",
-  "found": "{SUCCESS} {module}",
+
+  "found": "  [{LGN}■{X}] {module}",
+
   "not_found": "\n{FAIL} Modul nicht gefunden.\n",
+
   "no_module": "\n{FAIL} Kein Modul geladen.\n",
+
   "invalid_option": "\n{FAIL} Ungültige Option.\n",
+
   "set_success": "\n{SUCCESS} '{parameter}' gesetzt auf '{value}'\n",
+
   "set_usage": "\n{FAIL} Benutzung: set <option> <wert>\n",
+
   "missing_fields": "\n{FAIL} Fehlende Pflichtfelder: {fields}\n",
+
   "invalid_show": "\n{FAIL} Kein Modul geladen oder ungültiger show-Befehl.\n",
+
   "module_closed": "\n{NEUTRAL} Das Modul '{module}' wurde geschlossen.\n",
+
   "no_active_module": "\n{NEUTRAL} Es ist kein Modul aktiv.\n",
+
   "execution_started": "\n{NEUTRAL} Modul {module} wird gestartet..\n"
 }

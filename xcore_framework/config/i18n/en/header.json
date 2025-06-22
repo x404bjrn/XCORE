@@ -1,6 +1,15 @@
 {
   "module_options": "\n{LBE}MODULE OPTIONS{X}\n",
-  "user_list": "{LGN}REGISTERED USERS{X}",
+
+  "user_list": "R E G I S T E R E D   U S E R S",
+
   "module_info": "{LBE}MODULE INFORMATION{X}",
-  "help": "Documented commands (type '{YW}help{X} <{LGN}topic{X}>'):"
+
+  "help": "Documented commands (type '{YW}help{X} <{LGN}topic{X}>'):",
+
+  "module_list": "M O D U L E   L I S T",
+
+  "setpoint_cli": "SETPOINT - CLI (Configuration Menu)",
+
+  "search_results": "M O D U L E S   F O U N D"
 }

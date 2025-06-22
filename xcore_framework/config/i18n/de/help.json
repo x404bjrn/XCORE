@@ -10,7 +10,7 @@
   "list": "\nZeigt eine Übersicht aller verfügbaren Module mit Kurzbeschreibung.\n",
   "info": "\nZeigt Metadaten ({LBE}Autor{X}, {LBE}Version{X}, {LBE}Beschreibung{X} etc.) eines Moduls an.\nBei leerem Argument wird das aktuell geladene Modul verwendet.\n",
 
-  "user": "\n'{LYW}user create{X}' Legt einen Benutzer an. Syntax: user create <name> <passwort>\n'{LYW}user delete{X}' Entfernt (Löscht) einen Benutzer. Syntax: user delete <name> <passwort>\n'{LYW}user login{X}' Login für einen Benutzer. Syntax: user login <name> <passwort>\n'{LYW}user logout{X}' Loggt den aktuellen Benutzer aus.\n'{LYW}user status{X}' Zeigt den aktuellen Login-Status.\n",
+  "user": "\n'{LYW}user create{X}' Legt einen Benutzer an. {LMA}Syntax{X}: {LYW}user create{X} <{LBE}name{X}> <{LGN}passwort{X}>\n'{LYW}user delete{X}' Entfernt (Löscht) einen Benutzer. {LMA}Syntax{X}: {LYW}user delete{X} <{LBE}name{X}> <{LGN}passwort{X}>\n'{LYW}user login{X}' Login für einen Benutzer. {LMA}Syntax{X}: {LYW}user login{X} <{LBE}name{X}> <{LGN}passwort{X}>\n'{LYW}user logout{X}' Loggt den aktuellen Benutzer aus.\n'{LYW}user status{X}' Zeigt den aktuellen Login-Status.\n",
 
   "save_options": "\nSpeichert die aktuellen Moduloptionen für den eingeloggten Benutzer.\n",
   "load_options": "\nLädt gespeicherte Moduloptionen für den eingeloggten Benutzer.\n"

@@ -1,5 +1,5 @@
 {
-  "connected": "{SUCCESS} Connected to DB: {path}",
+  "connected": "\n{SUCCESS} Connected to DB: {path}",
   "disconnected": "{NEUTRAL} Connection to the database closed.",
   "deleted": "{FAIL} Database deleted: {path}",
   "no_found": "{FAIL} No database found to delete.",

@@ -9,7 +9,7 @@
   "back": "\nCloses the active module and returns to the main menu.\n",
   "list": "\nShows an overview of all available modules with a short description.\n",
   "info": "\nDisplays metadata ({LBE}author{X}, {LBE}version{X}, {LBE}description{X}, etc.) of a module.\nIf the argument is empty, the currently loaded module is used.\n",
-  "user": "'{LYW}user create{X}' Creates a user. Syntax: user create <name> <password>\n'{LYW}user delete{X}' Removes (deletes) a user. Syntax: user delete <name> <password>\n'{LYW}user login{X}' Login for a user. Syntax: user login <name> <password>\n'{LYW}user logout{X}' Logs out the current user.\n'{LYW}user status{X}' Displays the current login status.\n",
+  "user": "'{LYW}user create{X}' Creates a user. {LMA}Syntax{X}: {LYW}user create{X} <{LBE}name{X}> <{LGN}passwort{X}>\n'{LYW}user delete{X}' Removes (deletes) a user. {LMA}Syntax{X}: {LYW}user delete{X} <{LBE}name{X}> <{LGN}passwort{X}>\n'{LYW}user login{X}' Login for a user. {LMA}Syntax{X}: {LYW}user login{X} <{LBE}name{X}> <{LGN}passwort{X}>\n'{LYW}user logout{X}' Logs out the current user.\n'{LYW}user status{X}' Displays the current login status.\n",
   "save_options": "\nSaves the current module options for the logged in user.\n",
   "load_options": "\nLoads saved module options for the logged in user.\n"
 }

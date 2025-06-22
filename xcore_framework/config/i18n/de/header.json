@@ -1,6 +1,15 @@
 {
   "module_options": "\n{LBE}MODULOPTIONEN{X}\n",
-  "user_list": "\n{LGN}REGISTRIERTE BENUTZER{X}\n",
+
+  "user_list": "R E G I S T R I E R T E   B E N U T Z E R",
+
   "module_info": "{LBE}MODULINFORMATIONEN{X}",
-  "help": "Dokumentierte Befehle (geben Sie '{YW}help{X} <{LGN}thema{X}>' ein):"
+
+  "help": "Dokumentierte Befehle (geben Sie '{YW}help{X} <{LGN}thema{X}>' ein):",
+
+  "module_list": "M O D U L L I S T E",
+
+  "setpoint_cli": "SETPOINT - CLI (Konfigurationsmenü)",
+
+  "search_results": "G E F U N D E N E   M O D U L E"
 }

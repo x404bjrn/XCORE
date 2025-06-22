@@ -4,7 +4,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 import cmd
 
-from xcore_framework.config.banner import show_banner
+from xcore_framework.config.banner import show_banner, show_basic_banner
 from xcore_framework.config.i18n import i18n
 from xcore_framework.config.formatting import formatter, strip_ansi
 from xcore_framework.config.env import set_env_key
@@ -74,10 +74,13 @@ class XCoreShell(cmd.Cmd):
         """
         results = self.loader.search_modules(arg)
 
-        print()
+        # Ausgabe der Suchergebnisse (Banner)
+        show_basic_banner(i18n.t("header.search_results"))
+
         for module in results:
             print(i18n.t("module.found", module=module))
-        print()
+
+        print("╚" + ("═" * 58) + "╝\n")
 
     @staticmethod
     def help_search():
@@ -127,15 +130,15 @@ class XCoreShell(cmd.Cmd):
             return
 
         # Ausgabe der XCORE Modulliste (Banner)
-        show_banner(banner="cli_modullist_header_banner")
+        show_basic_banner(i18n.t("header.module_list"))
 
         for mod_path in sorted(modules):
             mod = self.loader.load_module(mod_path)
-
             if mod:
-                print(f"║ {mod.name:<30} - {mod.description[:40]}")
+                print("  {LBE}▶{X} {name}\n    - {desc}".format(
+                    name=f"{mod.name:<30}", desc=f"{mod.description[:51]}...", **formatter))
 
-        print("╚" + ("═" * 60) + "\n")
+        print("╚" + ("═" * 58) + "╝\n")
 
     @staticmethod
     def help_list():
@@ -210,10 +213,12 @@ class XCoreShell(cmd.Cmd):
             all_users = self.db.get_all_users()
 
             # Ausgabe der registrierten Benutzer (Liste)
-            print(i18n.t("header.user_list"))
+            show_basic_banner(i18n.t("header.user_list"), color=formatter["LGN"])
+
             for user in all_users:
-                print("  {LBE}▶{X} {LYW}{user}{X}".format(user=user, **formatter))
-            print()
+                print("   {LBE}▶{X} {LYW}{user}{X}".format(user=user, **formatter))
+
+            print("╚" + ("═" * 58) + "╝\n")
 
         else:
             print(i18n.t("module.invalid_show"))
@@ -355,21 +360,21 @@ class XCoreShell(cmd.Cmd):
 
         if command == "create":
             if len(args) != 2:
-                print("{LBE}Syntax{X}: user create <benutzername> <passwort>".format(**formatter))
+                print("{LMA}Syntax{X}: {LYW}user create{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter))
             else:
                 username, password = args
                 self.db.create_user(username, password)
 
         elif command == "delete":
             if len(args) != 2:
-                print("{LBE}Syntax{X}: user delete <benutzername> <passwort>".format(**formatter))
+                print("{LMA}Syntax{X}: {LYW}user delete{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter))
             else:
                 username, password = args
                 self.db.delete_user(username, password)
 
         elif command == "login":
             if len(args) != 2:
-                print("{LBE}Syntax{X}: user login <benutzername> <passwort>".format(**formatter))
+                print("{LMA}Syntax{X}: {LYW}user login{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter))
             else:
                 username, password = args
                 self.db.login(username, password)
@@ -383,10 +388,8 @@ class XCoreShell(cmd.Cmd):
                 print(i18n.t("database.login_as", user=user))
             else:
                 print(i18n.t("database.no_login_user"))
-
         else:
             print(i18n.t("system.error_invalid_user_command"))
-
         print()
 
     @staticmethod

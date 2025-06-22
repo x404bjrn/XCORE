@@ -34,16 +34,6 @@ cli_banner = r"""
                         ╚═════════════════════════════════════════════╝
 """
 
-setpoint_cli_banner = r"""
-╔════════════════════════════════════════╗
-║  {LGN}XCORE{X} {LBE}SETPOINT{X} - {BE}CLI{X} ({LYW}Konfiguration{X})  ║
-╚════════════════════════════════════════╝"""
-
-cli_modullist_header_banner = r"""
-╔═══════════════════════════════════════════════════════════
-║ {LGN}X C O R E{X}   M O D U L E S   L I S T
-╠═══════════════════════════════════════════════════════════"""
-
 xcore_banner = r"""
 ╔═════════════════════════════════════════════╗
 ║  {LGN}██╗  ██╗{GN} ██████╗ ██████╗ ██████╗ ███████╗{X}  ║
@@ -59,26 +49,51 @@ xcore_banner = r"""
 {dialog}
 """
 
+default_banner = r"""
+╔══════════════════════════════════════════════════════════╗
+║ {color}{header}{X} ║
+╚══════════════════════════════════════════════════════════╝"""
+
 cli_module_info_banner = r"""
-╔═══════════════════════════════════════════════════════════
-║ {header}
-╠═══════════════════════════════════════════════════════════
-║ {LYW}{mod_name}{X}
-║ {mod_desc}
-║ {mod_author}
-║ {mod_version}
-║ {mod_created}
-╚═══════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════╗
+║ {header} ║
+╠══════════════════════════════════════════════════════════╝
+║ {LYW}{mod_name}{X} ║
+║ {mod_desc} ║
+║ {mod_author} ║
+║ {mod_version} ║
+║ {mod_created} ║
+╚══════════════════════════════════════════════════════════╝
 """
 
-cli_module_options_banner = r"""╔═══════════════════════════════════════════════════════════
-║🧾 Option: {option_label}
-╚┳──────────────────────────────────────────────────────────
+cli_module_options_banner = r"""╔══════════════════════════════════════════════════════════╗
+║🧾 Option: {option_label} ║
+╚┳─────────────────────────────────────────────────────────┘
  ├─ {option_required}
  ├─ {option_default}
  ├─ {option_current}
  └─ {option_desc}
 """
+
+
+def show_basic_banner(text, chars=56, color=formatter["BE"]):
+    """
+    Formatiert und zeigt ein grundlegendes Banner in der Konsole an.
+    Der Text wird linksbündig mit Leerzeichen ergänzt, um auf die festgelegte
+    Zeichenlänge zu kommen. Zusätzlich wird eine Farboption angewendet,
+    die über den 'color'-Parameter gesteuert wird.
+
+    Args:
+        text (str): Der anzuzeigende Text des Banners.
+        chars (int, optional): Die Gesamtanzahl an Zeichen,
+                               die das Banner umfassen soll.
+                               Standartwert ist 56.
+        color (str, optional): Die Farboption des Textes,
+                               entsprechend der Werte aus dem `formatter`-Dictionary.
+                               Standardwert ist `formatter["X"]`.
+    """
+    formatted_text = text + (chars - len(text)) * " "
+    print(default_banner.format(header=formatted_text, color=color, **formatter))
 
 
 def show_banner(banner="xcore_banner", **kwargs):
@@ -91,10 +106,6 @@ def show_banner(banner="xcore_banner", **kwargs):
     if banner == "cli_banner":
         # Banner des CLI-/ Konsolen-Modus
         print(cli_banner.format(version=version, **formatter))
-
-    elif banner == "cli_modullist_header_banner":
-        # Modullisten Header des CLI-Modus
-        print(cli_modullist_header_banner.format(**formatter))
 
     elif banner == "cli_module_info_banner":
         # Modulinformationen Banner des CLI-Modus
@@ -120,12 +131,8 @@ def show_banner(banner="xcore_banner", **kwargs):
             **formatter)
         )
 
-    elif banner == "setpoint_cli_banner":
-        # Banner des Setpoint-Modus mit CLI Interface
-        print(setpoint_cli_banner.format(**formatter))
-
     elif banner == "xcore_banner":
-        # Default XCORE Banner
+        # XCORE Banner
         print(xcore_banner.format(dialog=i18n.t("main.banner_dialog"),
                                   version=version,
                                   **formatter))
