@@ -7,6 +7,7 @@ import json
 
 from xcore_framework.config.formatting import formatter
 
+
 available_languages = ["de", "en"]
 
 
@@ -40,9 +41,10 @@ class I18nManager:
 
     def load_translations(self):
         """
-        Lädt Übersetzungsdaten für die Anwendung und initialisiert diese. Die Methode sorgt
-        dafür, dass zuerst die Fallback-Sprache geladen wird. Falls die aktive Sprache nicht
-        mit der Fallback-Sprache übereinstimmt, wird zusätzlich die aktive Sprache geladen.
+        Lädt Übersetzungsdaten für die Anwendung und initialisiert diese.
+        Die Methode sorgt dafür, dass zuerst die Fallback-Sprache geladen wird.
+        Falls die aktive Sprache nicht mit der Fallback-Sprache übereinstimmt,
+        wird zusätzlich die aktive Sprache geladen.
 
         :raises RuntimeError: Falls die Sprache nicht geladen werden kann.
         :return: Gibt nichts zurück. Initialisiert interne Datenstrukturen.
@@ -55,13 +57,14 @@ class I18nManager:
     def _load_language(self, lang_code):
         """
         Lädt Übersetzungsdateien für eine gegebene Sprachkennung aus dem festgelegten Pfad.
-        Die Funktion überprüft, ob der entsprechende Ordner existiert, geht durch alle JSON-Dateien
-        im Ordner und aktualisiert die Übersetzungskategorien mit den Inhalten der Dateien.
+        Die Funktion überprüft, ob der entsprechende Ordner existiert, und
+        geht durch alle JSON-Dateien im Ordner und aktualisiert die Übersetzungskategorien
+        mit den Inhalten der Dateien.
 
         :param lang_code: Die Sprachkennung, die verwendet wird, um den Sprachpfad zu bestimmen.
         :type lang_code: str
         :return: Gibt None zurück, wenn das Verzeichnis nicht existiert oder keine
-        JSON-Dateien gefunden werden.
+                 JSON-Dateien gefunden werden.
         :rtype: None
         """
         lang_path = os.path.join(self.base_path, lang_code)
@@ -86,10 +89,11 @@ class I18nManager:
         :param key: Der Schlüssel der Übersetzung im Format 'kategorie.schlüssel'.
         :type key: str
         :param kwargs: Zusätzliche Schlüsselwortargumente, die verwendet werden, um Platzhalter
-            in der übersetzten Zeichenkette zu ersetzen.
+                       in der übersetzten Zeichenkette zu ersetzen.
         :type kwargs: dict
         :return: Die übersetzte Zeichenkette oder, falls der Schlüssel nicht gefunden wird oder
-            ein Fehler auftritt, der ursprüngliche Schlüssel oder ein gekennzeichneter Fallback.
+                 ein Fehler auftritt, der ursprüngliche Schlüssel oder ein gekennzeichneter
+                 Fallback.
         :rtype: str
         """
         parts = key.split(".")

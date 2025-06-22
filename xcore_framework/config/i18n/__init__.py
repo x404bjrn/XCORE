@@ -7,16 +7,17 @@ import locale
 from dotenv import load_dotenv
 
 from .i18n_manager import I18nManager
+from xcore_framework.config.env import SETTING_LANGUAGE
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ENV_FILE = os.path.join(BASE_DIR, "..", "..", ".env")
 
-if os.path.exists(ENV_FILE):
-    load_dotenv(ENV_FILE)
-    XCORE_LANGUAGE = os.getenv("SETTING_LANGUAGE")
-else:
+try:
+    XCORE_LANGUAGE = SETTING_LANGUAGE
+
+except Exception:
     locale_info = locale.getlocale()[0]
     XCORE_LANGUAGE = locale_info[:2] if locale_info else "en"
 
-# Globale Instanz (wird dynamisch aus Umgebungsvariable lesen oder aus Systemeinstellungen gelesen)
+# Globale Instanz
 i18n = I18nManager(lang=XCORE_LANGUAGE, base_path=os.path.join(BASE_DIR))
