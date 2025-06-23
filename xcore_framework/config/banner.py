@@ -77,11 +77,40 @@ cli_module_options_banner = r"""╔═══════════════
 
 
 def fit_text_to_frame(text, frame_chars=56):
+    """
+    Passt den gegebenen Text an den Rahmen an, indem Leerzeichen hinzugefügt werden,
+    um sicherzustellen, dass die resultierende Breite des Textes dem gewünschten Rahmen
+    entspricht. Falls ANSI-Farbcodes im Text enthalten sind, werden sie berücksichtigt
+    und bei der Längenberechnung ignoriert.
+
+    Args:
+        text (str): Der Text, der an den Rahmen angepasst werden soll. Kann ANSI-Farbcodes
+                    enthalten, welche nicht bei der Längenzählung berücksichtigt werden.
+        frame_chars (int, optional): Die gewünschte Breite des Rahmens. Standard ist 56.
+
+    Returns:
+        str: Der angepasste Text, dessen Länge der gewünschten Breite entspricht.
+    """
     new_text = text + (frame_chars - len(strip_ansi(text))) * " "
     return str(new_text)
 
 
 def show_basic_banner(text, chars=56, color=formatter["BE"]):
+    """
+    Zeigt ein Basis-Banner im Terminal an.
+
+    Die Funktion erstellt ein Banner mit einem Titeltext, der an eine bestimmte
+    Zeichenbreite angepasst wird, und wendet eine definierte Farbformatierung
+    an.
+
+    Args:
+        text (str): Der Text, der im Banner angezeigt wird.
+        chars (int, optional): Die maximale Zeichenbreite für das Banner.
+                               Standardmäßig auf 56 gesetzt.
+        color (str, optional): Die Farbformatierung für den Bannertext.
+                               Standardmäßig wird der Wert aus formatter["BE"]
+                               verwendet.
+    """
     print(default_banner.format(header=fit_text_to_frame(text, chars),
                                 color=color, **formatter))
 
@@ -129,7 +158,7 @@ def show_banner(banner="xcore_banner", **kwargs):
             option_default=i18n.t("options.default", default=kwargs.get("default", "")),
             option_current=i18n.t("options.current", current=kwargs.get("current", ""),
                                   space=kwargs.get("space", "")),
-            option_desc=i18n.t("options.description", desc=kwargs.get("desc", "")),
+            option_desc=i18n.t("options.desc", desc=kwargs.get("desc", "")),
             **formatter)
         )
 
