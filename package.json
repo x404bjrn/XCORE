@@ -1,6 +1,6 @@
 {
   "name": "xcore-framework",
-  "version": "0.1.0a2",
+  "version": "0.1.0a3",
   "scripts": {
     "version:patch": "standard-version --release-as patch --skip.commit --skip.tag && node scripts/update-setup-version.js",
     "version:minor": "standard-version --release-as minor --skip.commit --skip.tag && node scripts/update-setup-version.js",
