@@ -202,7 +202,9 @@ def main():
     )
     # Webbrowser öffnen beim Start des Web-Modus
     web_group.add_argument(
-        "--open-browser", action="store_true", help=i18n.t("main.arg_open_browser_desc"),
+        "--open-browser",
+        action="store_true",
+        help=i18n.t("main.arg_open_browser_desc"),
     )
 
     # Argumentgruppe für die Konfiguration des Setpoint-Modus ________________________________
@@ -268,11 +270,11 @@ def main():
     elif args.gui:
         # keine weiteren Argumente erlaubt
         if (
-                args.host != "127.0.0.1"
-                or args.port != 5000
-                or args.debug
-                or args.open_browser
-                or args.interface != "cli"
+            args.host != "127.0.0.1"
+            or args.port != 5000
+            or args.debug
+            or args.open_browser
+            or args.interface != "cli"
         ):
             parser.error(i18n.t("main.fail_start_gui_msg"))
 

@@ -17,13 +17,15 @@ def real_module_environment():
     temp_dir = tempfile.mkdtemp()
 
     # Beispielmodul 1: test_hello_module.py
-    module_code = textwrap.dedent("""
+    module_code = textwrap.dedent(
+        """
         class Module:
             def __init__(self):
                 self.name = "Hello"
             def greet(self):
                 return "Hello from real module"
-    """)
+    """
+    )
     module_path = os.path.join(temp_dir, "test_hello_module.py")
     with open(module_path, "w") as f:
         f.write(module_code)

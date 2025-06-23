@@ -14,7 +14,7 @@ INIT_CHECKFILE_PATH = os.path.join(os.path.dirname(__file__), "..", ".init.xcore
 
 
 def initialize():
-    """ Initialisiert .env-Datei und Datenbank bei Erststart. """
+    """Initialisiert .env-Datei und Datenbank bei Erststart."""
     if not os.path.exists(INIT_CHECKFILE_PATH):
         print(i18n.t("system.init"))
 

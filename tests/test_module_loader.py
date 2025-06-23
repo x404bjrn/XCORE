@@ -18,11 +18,15 @@ def temp_module_dir():
 
     # Modul mit Keyword
     with open(os.path.join(temp_dir, "test_keyword.py"), "w") as f:
-        f.write(textwrap.dedent("""\
+        f.write(
+            textwrap.dedent(
+                """\
             class Module:
                 def __init__(self):
                     self.name = "TestModule"
-        """))
+        """
+            )
+        )
 
     # Modul ohne Keyword
     with open(os.path.join(temp_dir, "random.py"), "w") as f:
@@ -34,11 +38,15 @@ def temp_module_dir():
 
     # Unterverzeichnis mit Treffern
     with open(os.path.join(temp_dir, "subdir", "another_keyword_module.py"), "w") as f:
-        f.write(textwrap.dedent("""\
+        f.write(
+            textwrap.dedent(
+                """\
             class Module:
                 def __init__(self):
                     self.name = "AnotherTestModule"
-        """))
+        """
+            )
+        )
 
     yield temp_dir
     shutil.rmtree(temp_dir)

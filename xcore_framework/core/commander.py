@@ -41,7 +41,7 @@ class XCoreShell(cmd.Cmd):
 
     @property
     def doc_header(self):
-        """ Anzeige des 'help' Headers. """
+        """Anzeige des 'help' Headers."""
         return i18n.t("header.help")
 
     def __init__(self):
@@ -57,14 +57,14 @@ class XCoreShell(cmd.Cmd):
 
     @property
     def prompt(self):
-        """ Rückgabe des Prompts. """
+        """Rückgabe des Prompts."""
         return i18n.t(
             "system.cli_prompt",
             current_module=self.current_module.name if self.current_module else "xcore",
         )
 
     def default(self, line):
-        """ Fehlermeldung für unbekannte Befehle. """
+        """Fehlermeldung für unbekannte Befehle."""
         self.stdout.write(i18n.t("system.error_unknown_command", line=line) + "\n")
 
     def do_search(self, arg):
@@ -84,7 +84,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_search():
-        """ Dynamischen Hilfetext für `search` bereitstellen. """
+        """Dynamischen Hilfetext für `search` bereitstellen."""
         print(i18n.t("help.search"))
 
     def complete_search(self, text, line, begidx, endidx):
@@ -110,7 +110,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_use():
-        """ Dynamischen Hilfetext für `use` bereitstellen. """
+        """Dynamischen Hilfetext für `use` bereitstellen."""
         print(i18n.t("help.use"))
 
     def complete_use(self, text, line, begidx, endidx):
@@ -135,14 +135,19 @@ class XCoreShell(cmd.Cmd):
         for mod_path in sorted(modules):
             mod = self.loader.load_module(mod_path)
             if mod:
-                print("  {LBE}▶{X} {name}\n    - {desc}".format(
-                    name=f"{mod.name:<30}", desc=f"{mod.description[:49]}...", **formatter))
+                print(
+                    "  {LBE}▶{X} {name}\n    - {desc}".format(
+                        name=f"{mod.name:<30}",
+                        desc=f"{mod.description[:49]}...",
+                        **formatter,
+                    )
+                )
 
         print("╚" + ("═" * 58) + "╝\n")
 
     @staticmethod
     def help_list():
-        """ Dynamischen Hilfetext für `list` bereitstellen. """
+        """Dynamischen Hilfetext für `list` bereitstellen."""
         print(i18n.t("help.list"))
 
     def do_info(self, arg):
@@ -164,17 +169,18 @@ class XCoreShell(cmd.Cmd):
             return
 
         # Ausgabe der Modulinformationen (Banner)
-        show_banner("cli_module_info_banner",
-                    name=module.name,
-                    desc=module.description,
-                    author=getattr(module, "author", "Unbekannt"),
-                    version=getattr(module, "version", "1.0.0"),
-                    created=getattr(module, "created", "n/a")
-                    )
+        show_banner(
+            "cli_module_info_banner",
+            name=module.name,
+            desc=module.description,
+            author=getattr(module, "author", "Unbekannt"),
+            version=getattr(module, "version", "1.0.0"),
+            created=getattr(module, "created", "n/a"),
+        )
 
     @staticmethod
     def help_info():
-        """ Dynamischen Hilfetext für `info` bereitstellen. """
+        """Dynamischen Hilfetext für `info` bereitstellen."""
         print(i18n.t("help.info"))
 
     def complete_info(self, text, line, begidx, endidx):
@@ -202,13 +208,15 @@ class XCoreShell(cmd.Cmd):
                 space = "" if current_value else " "
 
                 # Ausgabe der Moduloption (Banner)
-                show_banner("cli_module_options_banner",
-                            label=name,
-                            required=is_required,
-                            default=default_value,
-                            current=current_value or "(nicht gesetzt)",
-                            space=space,
-                            desc=description)
+                show_banner(
+                    "cli_module_options_banner",
+                    label=name,
+                    required=is_required,
+                    default=default_value,
+                    current=current_value or "(nicht gesetzt)",
+                    space=space,
+                    desc=description,
+                )
 
         elif arg.strip() == "users":
             # Auslesen aller Benutzer aus der Datenbank
@@ -227,7 +235,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_show():
-        """ Dynamischen Hilfetext für `show` bereitstellen. """
+        """Dynamischen Hilfetext für `show` bereitstellen."""
         print(i18n.t("help.show"))
 
     @staticmethod
@@ -262,7 +270,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_set():
-        """ Dynamischen Hilfetext für `set` bereitstellen. """
+        """Dynamischen Hilfetext für `set` bereitstellen."""
         print(i18n.t("help.set"))
 
     def complete_set(self, text, line, begidx, endidx):
@@ -295,7 +303,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_run():
-        """ Dynamischen Hilfetext für `run` bereitstellen. """
+        """Dynamischen Hilfetext für `run` bereitstellen."""
         print(i18n.t("help.run"))
 
     def do_back(self, arg):
@@ -312,7 +320,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_back():
-        """ Dynamischen Hilfetext für `back` bereitstellen. """
+        """Dynamischen Hilfetext für `back` bereitstellen."""
         print(i18n.t("help.back"))
 
     @staticmethod
@@ -331,22 +339,21 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_lang():
-        """ Dynamischen Hilfetext für `lang` bereitstellen. """
+        """Dynamischen Hilfetext für `lang` bereitstellen."""
         print(i18n.t("help.lang"))
 
     def do_user(self, arg):
         """
-        Verarbeitet Benutzerbefehle, wie das Erstellen, Löschen, Anmelden, Abmelden von Benutzern und
-        die Abfrage des aktuellen Benutzerstatus. Je nach eingegebenem Befehl analysiert die Methode
-        den Input, führt die entsprechende Datenbankoperation aus und gibt eine Bestätigung oder
+        Verarbeitet Benutzerbefehle, wie das Erstellen, Löschen, Anmelden, Abmelden von
+        Benutzern und die Abfrage des aktuellen Benutzerstatus.
+        Je nach eingegebenem Befehl analysiert die Methode den Input,
+        führt die entsprechende Datenbankoperation aus und gibt eine Bestätigung oder
         Fehlermeldung aus.
 
         Diese Methode unterstützt die folgenden Befehle:
         - "create": Erstellen eines neuen Benutzers.
         - "delete": Löschen eines Benutzers.
         - "status": Überprüfung, welcher Benutzer aktuell angemeldet ist.
-
-        Falls der eingegebene Befehl nicht gültig ist, wird eine Fehlermeldung auf der Konsole ausgegeben.
         """
         print()
         parts = arg.strip().split()
@@ -361,14 +368,22 @@ class XCoreShell(cmd.Cmd):
 
         if command == "create":
             if len(args) != 2:
-                print("{LMA}Syntax{X}: {LYW}user create{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter))
+                print(
+                    "{LMA}Syntax{X}: {LYW}user create{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(
+                        **formatter
+                    )
+                )
             else:
                 username, password = args
                 self.db.create_user(username, password)
 
         elif command == "delete":
             if len(args) != 2:
-                print("{LMA}Syntax{X}: {LYW}user delete{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter))
+                print(
+                    "{LMA}Syntax{X}: {LYW}user delete{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(
+                        **formatter
+                    )
+                )
             else:
                 username, password = args
                 self.db.delete_user(username, password)
@@ -387,7 +402,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_user():
-        """ Dynamischen Hilfetext für `user` bereitstellen. """
+        """Dynamischen Hilfetext für `user` bereitstellen."""
         print(i18n.t("help.user"))
 
     def do_login(self, arg):
@@ -401,25 +416,26 @@ class XCoreShell(cmd.Cmd):
             self.db.login(username, password)
 
         except ValueError:
-            print("{LMA}Syntax{X}: {LYW}user login{X} "
-                  "<{LBE}benutzername{X}> <{LGN}passwort{X}>".format(
-                    **formatter))
+            print(
+                "{LMA}Syntax{X}: {LYW}user login{X} "
+                "<{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter)
+            )
         print()
 
     @staticmethod
     def help_login():
-        """ Dynamischen Hilfetext für `login` bereitstellen. """
+        """Dynamischen Hilfetext für `login` bereitstellen."""
         print(i18n.t("help.login"))
 
     def do_logout(self, arg):
-        """ Loggt den aktuellen Benutzer aus. """
+        """Loggt den aktuellen Benutzer aus."""
         print()
         self.db.logout()
         print()
 
     @staticmethod
     def help_logout():
-        """ Dynamischen Hilfetext für `logout` bereitstellen. """
+        """Dynamischen Hilfetext für `logout` bereitstellen."""
         print(i18n.t("help.logout"))
 
     def do_save(self, arg):
@@ -448,7 +464,7 @@ class XCoreShell(cmd.Cmd):
             return
 
         command = parts[0]
-        #args = parts[1:] <- wenn benötigt kann ent-kommentiert werden..
+        # args = parts[1:] <- wenn benötigt kann ent-kommentiert werden..
 
         if command == "options":
             if not self.current_module:
@@ -468,7 +484,11 @@ class XCoreShell(cmd.Cmd):
                 content = json.dumps(self.options)
                 success = self.db.save_content(content, designation=designation)
                 if success:
-                    print(i18n.t("database.options_saved", module=self.current_module.name))
+                    print(
+                        i18n.t(
+                            "database.options_saved", module=self.current_module.name
+                        )
+                    )
             except Exception as e:
                 print(i18n.t("database.options_save_failed", e=str(e)))
 
@@ -479,7 +499,7 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_save():
-        """ Dynamischen Hilfetext für `save` bereitstellen. """
+        """Dynamischen Hilfetext für `save` bereitstellen."""
         print(i18n.t("help.save"))
 
     def do_load(self, arg):
@@ -509,7 +529,7 @@ class XCoreShell(cmd.Cmd):
             return
 
         command = parts[0]
-        #args = parts[1:] <- wenn benötigt kann ent-kommentiert werden..
+        # args = parts[1:] <- wenn benötigt kann ent-kommentiert werden..
 
         if command == "options":
             if not self.current_module:
@@ -530,7 +550,9 @@ class XCoreShell(cmd.Cmd):
                     loaded = json.loads(content)
                     self.options.update(loaded)
                     print(
-                        i18n.t("database.options_loaded", module=self.current_module.name)
+                        i18n.t(
+                            "database.options_loaded", module=self.current_module.name
+                        )
                     )
                     print()
                     return
@@ -547,23 +569,23 @@ class XCoreShell(cmd.Cmd):
 
     @staticmethod
     def help_load():
-        """ Dynamischen Hilfetext für `load` bereitstellen. """
+        """Dynamischen Hilfetext für `load` bereitstellen."""
         print(i18n.t("help.load"))
 
     @staticmethod
     def do_exit(arg):
-        """ Beendet das Programm. """
+        """Beendet das Programm."""
         print(i18n.t("system.cli_goodbye"))
         return True
 
     @staticmethod
     def help_exit():
-        """ Dynamischen Hilfetext für `exit` bereitstellen. """
+        """Dynamischen Hilfetext für `exit` bereitstellen."""
         print(i18n.t("help.exit"))
 
 
 def start_cli():
-    """ Startet den XCORE CLI-Modus (XCore-Shell). """
+    """Startet den XCORE CLI-Modus (XCore-Shell)."""
     show_banner(banner="cli_banner")
 
     shell = XCoreShell()

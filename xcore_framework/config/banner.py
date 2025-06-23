@@ -111,8 +111,11 @@ def show_basic_banner(text, chars=56, color=formatter["BE"]):
                                Standardmäßig wird der Wert aus formatter["BE"]
                                verwendet.
     """
-    print(default_banner.format(header=fit_text_to_frame(text, chars),
-                                color=color, **formatter))
+    print(
+        default_banner.format(
+            header=fit_text_to_frame(text, chars), color=color, **formatter
+        )
+    )
 
 
 def show_banner(banner="xcore_banner", **kwargs):
@@ -120,7 +123,7 @@ def show_banner(banner="xcore_banner", **kwargs):
     Zeigt ein Banner basierend auf dem gegebenen Parameter an.
     """
     # Formatieren der Versionsanzeige
-    version = ((9 - (len(__version__) + 1)) * ' ') + 'v' + __version__
+    version = ((9 - (len(__version__) + 1)) * " ") + "v" + __version__
 
     if banner == "cli_banner":
         # Banner des CLI-/ Konsolen-Modus
@@ -128,42 +131,58 @@ def show_banner(banner="xcore_banner", **kwargs):
 
     elif banner == "cli_module_info_banner":
         # Modulinformationen Banner des CLI-Modus
-        print(cli_module_info_banner.format(
-            header=fit_text_to_frame(
-                i18n.t("header.module_info")
-            ),
-            mod_name=fit_text_to_frame(
-                i18n.t("info.name", name=kwargs.get("name", ""))
-            ),
-            mod_desc=(fit_text_to_frame(
-                i18n.t("info.description", desc=kwargs.get("desc", ""))[:52]+ "...")
-            ),
-            mod_author=fit_text_to_frame(
-                i18n.t("info.author", author=kwargs.get("author", ""))
-            ),
-            mod_version=fit_text_to_frame(
-                i18n.t("info.version", version=kwargs.get("version", ""))
-            ),
-            mod_created=fit_text_to_frame(
-                i18n.t("info.created", created=kwargs.get("created", ""))
-            ),
-            **formatter)
+        print(
+            cli_module_info_banner.format(
+                header=fit_text_to_frame(i18n.t("header.module_info")),
+                mod_name=fit_text_to_frame(
+                    i18n.t("info.name", name=kwargs.get("name", ""))
+                ),
+                mod_desc=(
+                    fit_text_to_frame(
+                        i18n.t("info.description", desc=kwargs.get("desc", ""))[:52]
+                        + "..."
+                    )
+                ),
+                mod_author=fit_text_to_frame(
+                    i18n.t("info.author", author=kwargs.get("author", ""))
+                ),
+                mod_version=fit_text_to_frame(
+                    i18n.t("info.version", version=kwargs.get("version", ""))
+                ),
+                mod_created=fit_text_to_frame(
+                    i18n.t("info.created", created=kwargs.get("created", ""))
+                ),
+                **formatter,
+            )
         )
 
     elif banner == "cli_module_options_banner":
         # Moduloptionen Banner des CLI-Modus
-        print(cli_module_options_banner.format(
-            option_label=fit_text_to_frame(i18n.t("options.label", name=kwargs.get("label", ""))),
-            option_required=i18n.t("options.required", required=kwargs.get("required", "")),
-            option_default=i18n.t("options.default", default=kwargs.get("default", "")),
-            option_current=i18n.t("options.current", current=kwargs.get("current", ""),
-                                  space=kwargs.get("space", "")),
-            option_desc=i18n.t("options.desc", desc=kwargs.get("desc", "")),
-            **formatter)
+        print(
+            cli_module_options_banner.format(
+                option_label=fit_text_to_frame(
+                    i18n.t("options.label", name=kwargs.get("label", ""))
+                ),
+                option_required=i18n.t(
+                    "options.required", required=kwargs.get("required", "")
+                ),
+                option_default=i18n.t(
+                    "options.default", default=kwargs.get("default", "")
+                ),
+                option_current=i18n.t(
+                    "options.current",
+                    current=kwargs.get("current", ""),
+                    space=kwargs.get("space", ""),
+                ),
+                option_desc=i18n.t("options.desc", desc=kwargs.get("desc", "")),
+                **formatter,
+            )
         )
 
     elif banner == "xcore_banner":
         # XCORE Banner
-        print(xcore_banner.format(dialog=i18n.t("main.banner_dialog"),
-                                  version=version,
-                                  **formatter))
+        print(
+            xcore_banner.format(
+                dialog=i18n.t("main.banner_dialog"), version=version, **formatter
+            )
+        )

@@ -17,7 +17,7 @@ from xcore_framework.config.i18n import i18n
 
 
 class DatabaseManager:
-    """ Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen. """
+    """Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen."""
 
     def __init__(self, db_path=DIRECTORY_DATABASE):
         """
