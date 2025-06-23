@@ -13,7 +13,7 @@
   "user_not_found": "{NEUTRAL} User not found.",
   "user_delete_failed": "{FAIL} The user {username} is currently logged in and therefore cannot be deleted.",
   "logged_out": "{NEUTRAL} User '{logged_in_user}' has been logged out.",
-  "login_as": "[✓] Logged in as: {user}",
+  "login_as": "{CHECK} Logged in as: {user}",
   "no_login_user": "{FAIL} No user logged in.",
   "path": "\n{NEUTRAL} Expect database at: {path}",
   "no_exist": "{NEUTRAL} Database does not exist. Create..",

@@ -7,6 +7,7 @@ import os
 from xcore_framework.core.database_manager import DatabaseManager
 from xcore_framework.config.i18n import i18n
 
+
 # Basisverzeichnis definieren
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DB_PATH = os.path.join(BASE_DIR, "database", "database.db")
@@ -15,12 +16,7 @@ DB_PATH = os.path.join(BASE_DIR, "database", "database.db")
 def ensure_db_file(path=DB_PATH):
     """
     Überprüft, ob eine Datenbankdatei existiert, und erstellt diese bei Bedarf.
-
-    Diese Funktion prüft das Vorhandensein der Datei an einem bestimmten
-    Pfad. Falls die Datei fehlt, wird eine neue Datenbank erstellt und
-    initialisiert. Es wird außerdem eine Benutzer-Tabelle in der Datenbank
-    erstellt. Die Ergebnisse des Prozesses werden auf der Konsole
-    ausgegeben.
+    Es wird außerdem eine Benutzer-Tabelle in der Datenbank erstellt.
 
     Args:
         path (str): Der Pfad zur Datenbankdatei, die überprüft werden soll.

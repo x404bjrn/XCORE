@@ -5,6 +5,8 @@
 import importlib.util
 import os
 
+from xcore_framework.config.env import DIRECTORY_MODULES
+
 
 class ModuleLoader:
     """
@@ -20,7 +22,12 @@ class ModuleLoader:
     """
 
     def __init__(self):
-        self.module_base = os.path.join(os.path.dirname(__file__), "..", "modules")
+        try:
+            self.module_base = DIRECTORY_MODULES
+
+        except Exception:
+            # Fallback Modulpfad
+            self.module_base = os.path.join(os.path.dirname(__file__), "..", "modules")
 
     def search_modules(self, keyword):
         """
@@ -64,9 +71,12 @@ class ModuleLoader:
         :rtype: typing.Optional[object]
         """
         full_path = os.path.join(self.module_base, *path.split("/")) + ".py"
+
         if not os.path.isfile(full_path):
             return None
+
         spec = importlib.util.spec_from_file_location("mod", full_path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
+
         return mod.Module()

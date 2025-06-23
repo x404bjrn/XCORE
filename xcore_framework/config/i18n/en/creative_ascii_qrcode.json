@@ -1,6 +1,0 @@
-{
-  "modul_name": "{LGN}creative/ascii_qrcode{X}",
-  "modul_desc": "Creates an ASCII QR code for any text or a URL.",
-  "modul_headline": "\n{LBE}ASCII QR-CODE GENERATOR{X}",
-  "option_text_desc": "Text or URL for the QR code"
-}

@@ -9,13 +9,12 @@ from xcore_framework.config.db import ensure_db_file
 import os
 from datetime import datetime
 
+
 INIT_CHECKFILE_PATH = os.path.join(os.path.dirname(__file__), "..", ".init.xcore")
 
 
 def initialize():
-    """
-    Initialisiert .env-Datei und Datenbank bei Erststart.
-    """
+    """ Initialisiert .env-Datei und Datenbank bei Erststart. """
     if not os.path.exists(INIT_CHECKFILE_PATH):
         print(i18n.t("system.init"))
 
@@ -29,7 +28,7 @@ def initialize():
             # INFO: Hier weitere Initialisierungen bei Bedarf hinzufügen
             # ...
 
-            # Legt Datei mit init_ok-Marker an, als Kennzeichnung für abgeschlossene Initialisierung
+            # Legt Datei mit init-Marker an, als Kennzeichnung für abgeschlossene Initialisierung
             with open(INIT_CHECKFILE_PATH, "w", encoding="utf-8") as f:
                 f.write(f"{datetime.now()} = init_ok")
                 f.close()

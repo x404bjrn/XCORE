@@ -1,6 +1,5 @@
 {
-  "header": "\n{LBE}MODULINFORMATIONEN{X}",
-  "name": "Name: {LYW}{name}{X}",
+  "name": "Name: {name}",
   "description": "Beschreibung: {desc}",
   "author": "Author: {author}",
   "version": "Version: {version}",

@@ -1,5 +1,25 @@
 {
   "init": "\n{NEUTRAL} {LYW}Initialisiere System{X}...\n",
   "init_error": "{FAIL} {LYW}Initialisierung {LRD}fehlgeschlagen{X}...",
-  "init_success": "{SUCCESS} {LYW}Initialisierung {LGN}erfolgreich{X}..."
+  "init_success": "{SUCCESS} {LYW}Initialisierung {LGN}erfolgreich{X}...",
+
+
+  "cli_welcome": "\nWillkommen bei {LMA}XCore{X}.\nTippe '{YW}help{X}' oder '{YW}?{X}' für Befehle.\n",
+  "cli_goodbye": "\n{LMA}Auf Wiedersehen{X} und bis zum nächsten mal!\n",
+  "cli_prompt": "({LMA}{current_module}{X}) {LYW}>>{X} ",
+
+
+  "error_msg": "\n{FAIL} {LRD}{e}{X}\n",
+  "error_unknown_command": "\n{FAIL} Unbekannter Befehl: '{LRD}{line}{X}'\n",
+
+  "error_invalid_user_command": "{FAIL} Unbekannter '{LYW}user{X}' Befehl!",
+  "error_invalid_save_command": "{FAIL} Unbekannter '{LYW}save{X}' Befehl!",
+  "error_invalid_load_command": "{FAIL} Unbekannter '{LYW}load{X}' Befehl!",
+
+
+  "notice_autocomplete": "\n{NEUTRAL} {YW}Hinweis{X}: Autovervollständigung ist auf diesem System evtl. nicht verfügbar.",
+
+
+  "language_changed": "\n{SUCCESS} Sprache geändert zu: {LYW}{lang}{X}\n",
+  "language_not_supported": "\n{FAIL} Sprache {LRD}nicht{X} unterstützt.\n"
 }

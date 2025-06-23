@@ -7,11 +7,11 @@ from dotenv import dotenv_values
 
 from xcore_framework.config.env import DIRECTORY_ENV
 from xcore_framework.config.i18n import i18n
-from xcore_framework.config.banner import show_banner
+from xcore_framework.config.banner import show_basic_banner
 from xcore_framework.setpoint.setpoint_logic import save_config
 
 
-def start_cli_setpoint():
+def start_setpoint_cli():
     """
     Startet das interaktive Command-Line-Interface (CLI) für
     die Verwaltung der Setpoint-Konfiguration.
@@ -31,7 +31,9 @@ def start_cli_setpoint():
         Ganzzahl ist und die Eingabe auch nicht einem gültigen
         Abbruchbefehl entspricht.
     """
-    show_banner("setpoint_cli_banner")
+    # Header und Hauptschleife
+    show_basic_banner(i18n.t("header.setpoint_cli"))
+
     while True:
         config = dotenv_values(DIRECTORY_ENV)
         keys = list(config.keys())

@@ -16,10 +16,10 @@ class XCoreModule:
     Integration mit verschiedenen Benutzerschnittstellen bereit.
 
     Attribute:
-    - output: Liste der verarbeiteten Ausgaben (nur relevant im Web-Modus).
-    - results: Liste der im Web-Modus gespeicherten Ergebnisdaten.
-    - mode: Modus der Anwendung (z. B. "web", "gui" oder leer für CLI).
-    - console_widget: Referenz auf ein Widget zur Konsolenausgabe im GUI-Modus.
+        - output: Liste der verarbeiteten Ausgaben (nur relevant im Web-Modus).
+        - results: Liste der im Web-Modus gespeicherten Ergebnisdaten.
+        - mode: Modus der Anwendung (z. B. "web", "gui" oder leer für CLI).
+        - console_widget: Referenz auf ein Widget zur Konsolenausgabe im GUI-Modus.
     """
 
     def __init__(self):
@@ -30,19 +30,20 @@ class XCoreModule:
 
     def feedback(self, output: list = None, result: dict = None):
         """
-        Sendet Rückmeldungen im CLI- und/oder Web-Modus.
+        Führt eine Feedback-Funktionalität durch, abhängig von der Betriebsart (CLI, Web, GUI)
+        und verarbeitet die gelieferte Ausgabe bzw. Ergebnisse entsprechend.
 
-        Diese Methode verarbeitet eine Liste von Ausgaben und/oder ein Ergebnisobjekt.
-        Wenn eine Ausgabe angegeben wird, wird jeder Eintrag in der Liste ausgegeben
-        und gegebenenfalls im Web-Modus entsprechend behandelt.
-        Ebenso wird ein übergebenes Ergebnis im Web-Modus gespeichert.
+        Wenn `output` bereitgestellt wird, wird diese abhängig vom Modus auf der Konsole
+        ausgegeben und für Web- oder GUI-Modi verarbeitet. ANSI-Formatierungen werden bei
+        Bedarf entfernt. Wenn `result` bereitgestellt wird und der Modus auf 'web' gesetzt ist,
+        wird das Ergebnis an die Webschnittstelle übergeben.
 
-        :param output: Liste mit Ausgaben, die ggf. verarbeitet und ausgegeben werden sollen
-        :type output: list, optional
-        :param result: Ergebnisdaten, die ggf. im Web-Modus gespeichert werden sollen
-        :type result: dict, optional
-        :return: Es wird kein Wert zurückgegeben
-        :rtype: None
+        Args:
+            output (list): Eine Liste von Zeichenketten, die als Ausgabe verarbeitet werden
+                           sollen. Jede Zeichenkette repräsentiert eine einzelne Zeile
+                           der Ausgabe.
+            result (dict): Ein optionales Wörterbuch, das Ergebnisdaten enthält, die für den
+                           Web-Modus weitergegeben werden sollen.
         """
         if output is not None:
             for line in output:

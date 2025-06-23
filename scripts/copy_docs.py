@@ -16,6 +16,10 @@ files_to_copy = {
     "LICENSE": "LICENSE",
     "README.md": "README.md",
     "README_EN.md": os.path.join("docs", "README_EN.md"),
+    "CONTRIBUTING.md": "CONTRIBUTING.md",
+    "CONTRIBUTING_EN.md": os.path.join("docs", "CONTRIBUTING_EN.md"),
+    "CODE_OF_CONDUCT.md": "CODE_OF_CONDUCT.md",
+    "CODE_OF_CONDUCT_EN.md": os.path.join("docs", "CODE_OF_CONDUCT_EN.md"),
 }
 
 # Zielverzeichnisse

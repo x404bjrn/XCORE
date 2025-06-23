@@ -1,8 +1,0 @@
-{
-  "modul_name": "{LGN}system/bash_history_stats{X}",
-  "modul_desc": "Analyzes the Bash history and shows the most used commands.",
-  "modul_headline": "\n{LBE}BASH HISTORY STATS{X}",
-  "option_history_path_desc": "Path to the Bash history file",
-  "file_not_found": "{FAIL} File not found: {path}\n",
-  "most_cmd": "{SUCCESS} Most common commands:\n"
-}

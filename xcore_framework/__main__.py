@@ -3,15 +3,23 @@
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
 import os
+import sys
 import argparse
 import webbrowser
 import subprocess
-import sys
 
 from xcore_framework.core.initializer import initialize
+from xcore_framework.core.commander import start_cli
+
 from xcore_framework.config.env import DIRECTORY_WEB_INTERFACE_DIR
 from xcore_framework.config.i18n import i18n
 from xcore_framework.config.banner import show_banner
+
+from xcore_framework.setpoint.setpoint_cli import start_setpoint_cli
+from xcore_framework.setpoint.setpoint_gui import start_setpoint_gui
+from xcore_framework.setpoint.setpoint_web import start_setpoint_web
+
+from xcore_framework.gui.gui import start_gui
 
 
 class CustomHelp(argparse.ArgumentParser):
@@ -21,24 +29,15 @@ class CustomHelp(argparse.ArgumentParser):
     Diese Klasse ersetzt die Standardhilfefunktion durch eine angepasste
     Ausgabe. Die neue Hilfsfunktion fügt eine zusätzliche benutzerdefinierte
     Nachricht hinzu, bevor die reguläre Hilfeausgabe der Basisklasse angezeigt
-    wird. Sie kann in Anwendungen verwendet werden, um die Benutzerfreundlichkeit
-    durch individuellere Hilfetexte zu verbessern.
-
-    Attributes:
-        Keine besonderen Attribute definiert.
-
-    Methods:
-        print_help(*args, **kwargs):
-            Überschreibt die Hilfsmethode, um eine benutzerdefinierte Nachricht
-            vor der Standardausgabe der Basisklasse hinzuzufügen.
+    wird.
     """
 
     def print_help(self, *args, **kwargs):
-        print(i18n.t("main.help_title"))
+        print(i18n.t("main.help_title") + "\n")
         super().print_help(*args, **kwargs)
 
 
-def start_web(host="127.0.0.1", port=5000, debug=True, open_browser=True):
+def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
     """
     Startet die Web-Schnittstelle unter einem angegebenen Host und Port. Die Methode erlaubt es,
     den Modus (Debug) zu konfigurieren und optional einen Webbrowser mit der Schnittstellen-URL
@@ -47,8 +46,8 @@ def start_web(host="127.0.0.1", port=5000, debug=True, open_browser=True):
     :param host: Die Host-Adresse, unter der der Dienst erreichbar ist.
     :param port: Der Port, auf dem der Dienst verfügbar ist.
     :param debug: Aktiviert den Debug-Modus, wenn True.
-    :param open_browser: Öffnet standardmäßig nach dem Start der Schnittstelle einen Webbrowser.
-    :return: Keiner. Der Prozess wird gestartet und gewartet, bis er beendet wird.
+    :param open_browser: Öffnet nach dem Start der Schnittstelle einen Webbrowser.
+    :return: Nichts. Der Prozess wird gestartet und gewartet, bis er beendet wird.
     """
     initialize()
     run_path = os.path.join(DIRECTORY_WEB_INTERFACE_DIR, "run.py")
@@ -56,9 +55,11 @@ def start_web(host="127.0.0.1", port=5000, debug=True, open_browser=True):
 
     if debug:
         cmd.append("--debug")
+
     if host != "127.0.0.1":
         cmd.append("--host")
         cmd.append(host)
+
     if port != 5000:
         cmd.append("--port")
         cmd.append(f"{port}")
@@ -72,72 +73,52 @@ def start_web(host="127.0.0.1", port=5000, debug=True, open_browser=True):
     process.wait()
 
 
-def start_cli():
+def start_cli_mode():
     """
-    Startet die Kommandozeilenschnittstelle (CLI) mithilfe der Funktion `start_cli`
-    aus dem Modul `xcore_framework.core.commander`.
-
-    Diese Funktion dient als Startpunkt für die CLI und ruft die zugrundeliegende
-    Implementierung auf, die im Framework enthalten ist.
-
-    :return: None
+    Startet die Kommandozeilenschnittstelle (CLI).
     """
-    from xcore_framework.core.commander import start_cli
-
     initialize()
     start_cli()
 
 
-def start_gui():
+def start_gui_mode():
     """
     Startet die grafische Benutzeroberfläche (GUI) der Anwendung.
-
-    Zusammenfassung:
-    Diese Funktion importiert und ruft die `start_gui`-Funktion aus dem Modul
-    `xcore_framework.gui.gui` auf, um die grafische Benutzeroberfläche zu initialisieren
-    und zu starten.
-
-    Raises:
-    ImportError: Wird ausgelöst, wenn das Modul `xcore_framework.gui.gui` nicht gefunden
-    werden kann.
     """
-    from xcore_framework.gui.gui import start_gui
-
     initialize()
     start_gui()
 
 
-def start_setpoint(mode="gui"):
+def start_setpoint_mode(interface="cli"):
     """
-    Führt den Start einer Setpoint-Konfiguration basierend auf dem angegebenen Modus aus.
+    Führt den Start eines Setpoints basierend auf der angegebenen Interfacevariante aus.
 
-    Diese Funktion ermöglicht es, basierend auf dem ausgewählten Modus (CLI, GUI oder Web)
-    die entsprechende Setpoint-Konfiguration zu initialisieren.
-    Wird ein ungültiger Modus übergeben, wird eine Fehlermeldung ausgegeben.
+    Diese Funktion ermöglicht es, basierend auf der ausgewählten Interface
+    Variante (CLI, GUI oder Web) das entsprechende Setpoint-Objekt zu initialisieren.
+    Wird eine ungültige Interfacevariante übergeben, wird eine Fehlermeldung ausgegeben.
 
     Args:
-        mode (str): Der Modus der Konfiguration. Unterstützte Werte sind "cli", "gui" und "web".
-            Der Standardwert ist "gui".
-
+        interface (str): Der Modus der Konfigurationsoberflächendarstellung.
+                         Unterstützte Werte sind "cli", "gui" und "web".
+                         Der Standardwert ist "cli".
     Raises:
-        ImportError: Wenn der Import des entsprechenden Moduls fehlschlägt.
-        Exception: Bei Ausführung eines nicht unterstützten Modus.
+        Exception: Bei Ausführung einer nicht unterstützten Interfacevariante.
     """
     initialize()
-    if mode == "cli":
-        from xcore_framework.setpoint.setpoint_cli import start_cli_setpoint
+    if interface == "cli":
+        # Startet Setpoint im CLI- / Konsolen-Modus
+        start_setpoint_cli()
 
-        start_cli_setpoint()
-    elif mode == "gui":
-        from xcore_framework.setpoint.setpoint_gui import start_gui_setpoint
+    elif interface == "gui":
+        # Startet Setpoint im GUI-Modus
+        start_setpoint_gui()
 
-        start_gui_setpoint()
-    elif mode == "web":
-        from xcore_framework.setpoint.setpoint_web import start_web_setpoint
+    elif interface == "web":
+        # Startet Setpoint im Web-Modus
+        start_setpoint_web()
 
-        start_web_setpoint()
     else:
-        print(i18n.t("main.invalid_mode", mode))
+        print(i18n.t("main.invalid_interface", interface=interface))
 
 
 def main():
@@ -148,30 +129,39 @@ def main():
     einzelnen Modi konfiguriert werden.
 
     Arguments:
-        --cli (bool): Aktiviert den CLI-Modus. Wird dieser Modus gewählt, sind keine weiteren
-                      Argumente erlaubt.
-        --web (bool): Aktiviert den Web-Modus. Zugelassene zusätzliche Argumente in diesem
-                      Modus sind --host, --port, --debug und --open-browser.
-        --host (str, optional): Definiert die Host-Adresse für die Webanwendung. Standard ist
-                                '127.0.0.1'.
-        --port (int, optional): Definiert den Port für die Webanwendung. Standard ist 5000.
+        --cli (bool): Aktiviert den CLI-Modus.
+                      Wird dieser Modus gewählt, sind keine weiteren Argumente erlaubt.
+
+        --web (bool): Aktiviert den Web-Modus.
+                      Zugelassene zusätzliche Argumente in diesem Modus sind:
+                      --host, --port, --debug, --open-browser.
+
+        --host (str, optional): Definiert die Host-Adresse für die Webanwendung.
+                                Standard ist '127.0.0.1' (localhost).
+
+        --port (int, optional): Definiert den Port für die Webanwendung.
+                                Standard ist 5000.
+
         --debug (bool, optional): Aktiviert den Debug-Modus für die Webanwendung.
-        --open-browser (bool, optional): Öffnet den Standard-Webbrowser automatisch beim Start
-                                          der Anwendung im Web-Modus.
+
+        --open-browser (bool, optional): Öffnet den Standard-Webbrowser automatisch beim
+                                         Start der Anwendung im Web-Modus.
+
         --gui (bool): Aktiviert den GUI-Modus.
-        --setpoint (bool): Aktiviert den Setpoint-Modus. Nur das Argument --interface ist in
-                           diesem Modus erlaubt.
+
+        --setpoint (bool): Aktiviert den Setpoint-Modus.
+                           Nur das Argument --interface ist in diesem Modus erlaubt.
+
         --interface (bool, optional): Legt das Interface für den Konfigurationseditor fest,
-                                      der im Setpoint-Modus verwendet wird. Standard ist "gui".
+                                      der im Setpoint-Modus verwendet wird.
+                                      Standard ist "cli".
 
     Raises:
         ArgumentError: Falls ungültige oder inkompatible Argumentkombinationen übergeben werden,
                        wird ein Fehler ausgegeben.
-
-    Returns:
-        None
     """
-    # Banner anzeigen
+
+    # (XCORE) Banner anzeigen
     show_banner("xcore_banner")
 
     # ArgumenteParser initialisieren und konfigurieren
@@ -179,9 +169,10 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=i18n.t("main.help_desc"),
     )
-    # Modus-Argumente
+
+    # Argumentgruppe der Betriebsmodi ________________________________________________________
     mode_group = parser.add_argument_group(
-        i18n.t("main.arg_mode_group_title"), i18n.t("main.arg_mode_group_desc")
+        i18n.t("main.arg_group_mode_title"), i18n.t("main.arg_group_mode_desc")
     )
     mode_group.add_argument(
         "--cli", action="store_true", help=i18n.t("main.arg_cli_desc")
@@ -196,10 +187,9 @@ def main():
         "--setpoint", action="store_true", help=i18n.t("main.arg_setpoint_desc")
     )
 
-    # Nur für Web-Modus relevant
-    # Flask Verbindungseinstellungen
+    # Argumentgruppe für Konfigurationen des Web-Modus _______________________________________
     web_group = parser.add_argument_group(
-        i18n.t("main.arg_web_group_title"), i18n.t("main.arg_web_group_desc")
+        i18n.t("main.arg_group_web_title"), i18n.t("main.arg_group_web_desc")
     )
     web_group.add_argument(
         "--host", default="127.0.0.1", help=i18n.t("main.arg_host_desc")
@@ -210,72 +200,87 @@ def main():
     web_group.add_argument(
         "--debug", action="store_true", help=i18n.t("main.arg_debug_desc")
     )
-    # Webbrowser öffnen beim Start (Web-Modus)
+    # Webbrowser öffnen beim Start des Web-Modus
     web_group.add_argument(
-        "--open-browser",
-        default=True,
-        action="store_true",
-        help=i18n.t("main.arg_open_browser_desc"),
+        "--open-browser", action="store_true", help=i18n.t("main.arg_open_browser_desc"),
     )
 
-    # Nur für den Setpoint-Modus relevant
-    # Interface Variante zur Darstellung des Konfigurations-Editors
+    # Argumentgruppe für die Konfiguration des Setpoint-Modus ________________________________
     setpoint_group = parser.add_argument_group(
-        i18n.t("main.arg_setpoint_group_title"), i18n.t("main.arg_setpoint_group_desc")
+        i18n.t("main.arg_group_setpoint_title"), i18n.t("main.arg_group_setpoint_desc")
     )
+    # Darstellungsvariante für den Konfigurationseditor (Setpoint)
     setpoint_group.add_argument(
         "--interface",
         choices=["cli", "gui", "web"],
-        default="gui",
+        default="cli",
         help=i18n.t("main.arg_interface_desc"),
     )
 
     args = parser.parse_args()
 
-    # MODUS: CLI / Konsole
+    # ARGUMENT AUSWERTUNG ====================================================================
+    # MODUS: CLI / Konsole ___________________________________________________________________
     if args.cli:
         # keine weiteren Argumente erlaubt
         if (
             args.host != "127.0.0.1"
             or args.port != 5000
             or args.debug
-            or not args.open_browser
-            or args.interface != "gui"
+            or args.open_browser
+            or args.interface != "cli"
         ):
             parser.error(i18n.t("main.fail_start_cli_msg"))
-        print(i18n.t("main.start_cli_msg"))
-        start_cli()
 
-    # MODUS: WEBSERVER
+        print(i18n.t("main.start_cli_msg"))
+        start_cli_mode()
+
+    # MODUS: WEB _____________________________________________________________________________
     elif args.web:
         # --interface darf NICHT gesetzt sein
-        if args.interface != "gui":
+        if args.interface != "cli":
             parser.error(i18n.t("main.fail_start_web_msg"))
+
         host = args.host
         port = args.port
         debug = args.debug
         open_browser = args.open_browser
-        print(i18n.t("main.start_web_msg", host=host, port=port))
-        start_web(host=host, port=port, debug=debug, open_browser=open_browser)
 
-    # MODUS: SETPOINT
+        print(i18n.t("main.start_web_msg", host=host, port=port))
+        start_web_mode(host=host, port=port, debug=debug, open_browser=open_browser)
+
+    # MODUS: SETPOINT ________________________________________________________________________
     elif args.setpoint:
         # Nur --interface erlaubt (alle anderen müssen default sein)
         if (
             args.host != "127.0.0.1"
             or args.port != 5000
             or args.debug
-            or not args.open_browser
+            or args.open_browser
         ):
             parser.error(i18n.t("main.fail_start_setpoint_msg"))
-        mode = args.interface or "gui"
-        print(i18n.t("main.start_setpoint_msg", mode=mode.upper()))
-        start_setpoint(mode=mode)
 
-    # MODUS: GUI
+        interface = args.interface or "cli"
+        print(i18n.t("main.start_setpoint_msg", interface=interface.upper()))
+        start_setpoint_mode(interface=interface)
+
+    # MODUS: GUI _____________________________________________________________________________
     elif args.gui:
+        # keine weiteren Argumente erlaubt
+        if (
+                args.host != "127.0.0.1"
+                or args.port != 5000
+                or args.debug
+                or args.open_browser
+                or args.interface != "cli"
+        ):
+            parser.error(i18n.t("main.fail_start_gui_msg"))
+
         print(i18n.t("main.start_gui_msg"))
-        start_gui()
+        start_gui_mode()
+
+    # TODO: Weiterer Modus (TUI - Terminal User Interface) geplant
+    # TODO: Anzeige der Dokumentation soll über ein Argument realisiert werden
 
 
 if __name__ == "__main__":

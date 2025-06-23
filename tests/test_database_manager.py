@@ -5,6 +5,7 @@
 import os
 import pytest
 from werkzeug.security import check_password_hash
+
 from xcore_framework.core.database_manager import DatabaseManager
 
 

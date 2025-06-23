@@ -1,0 +1,15 @@
+{
+  "module_options": "M O D U L O P T I O N E N",
+
+  "user_list": "R E G I S T R I E R T E   B E N U T Z E R",
+
+  "module_info": "M O D U L I N F O R M A T I O N E N",
+
+  "help": "Dokumentierte Befehle (geben Sie '{YW}help{X} <{LGN}thema{X}>' ein):",
+
+  "module_list": "M O D U L L I S T E",
+
+  "setpoint_cli": "SETPOINT - CLI (Konfigurationsmenü)",
+
+  "search_results": "G E F U N D E N E   M O D U L E"
+}

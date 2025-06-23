@@ -1,29 +1,44 @@
 {
+  "banner_dialog": "Select an operating mode to start {LGN}X{GN}CORE{X}.\n[ {BE}CLI{X} | {LMA}GUI{X} | {YW}WEB{X} ]\nor use '{LBE}--help{X}' for help.",
+
+
+  "help_title": "{LGN}X{GN}CORE {LYW}help function{X}:",
+  "help_desc": "Overview of {LGN}X{GN}CORE{X} application commands and modes.\nFor a {LYW}simple first start{X}, use the '{LBE}xcore --cli{X}' command.\nFor more {LYW}detailed help{X}, refer to the XCORE documentation.\n",
+
+
+  "arg_group_mode_title": "{LBE}Operating modes{X}",
+  "arg_group_mode_desc": "Available execution modes",
+
+  "arg_group_web_title": "{LBE}Web options{X}",
+  "arg_group_web_desc": "Web mode settings",
+
+  "arg_group_setpoint_title": "{LBE}Setpoint options{X}",
+  "arg_group_setpoint_desc": "Setpoint mode settings",
+
+
   "start_cli_msg": "{NEUTRAL} start {BE}CLI{X}-Mode ...",
   "start_web_msg": "{NEUTRAL} \uD83D\uDE80 start {LGN}XCORE{X} {YW}Web{X}-Interface http://{LRD}{host}{X}:{LBE}{port}{X} ...",
   "start_gui_msg": "{NEUTRAL} Start {LMA}GUI{X} mode ...",
-  "start_setpoint_msg": "{NEUTRAL} Start {LBE}SET{LYW}PO{LMA}INT{X} with {mode} interface ...",
+  "start_setpoint_msg": "{NEUTRAL} Start {LBE}SET{LYW}PO{LMA}INT{X} with {interface} interface ...",
+
+  "fail_start_cli_msg": "{FAIL} No further options allowed with --{BE}cli{X}.",
+  "fail_start_web_msg": "{FAIL} --{LYW}interface{X} is only allowed with --{LBE}set{LYW}po{LMA}int{X}.",
+  "fail_start_gui_msg": "{FAIL} No further options allowed with --{LMA}gui{X}.",
+  "fail_start_setpoint_msg": "{FAIL} Only --{LYW}interface{X} is allowed with --{LBE}set{LYW}po{LMA}int{X}.",
+
+
   "arg_cli_desc": "start {BE}CLI{X}-Interface",
   "arg_web_desc": "start {YW}Web{X}-Interface (Flask)",
+  "arg_setpoint_desc": "Starts the {LBE}SET{LYW}PO{LMA}INT{X} mode via the selected interface variant",
+  "arg_gui_desc": "Starts the {LMA}GUI{X} interface",
+
   "arg_host_desc": "Webserver Host ({LYW}Default{X}: 127.0.0.1)",
   "arg_port_desc": "Webserver Port ({LYW}Default{X}: 5000)",
   "arg_debug_desc": "Enable Flask {LGN}debug mode{X}",
-  "arg_open_browser_desc": "No browser open on web server host",
-  "arg_gui_desc": "Starts the {LMA}GUI{X} interface",
-  "arg_setpoint_desc": "Starts the {LBE}SET{LYW}PO{LMA}INT{X} mode via the selected interface variant",
-  "arg_interface_desc": "Interface variant [{LMA}gui{X}, {BE}cli{X}, {YW}web{X}] for the {LBE}SET{LYW}PO{LMA}INT{X} mode. ({LYW}Default{X}: gui)",
-  "fail_start_cli_msg": "{FAIL} No further options allowed with --{BE}cli{X}.",
-  "fail_start_web_msg": "{FAIL} --{LYW}interface{X} is only allowed with --{LBE}set{LYW}po{LMA}int{X}.",
-  "fail_start_setpoint_msg": "{FAIL} Only --{LYW}interface{X} is allowed with --{LBE}set{LYW}po{LMA}int{X}.",
-  "invalid_mode": "{FAIL}Invalid mode: {RD}{mode}{X}",
-  "help_title": "{LGN}X{GN}CORE {LYW}help function{X}:\n",
-  "help_desc": "Overview of {LGN}X{GN}CORE{X} application commands and modes.\nFor a {LYW}simple first start{X}, use the '{LBE}xcore --cli{X}' command.\nFor more {LYW}detailed help{X}, refer to the XCORE documentation.\n",
-  "arg_mode_group_title": "{LBE}Operating modes{X}",
-  "arg_mode_group_desc": "Available execution modes",
-  "arg_web_group_title": "{LBE}Web options{X}",
-  "arg_web_group_desc": "Web mode settings",
-  "arg_setpoint_group_title": "{LBE}Setpoint options{X}",
-  "arg_setpoint_group_desc": "Setpoint mode settings",
-  "banner_dialog": "Select an operating mode to start {LGN}X{GN}CORE{X}.\n[ {BE}CLI{X} | {LMA}GUI{X} | {YW}WEB{X} ]\nor use '{LBE}--help{X}' for help."
-}
+  "arg_open_browser_desc": "Browser open on web server host",
 
+  "arg_interface_desc": "Interface variant [{LMA}gui{X}, {BE}cli{X}, {YW}web{X}] for the {LBE}SET{LYW}PO{LMA}INT{X} mode. ({LYW}Default{X}: cli)",
+
+
+  "invalid_interface": "{FAIL} Invalid interface variant: {RD}{interface}{X}"
+}
