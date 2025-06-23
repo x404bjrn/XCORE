@@ -344,8 +344,6 @@ class XCoreShell(cmd.Cmd):
         Diese Methode unterstützt die folgenden Befehle:
         - "create": Erstellen eines neuen Benutzers.
         - "delete": Löschen eines Benutzers.
-        - "login": Anmelden eines Benutzers.
-        - "logout": Abmelden des aktuell angemeldeten Benutzers.
         - "status": Überprüfung, welcher Benutzer aktuell angemeldet ist.
 
         Falls der eingegebene Befehl nicht gültig ist, wird eine Fehlermeldung auf der Konsole ausgegeben.
@@ -354,7 +352,8 @@ class XCoreShell(cmd.Cmd):
         parts = arg.strip().split()
 
         if not parts:
-            print(i18n.t("user.invalid_user_command"))
+            print(i18n.t("system.error_invalid_user_command"))
+            print()
             return
 
         command = parts[0]
@@ -374,22 +373,14 @@ class XCoreShell(cmd.Cmd):
                 username, password = args
                 self.db.delete_user(username, password)
 
-        elif command == "login":
-            if len(args) != 2:
-                print("{LMA}Syntax{X}: {LYW}user login{X} <{LBE}benutzername{X}> <{LGN}passwort{X}>".format(**formatter))
-            else:
-                username, password = args
-                self.db.login(username, password)
-
-        elif command == "logout":
-            self.db.logout()
-
         elif command == "status":
             user = self.db.get_user()
             if user:
                 print(i18n.t("database.login_as", user=user))
             else:
                 print(i18n.t("database.no_login_user"))
+
+        # INFO: Hier können weitere Unterbefehle für den 'user' Befehl hinzugefügt werden..
         else:
             print(i18n.t("system.error_invalid_user_command"))
         print()
@@ -399,80 +390,165 @@ class XCoreShell(cmd.Cmd):
         """ Dynamischen Hilfetext für `user` bereitstellen. """
         print(i18n.t("help.user"))
 
-    def do_save_options(self, arg):
+    def do_login(self, arg):
         """
-        Speichert die aktuellen Optionen für das aktuelle Modul in der Datenbank.
-        Die Methode prüft vor dem Speichervorgang, ob ein aktuelles Modul und ein
-        eingeloggter Benutzer vorhanden sind. Falls diese Bedingungen nicht erfüllt sind,
-        wird ein entsprechender Hinweis ausgegeben. Im Erfolgsfall werden die Optionen des
-        Moduls als JSON-String in der Datenbank gespeichert. Tritt ein Fehler während des
-        Speichervorgangs auf, wird dieser behandelt und eine Fehlermeldung
-        ausgegeben.
+        Login für einen Benutzer.
+        Syntax: user_login <name> <passwort>
         """
-        # TODO: Als allgemeinen Befehl mit 'sub args' erstellen (wie bei show und user)
         print()
-        if not self.current_module:
-            print(i18n.t("module.no_module"))
-            return
-
-        if not self.db.get_user():
-            print(i18n.t("database.no_login_user"))
-            return
-
-        designation = f"options::{strip_ansi(self.current_module.name)}"
         try:
+            username, password = arg.split()
+            self.db.login(username, password)
+
+        except ValueError:
+            print("{LMA}Syntax{X}: {LYW}user login{X} "
+                  "<{LBE}benutzername{X}> <{LGN}passwort{X}>".format(
+                    **formatter))
+        print()
+
+    @staticmethod
+    def help_login():
+        """ Dynamischen Hilfetext für `login` bereitstellen. """
+        print(i18n.t("help.login"))
+
+    def do_logout(self, arg):
+        """ Loggt den aktuellen Benutzer aus. """
+        print()
+        self.db.logout()
+        print()
+
+    @staticmethod
+    def help_logout():
+        """ Dynamischen Hilfetext für `logout` bereitstellen. """
+        print(i18n.t("help.logout"))
+
+    def do_save(self, arg):
+        """
+        Verarbeitet den 'save'-Befehl für die aktuelle Instanz. Der Befehl kann je nach
+        Eingabe spezifische Unteroperationen ausführen, wie z. B. das Speichern von
+        Optionseinstellungen einer aktuellen Modulinstanz in einer Datenbank.
+
+        Args:
+            arg (str): Der Eingabeparameter für den 'save'-Befehl. Dieser enthält
+                       die spezifischen Unterbefehle und Optionen,
+                       die verarbeitet werden sollen.
+
+        Raises:
+            KeyError: Kann ausgelöst werden, wenn ein Zugriff auf nicht vorhandene
+                      Schlüssel innerhalb der gespeicherten Optionen erfolgt.
+            ValueError: Kann ausgelöst werden, wenn der JSON-Dump fehlschlägt
+                        oder ungültige Daten verarbeitet werden.
+        """
+        print()
+        parts = arg.strip().split()
+
+        if not parts:
+            print(i18n.t("system.error_invalid_save_command"))
+            print()
+            return
+
+        command = parts[0]
+        #args = parts[1:] <- wenn benötigt kann ent-kommentiert werden..
+
+        if command == "options":
+            if not self.current_module:
+                print(i18n.t("module.no_module"))
+                print()
+                return
+
+            if not self.db.get_user():
+                print(i18n.t("database.no_login_user"))
+                print()
+                return
+
+            designation = f"options::{strip_ansi(self.current_module.name)}"
+            try:
+                import json
+
+                content = json.dumps(self.options)
+                success = self.db.save_content(content, designation=designation)
+                if success:
+                    print(i18n.t("database.options_saved", module=self.current_module.name))
+            except Exception as e:
+                print(i18n.t("database.options_save_failed", e=str(e)))
+
+        # INFO: Hier können weitere Unterbefehle für den 'save' Befehl hinzugefügt werden..
+        else:
+            print(i18n.t("system.error_invalid_save_command"))
+        print()
+
+    @staticmethod
+    def help_save():
+        """ Dynamischen Hilfetext für `save` bereitstellen. """
+        print(i18n.t("help.save"))
+
+    def do_load(self, arg):
+        """
+        Lädt bestimmte Inhalte oder Einstellungen basierend auf dem übergebenen Argument
+        und dem aktuellen Kontext des Systems, wie dem aktuellen Modul und Benutzerdaten.
+        Diese Methode verarbeitet spezifische Unterbefehle, prüft den Status des Systems
+        und interagiert mit einer Datenbank, um gespeicherte Inhalte zu laden.
+
+        Args:
+            arg (str): Der Befehl und optionale Parameter, die verarbeitet werden sollen.
+                       Dieser wird analysiert, um spezifische Operationen wie das Laden
+                       von gespeicherten Optionen durchzuführen.
+
+        Raises:
+            ValueError: Wird möglicherweise intern ausgelöst, wenn bestimmte Inhalte oder
+                        Operationen nicht korrekt verarbeitet werden können
+                        (z. B. fehlerhafte JSON-Daten). Diese Ausnahme wird jedoch
+                        intern behandelt und nicht explizit weitergegeben.
+        """
+        print()
+        parts = arg.strip().split()
+
+        if not parts:
+            print(i18n.t("system.error_invalid_load_command"))
+            print()
+            return
+
+        command = parts[0]
+        #args = parts[1:] <- wenn benötigt kann ent-kommentiert werden..
+
+        if command == "options":
+            if not self.current_module:
+                print(i18n.t("module.no_module"))
+                print()
+                return
+
+            if not self.db.get_user():
+                print(i18n.t("database.no_login_user"))
+                print()
+                return
+
+            designation = f"options::{strip_ansi(self.current_module.name)}"
             import json
 
-            content = json.dumps(self.options)
-            success = self.db.save_content(content, designation=designation)
-            if success:
-                print(i18n.t("database.options_saved", module=self.current_module.name))
-        except Exception as e:
-            print(i18n.t("database.options_save_failed", e=str(e)))
+            for name, content in self.db.load_content(designation_filter=designation):
+                try:
+                    loaded = json.loads(content)
+                    self.options.update(loaded)
+                    print(
+                        i18n.t("database.options_loaded", module=self.current_module.name)
+                    )
+                    print()
+                    return
+                except Exception as e:
+                    print(i18n.t("database.options_load_failed", e=str(e)))
+                    print()
+                    return
+            print(i18n.t("database.no_saved_options", module=self.current_module.name))
+
+        # INFO: Hier können weitere Unterbefehle für den 'load' Befehl hinzugefügt werden..
+        else:
+            print(i18n.t("system.error_invalid_load_command"))
         print()
 
     @staticmethod
-    def help_save_options():
-        """ Dynamischen Hilfetext für `save_options` bereitstellen. """
-        print(i18n.t("help.save_options"))
-
-    def do_load_options(self, arg):
-        """
-        Lädt die Optionen für das aktuell ausgewählte Modul aus der Datenbank und
-        aktualisiert die internen Einstellungen. Gibt entsprechende Meldungen zu
-        den Ladevorgängen aus.
-        """
-        # TODO: Als allgemeinen Befehl mit 'sub args' erstellen (wie bei show und user)
-        print()
-        if not self.current_module:
-            print(i18n.t("module.no_module"))
-            return
-
-        if not self.db.get_user():
-            print(i18n.t("database.no_login_user"))
-            return
-
-        designation = f"options::{strip_ansi(self.current_module.name)}"
-        import json
-
-        for name, content in self.db.load_content(designation_filter=designation):
-            try:
-                loaded = json.loads(content)
-                self.options.update(loaded)
-                print(
-                    i18n.t("database.options_loaded", module=self.current_module.name)
-                )
-                return
-            except Exception as e:
-                print(i18n.t("database.options_load_failed", e=str(e)))
-                return
-        print(i18n.t("database.no_saved_options", module=self.current_module.name))
-        print()
-
-    @staticmethod
-    def help_load_options():
-        """ Dynamischen Hilfetext für `load_options` bereitstellen. """
-        print(i18n.t("help.load_options"))
+    def help_load():
+        """ Dynamischen Hilfetext für `load` bereitstellen. """
+        print(i18n.t("help.load"))
 
     @staticmethod
     def do_exit(arg):

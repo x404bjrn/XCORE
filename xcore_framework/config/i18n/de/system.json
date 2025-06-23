@@ -11,7 +11,10 @@
 
   "error_msg": "\n{FAIL} {LRD}{e}{X}\n",
   "error_unknown_command": "\n{FAIL} Unbekannter Befehl: '{LRD}{line}{X}'\n",
+
   "error_invalid_user_command": "{FAIL} Unbekannter '{LYW}user{X}' Befehl!",
+  "error_invalid_save_command": "{FAIL} Unbekannter '{LYW}save{X}' Befehl!",
+  "error_invalid_load_command": "{FAIL} Unbekannter '{LYW}load{X}' Befehl!",
 
 
   "notice_autocomplete": "\n{NEUTRAL} {YW}Hinweis{X}: Autovervollständigung ist auf diesem System evtl. nicht verfügbar.",
