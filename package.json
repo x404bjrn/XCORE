@@ -11,6 +11,7 @@
     "sync:version": "node scripts/update-setup-version.js"
   },
   "devDependencies": {
+    "sass": "^1.89.2",
     "standard-version": "^9.5.0"
   },
   "dependencies": {

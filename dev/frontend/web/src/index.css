@@ -2,11 +2,4 @@
  Copyright (C) 2025, Xeniorn | x404bjrn
  Lizenziert - siehe LICENSE Datei für Details
  ───────────────────────────────────────────────────────────────────────────── */
-@import '@/styles/base.css';
-@import '@/styles/modal.css';
-@import '@/styles/footer.css';
-@import '@/styles/dashboard.css';
-@import '@/styles/navbar.css';
-@import '@/styles/sidelist.css';
-@import '@/styles/module_details.css';
-@import '@/styles/module_result_display.css';
+@import '@/styles/main.min.css';
