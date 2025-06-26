@@ -2,4 +2,81 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
-// TODO: SCSS (Framework) aufbauen - Feste Variablen definieren für Design
+// TODO
+// Google Font Imports
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter&family=Space+Grotesk&display=swap');
+
+// Farben / Colors ═════════════════════════════════════════════════════════════
+// Designfarben
+$colors: (
+  "background": (
+    dark: #6A6A6A,
+    darker: #232323,
+    darkest: #060606
+  ),
+  "text": (
+    light: #f0f0f0,
+    dark: #0a0a0a,
+  ),
+  "first": (
+    lighter: #0f0,
+    light: #1CDA6A,
+    base: #2db232,
+    dark: #167336,
+    darker: #104d23,
+  ),
+  "second": (
+    light: #ffd640,
+    base: #f1c40f,
+    dark: #a2850b,
+    shadow: #BEA93E68,
+    border: #ffd640
+  ),
+  "third": (
+    light: #6220bb,
+    base: #3F088C,
+    dark: #31076c
+  ),
+  "fourth": (
+    light: #ff7790,
+    base: #EE2F53,
+    dark: #b21335
+  )
+);
+
+// Schriftarten / Fonts ════════════════════════════════════════════════════════
+// Fonts
+$fonts: (
+  "family": (
+    orbitron: 'Orbitron, sans-serif',
+    russo: 'Russo One, sans-serif',
+    wdxl: 'WDXL Lubrifont TC, sans-serif',
+    fira: 'Fira Code, monospace',
+    inter: 'Inter, sans-serif',
+    space: 'Space Grotesk, sans-serif'
+  ),
+  "sizes": (
+    xxl: clamp(3rem, 4vw + 1rem, 5rem),
+    xl: clamp(2rem, 3vw + 1rem, 3rem),
+    lg: clamp(1.5rem, 2vw + 1rem, 2rem),
+    md: clamp(1.2rem, 1.5vw + 0.5rem, 1.5rem),
+    sm: clamp(1rem, 1.2vw + 0.5rem, 1.3rem),
+    xs: clamp(0.9rem, 1vw + 0.4rem, 1.2rem),
+    xxs: clamp(0.8rem, 1vw + 0.3rem, 1rem)
+  )
+);
+
+// Breakpoints ═════════════════════════════════════════════════════════════════
+$breakpoints: (
+  xs: 480px,
+  sm: 768px,
+  md: 1024px,
+  lg: 1280px,
+  xl: 1600px
+);
+
+// Wrapper-Breite ══════════════════════════════════════════════════════════════
+$container-max-width: 1200px;

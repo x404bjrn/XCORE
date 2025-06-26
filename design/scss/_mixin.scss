@@ -1,0 +1,44 @@
+// ════════════════════════════════════════════════════════════════════ XCORE ══
+// Copyright (C) 2025, Xeniorn | x404bjrn
+// Lizenziert - siehe LICENSE Datei für Details
+// ─────────────────────────────────────────────────────────────────────────────
+// TODO
+@use 'sass:map';
+@use "variables" as vars;
+
+// Color (Hilfsfunktion)
+@function color($group, $shade) {
+  @return map.get(map.get(vars.$colors, $group), $shade);
+}
+
+// Element Color (Hilfsfunktion)
+@function element-color($group, $shade) {
+  @return map.get(map.get($colors-elements, $group), $shade);
+}
+
+// Font-Family (Hilfsfunktion)
+@function font($group, $shade) {
+  $font-map: map.get(vars.$fonts, $group);
+  @if $font-map == null {
+    @error "⚠️ Font-Gruppe '#{$group}' wurde in vars.$fonts nicht gefunden.";
+  }
+  @return map.get($font-map, $shade);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Farbzuordnungen nach Elementen/Komponenten
+$colors-elements: (
+  "footer": (
+    shadow: color("second", "shadow"),
+    background: color("background", "darkest"),
+    text: color("text", "light")
+  )
+);
+
+// Mixin ═══════════════════════════════════════════════════════════════════════
+// Media Query
+@mixin respond($breakpoint) {
+  @media (max-width: map.get(vars.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}

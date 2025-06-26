@@ -3,6 +3,7 @@
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
 @use "base" as *;
+@use "layout" as *;
 @use "dashboard" as *;
 @use "footer" as *;
 @use "modal" as *;
@@ -11,3 +12,4 @@
 @use "navbar" as *;
 @use "sidelist" as *;
 @use "variables" as *;
+@use "mixin" as *;

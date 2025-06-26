@@ -1,35 +1,4 @@
-// ════════════════════════════════════════════════════════════════════ XCORE ══
-// Copyright (C) 2025, Xeniorn | x404bjrn
-// Lizenziert - siehe LICENSE Datei für Details
-// ─────────────────────────────────────────────────────────────────────────────
-// Google Schriften / Google Font Importe
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=WDXL+Lubrifont+TC&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter&family=Space+Grotesk&display=swap');
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html, body, #root, .main-container {
-    height: 100%;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /*padding: 2rem;*/
-    background-color: rgba(0, 0, 0, 0.63);
-}
-
+// TODO
 /* Listbox (Dropdown / Select) */
 .select {
   select {
@@ -51,19 +20,6 @@ main {
 //  Responsive Design
 // ─────────────────────────────────────────────────────────────────────────────
 @media (max-width: 768px) {
-  // Grundlayout zurücksetzen
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: scroll;
-  }
-
-  main {
-      background-color: rgb(11, 13, 11);
-  }
-
   // Dashboard-Layout zurücksetzen
   .dashboard-layout {
     height: auto !important;

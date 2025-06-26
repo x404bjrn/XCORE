@@ -2,46 +2,51 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
+@use "variables" as *;
+@use "mixin" as *;
+// TODO
 footer {
-    background-color: #060606;
-    box-shadow: -1px 10px 22px 17px rgba(190, 169, 62, 0.41);
-    font-family: "Orbitron", sans-serif;
-    font-size: 0.875rem;
-    color: #eee;
-    text-align: center;
-    padding: 1rem;
-    border-top: 1px solid #dbc247;
+  background-color: element-color(footer, background);
+  color: element-color(footer, text);
+  box-shadow: -1px 10px 22px 17px element-color(footer, shadow);
+  font-family: font("family", "orbitron");
+  font-size: font("sizes", "xxs");
+  text-align: center;
+  padding: 1rem;
+  border-top: 1px solid color("second", "border");
 
-    .list {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
+
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .list-item {
+    margin: 0;
+
+    .link {
+      color: #6a6a6a;
+      text-decoration: none;
+      margin: 10px;
+
+      &:hover {
+        color: #1CDA6A;
+        text-decoration: none;
+      }
     }
 
-    .list-item {
-        margin: 0;
+    .link-green {
+      color: #1CDA6A;
+      text-decoration: none;
 
-        .link {
-            color: #6a6a6a;
-            text-decoration: none;
-            margin: 10px;
-
-            &:hover {
-                color: #1CDA6A;
-                text-decoration: none;
-            }
-        }
-
-        .link-green {
-            color: #1CDA6A;
-            text-decoration: none;
-
-            &:hover {
-                color: #1CDA6A;
-                text-decoration: none;
-            }
-        }
+      &:hover {
+        color: #1CDA6A;
+        text-decoration: none;
+      }
     }
+  }
 }

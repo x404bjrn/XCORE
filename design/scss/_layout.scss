@@ -1,0 +1,74 @@
+// ════════════════════════════════════════════════════════════════════ XCORE ══
+// Copyright (C) 2025, Xeniorn | x404bjrn
+// Lizenziert - siehe LICENSE Datei für Details
+// ─────────────────────────────────────────────────────────────────────────────
+// TODO
+@use "variables" as *;
+@use "mixin" as *;
+
+// Global 'Reset'
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Base Layouts ════════════════════════════════════════════════════════════════
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: color("background", darker);
+  color: color("text", light);
+
+  @include respond(sm) {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: scroll;
+  }
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// Main Container - Ist aufgeteilt in 'Main' und 'Footer' Bereich
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  padding: 1rem;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  @include respond(sm) {
+    background-color: rgb(11, 13, 11);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Wrapper für max. Breite
+.wrapper {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+// Grid Container
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+}
