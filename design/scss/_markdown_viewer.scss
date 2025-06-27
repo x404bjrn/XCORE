@@ -1,0 +1,118 @@
+// ════════════════════════════════════════════════════════════════════ XCORE ══
+// Copyright (C) 2025, Xeniorn | x404bjrn
+// Lizenziert - siehe LICENSE Datei für Details
+// ─────────────────────────────────────────────────────────────────────────────
+@use "variables" as *;
+@use "mixin" as *;
+
+.markdown {
+  padding: 1rem;
+  max-width: $markdown-max-width;
+  margin: 0 auto;
+  font-family: elements("markdown-viewer", font-family);
+  font-size: elements("markdown-viewer", font-size);
+  line-height: elements("markdown-viewer", height-line);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: elements("markdown-viewer", color-text);
+
+  h1, h2, h3 {
+    margin-top: 2rem;
+    line-height: elements("markdown-viewer", height-line-title);
+    color: elements("markdown-viewer", color-title);
+  }
+
+  h1 { font-size: elements("markdown-viewer", font-size-title-h1); }
+  h2 { font-size: elements("markdown-viewer", font-size-title-h2); }
+  h3 { font-size: elements("markdown-viewer", font-size-title-h3); }
+
+  p {
+    margin: 1rem 0;
+  }
+
+  a {
+    color: elements("markdown-viewer", color-link);
+    text-decoration: underline;
+  }
+
+  code, pre {
+    background: #1e1e1e;
+    color: elements("markdown-viewer", color-text);
+    font-size: 0.95em;
+    border-radius: 4px;
+  }
+
+  code {
+    padding: 0.2em 0.4em;
+    word-break: break-word;
+  }
+
+  pre {
+    overflow-x: auto;
+    padding: 1em;
+    margin: 1rem 0;
+    border-radius: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: elements("markdown-viewer", font-size-table);
+
+    th, td {
+      border: 1px solid elements("markdown-viewer", color-table-border);
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: elements("markdown-viewer", color-table-header);
+      color: elements("markdown-viewer", color-table-header-text);
+    }
+
+    tr:nth-child(even) {
+      background-color: elements("markdown-viewer", color-table-background-row);
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1rem 0;
+    display: block;
+  }
+
+  blockquote {
+    border-left: 4px solid elements("markdown-viewer", color-blockquote-border);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    color: elements("markdown-viewer", color-blockquote-text);
+    font-style: italic;
+  }
+
+  ul, ol {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  // Responsive Darstellung
+  @include respond(sm) {
+    padding: 0.8rem;
+    font-size: font("size", "sm");
+
+    h1 { font-size: font("size", "sm"); }
+    h2 { font-size: font("size", "xs"); }
+    h3 { font-size: font("size", "xxs"); }
+
+    code, pre,
+    table, th, td {
+      font-size: font("size", "sm");
+    }
+  }
+}

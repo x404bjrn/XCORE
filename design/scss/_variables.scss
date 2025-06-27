@@ -2,7 +2,6 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
-// TODO
 // Google Font Imports
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
@@ -15,7 +14,10 @@ $colors: (
   "background": (
     dark: #6A6A6A,
     darker: #232323,
-    darkest: #060606
+    darkest: #060606,
+    light: #9b9b9b,
+    lighter: #c5c5c5,
+    lightest: #ffffff,
   ),
   "text": (
     light: #f0f0f0,
@@ -51,14 +53,14 @@ $colors: (
 // Fonts
 $fonts: (
   "family": (
-    orbitron: 'Orbitron, sans-serif',
-    russo: 'Russo One, sans-serif',
-    wdxl: 'WDXL Lubrifont TC, sans-serif',
-    fira: 'Fira Code, monospace',
-    inter: 'Inter, sans-serif',
-    space: 'Space Grotesk, sans-serif'
+    orbitron: (Orbitron, sans-serif),
+    russo: (Russo One, sans-serif),
+    wdxl: (WDXL Lubrifont TC, sans-serif),
+    fira: (Fira Code, monospace),
+    inter: (Inter, sans-serif),
+    space: (Space Grotesk, sans-serif)
   ),
-  "sizes": (
+  "size": (
     xxl: clamp(3rem, 4vw + 1rem, 5rem),
     xl: clamp(2rem, 3vw + 1rem, 3rem),
     lg: clamp(1.5rem, 2vw + 1rem, 2rem),
@@ -80,3 +82,4 @@ $breakpoints: (
 
 // Wrapper-Breite ══════════════════════════════════════════════════════════════
 $container-max-width: 1200px;
+$markdown-max-width: 800px;

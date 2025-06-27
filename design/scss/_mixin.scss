@@ -2,7 +2,6 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
-// TODO
 @use 'sass:map';
 @use "variables" as vars;
 
@@ -11,27 +10,58 @@
   @return map.get(map.get(vars.$colors, $group), $shade);
 }
 
-// Element Color (Hilfsfunktion)
-@function element-color($group, $shade) {
-  @return map.get(map.get($colors-elements, $group), $shade);
+// 'Elemente/Komponente' (Hilfsfunktion)
+@function elements($group, $shade) {
+  @return map.get(map.get($elements, $group), $shade);
 }
 
 // Font-Family (Hilfsfunktion)
 @function font($group, $shade) {
   $font-map: map.get(vars.$fonts, $group);
   @if $font-map == null {
-    @error "⚠️ Font-Gruppe '#{$group}' wurde in vars.$fonts nicht gefunden.";
+    @error "[!] Font-Gruppe '#{$group}' wurde in vars.$fonts nicht gefunden.";
   }
   @return map.get($font-map, $shade);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Farbzuordnungen nach Elementen/Komponenten
-$colors-elements: (
+// Elemente/Komponenten konfigurationen
+// ─────────────────────────────────────────────────────────────────────────────S
+// Basis Übersicht zum schnellen Konfigurieren der Elemente/Komponenten.
+// Hinweis:
+// Für detailliertere Konfigurationen _*.scss Datei des Element bearbeiten
+$elements: (
   "footer": (
-    shadow: color("second", "shadow"),
-    background: color("background", "darkest"),
-    text: color("text", "light")
+    color-shadow: color("second", "shadow"),
+    color-background: color("background", "darkest"),
+    color-text: color("text", "light"),
+    color-border: color("second", "border"),
+    color-link: color("background", "dark"),
+    color-link-green: color("first", "light"),
+    color-link-hover: color("first", "lighter"),
+    margin-link: 6px,
+    font-family: font("family", "orbitron"),
+    font-size: font("size", "xxs"),
+    thickness-border: 1px,
+  ),
+  "markdown-viewer": (
+    color-text: color("text", "light"),
+    color-title: color("text", "light"),
+    color-link: color("first", "light"),
+    color-table-border: color("background", "dark"),
+    color-table-text-header: color("text", "lighter"),
+    color-table-background-header: color("background", "darker"),
+    color-table-background-row: color("background", "darkest"),
+    color-blockquote-border: color("third", "light"),
+    color-blockquote-text: color("text", "light"),
+    font-family: font("family", "roboto"),
+    font-size: font("size", "xs"),
+    font-size-table: font("size", "xs"),
+    font-size-title-h1: font("size", "lg"),
+    font-size-title-h2: font("size", "md"),
+    font-size-title-h3: font("size", "sm"),
+    height-line: 1.6,
+    height-line-title: 1.3,
   )
 );
 

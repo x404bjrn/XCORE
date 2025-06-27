@@ -4,18 +4,16 @@
 // ─────────────────────────────────────────────────────────────────────────────
 @use "variables" as *;
 @use "mixin" as *;
-// TODO
+
 footer {
-  background-color: element-color(footer, background);
-  color: element-color(footer, text);
-  box-shadow: -1px 10px 22px 17px element-color(footer, shadow);
-  font-family: font("family", "orbitron");
-  font-size: font("sizes", "xxs");
+  background-color: elements("footer", color-background);
+  color: elements("footer", color-text);
+  box-shadow: -1px 10px 22px 17px elements("footer", color-shadow);
+  font-family: elements("footer", font-family);
+  font-size: elements("footer", font-size);
   text-align: center;
   padding: 1rem;
-  border-top: 1px solid color("second", "border");
-
-
+  border-top: elements("footer", thickness-border) solid elements("footer", color-border);
 
   .list {
     display: flex;
@@ -29,22 +27,22 @@ footer {
     margin: 0;
 
     .link {
-      color: #6a6a6a;
+      color: elements("footer", color-link);
       text-decoration: none;
-      margin: 10px;
+      margin: elements("footer", margin-link);
 
       &:hover {
-        color: #1CDA6A;
+        color: elements("footer", color-link-hover);
         text-decoration: none;
       }
     }
 
     .link-green {
-      color: #1CDA6A;
+      color: elements("footer", color-link-green);
       text-decoration: none;
 
       &:hover {
-        color: #1CDA6A;
+        color: elements("footer", color-link-hover);
         text-decoration: none;
       }
     }
