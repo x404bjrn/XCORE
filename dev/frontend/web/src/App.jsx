@@ -4,9 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import {  Routes, Route } from "react-router-dom";
 import Layout from "@/Layout/Layout";
-import Support from "@/pages/Support";
-import Changelog from "@/pages/Changelog";
-import Documentation from "@/pages/Documentation";
+import MarkdownViewer from "@/components/MarkdownViewer";
 import SignIn from "@/pages/SignIn";
 import SignUp from "@/pages/SignUp";
 import Dashboard from "@/pages/Dashboard";
@@ -18,9 +16,10 @@ function App() {
                 <Route path="/" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/support" element={<Support />} />
-                <Route path="/changelog" element={<Changelog />} />
-                <Route path="/documentation" element={<Documentation />} />
+                <Route path="/contributing" element={<MarkdownViewer fileUrl="/CONTRIBUTING.md" />} />
+                <Route path="/changelog" element={<MarkdownViewer fileUrl="/CHANGELOG.md" />} />
+                <Route path="/documentation" element={<MarkdownViewer fileUrl="/DOCUMENTATION_DE.md" />} />
+                <Route path="/license" element={<MarkdownViewer fileUrl="/LICENSE" />} />
             </Route>
         </Routes>
     );
