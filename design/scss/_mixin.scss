@@ -35,7 +35,7 @@ $elements: (
     color-shadow: color("second", "shadow"),
     color-background: color("background", "darkest"),
     color-text: color("text", "light"),
-    color-border: color("second", "border"),
+    color-border: color("second", "light"),
     color-link: color("background", "dark"),
     color-link-green: color("first", "light"),
     color-link-hover: color("first", "lighter"),
@@ -62,6 +62,91 @@ $elements: (
     font-size-title-h3: font("size", "sm"),
     height-line: 1.6,
     height-line-title: 1.3,
+  ),
+  "modal": (
+    thickness-border: 2px,
+    thickness-border-button-input: 2px,
+    radius-border: 12px,
+    radius-border-button: 6px,
+    radius-border-input: 0.25rem,
+    color-hover-zoom: #27F26E7F,
+    color-text: color("text", "light"),
+    color-text-link: color("second", "light"),
+    color-border: color("background", "dark"),
+    color-border-button-input: color("background", "light"),
+    color-border-input-focus: color("first", "base"),
+    color-background: color("dark", "first"),
+    color-shadow: color("dark", "second"),
+    color-button: color("first", "dark"),
+    color-button-hover: color("first", "light"),
+    color-button-border-hover: color("second", "light"),
+    color-input: color("background", "lightest"),
+    color-input-focus: color("second", "lightest"),
+    font-family: font("family", "russo"),
+    font-family-button: font("family", "orbitron"),
+    font-family-link: font("family", "orbitron"),
+    font-size-title-h1: font("size", "lg"),
+    font-size-button-input: font("size", "xxs"),
+    font-size-link: font("size", "xxs"),
+    width-logo: 130px,
+    width-logo-xl: 250px,
+  ),
+  "navbar": (
+    thickness-border: 1px,
+    color-background: color("background", "darkest"),
+    color-text: color("text", "light"),
+    color-shadow: color("second", "shadow"),
+    color-button-hover: color("fourth", "base"),
+    color-button-border-hover: color("second", "light"),
+    color-border: color("second", "light"),
+    font-family-button: font("family", "orbitron"),
+    font-size-button: font("size", "xxs"),
+  ),
+  "dashboard": (
+    thickness-border-right-sidelist-wrapper: 2px,
+    margin-top-content-area: 50px,
+    width-sidelist-wrapper: 250px,
+    color-background-sidelist-wrapper: color("background", "dark"),
+    color-border-right-sidelist-wrapper: color("dark", "second"),
+    color-background-select: color("background", "lightest"),
+    color-border-select: color("background", "lighter"),
+    color-border-focus-select: color("background", "darker"),
+    font-size-select: font("size", "xxs"),
+  ),
+  "sidelist": (
+    thickness-border-module-item: 2px,
+    radius-border-module-item: 3px,
+    color-background: color("dark", "third"),
+    color-background-module-item: color("third", "light"),
+    color-border-module-item: color("second", "light"),
+    color-text: color("text", "light"),
+    color-background-hover: color("third", "base"),
+    color-background-hover-item-link: color("second", "light"),
+    color-background-hover-module-item: color("second", "light"),
+    color-text-hover-module-item: black,
+    color-border-hover-module-item: black,
+    color-text-hover-item-link: color("third", "base"),
+    color-background-active-item-link: color("third", "base"),
+    distances: font("size", "md"),
+    font-family-title-h1: font("family", "orbitron"),
+    font-family-menu-item: font("family", "inter"),
+    font-size-title-h1: font("size", "sm"),
+    font-size-menu-item: font("size", "xs"),
+    font-size-module-item: font("size", "xxs"),
+  ),
+  "module-details": (
+    radius-border: 10px,
+    color-text: color("text", "light"),
+    color-text-title-h2: color("second", "light"),
+    color-background: color("third", "base"),
+    color-border: color("first", "light"),
+    color-background-col-parameter: #2c1a3f,
+    color-background-col-description: #1f2a3f,
+    color-background-col-value: #1a3f2c,
+    font-size-title-h2: font("size", "lg"),
+    font-size-description: font("size", "xs"),
+    font-size-meta-info: font("size", "xxs"),
+    font-size-options-table: font("size", "xxs"),
   )
 );
 
@@ -70,5 +155,16 @@ $elements: (
 @mixin respond($breakpoint) {
   @media (max-width: map.get(vars.$breakpoints, $breakpoint)) {
     @content;
+  }
+}
+
+// Hover Zoom Effekt (Modals)
+@mixin hover-zoom($shadow-color: color("dark", "second"), $border-color: color("second", "light")) {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px $shadow-color;
+    transform: scale(1.05);
+    border: 2px solid $border-color;
   }
 }

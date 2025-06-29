@@ -2,138 +2,131 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
-// TODO
+@use "variables" as *;
+@use "mixin" as *;
+
 .modal {
-    border: 2px solid gray;
-    border-radius: 12px;
-    background-color: #0B0D0B;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.50);
-    padding: 2rem;
-    max-width: 400px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 40px;
-}
+  border: elements("modal", "thickness-border") solid elements("modal", "color-border");
+  border-radius: elements("modal", "radius-border");
+  background-color: elements("modal", "color-background");
+  box-shadow: 0 4px 8px elements("modal", "color-shadow");
+  padding: 2rem;
+  max-width: $modal-max-width;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
 
-.logo-container {
-    margin-bottom: 20px;
-
-    .logo {
-        width: 130px;
-        height: auto;
-    }
-}
-
-.logo-container-xl {
-    margin-bottom: 20px;
-
-    .logo {
-        width: 250px;
-        height: auto;
-    }
-}
-
-.modal h1 {
-    font-family: "Russo One", sans-serif;
-    font-size: 2rem;
+  h1 {
+    font-family: elements("modal", "font-family");
+    font-size: elements("modal", "font-size-title-h1");
     font-weight: bold;
     margin-bottom: 1.5rem;
-    color: #F8F9FAFF;
+    color: elements("modal", "color-text");
     text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  input,
+  button {
+    padding: 0.75rem;
+    font-size: elements("modal", "font-size-button-input");
+    border-radius: elements("modal", "radius-border-button");
+    border: elements("modal", "thickness-border-button-input") solid elements("modal", "color-border-button-input");
+  }
+
+  button {
+    font-family: elements("modal", "font-family-button");
+    display: block;
+    width: 100%;
+    background-color: elements("modal", "color-button");
+    color: elements("modal", "color-text");
+    text-align: center;
+    font-weight: 600;
+    font-size: elements("modal", "font-size-button-input");
+    cursor: pointer;
+    border: elements("modal", "thickness-border-button-input") solid elements("modal", "color-button");
+    transition: background-color, border-color 0.3s ease;
+
+    &:hover {
+      background-color: elements("modal", "color-button-hover");
+      border-color: elements("modal", "color-button-border-hover");
+    }
+  }
+
+  .link {
+    margin-top: 1rem;
+    text-align: center;
+
+    a {
+      color: elements("modal", "color-text-link");
+      text-decoration: none;
+      font-size: elements("modal", "font-size-link");
+      font-family: elements("modal", "font-family-link");
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
-.modal h2 {
-    margin-bottom: 1rem;
+.logo {
+  height: auto;
+}
+
+.logo-container,
+.logo-container-xl {
+  margin-bottom: 20px;
+
+  .logo {
+    width: elements("modal", "width-logo");
+  }
+}
+
+.logo-container-xl .logo {
+  width: elements("modal", "width-logo-xl");
 }
 
 .form-group {
   margin-bottom: 1rem;
 
-    label {
-        font-family: "Russo One", sans-serif;
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        color: white;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 0.25rem;
-        background-color: #f9f9f9;
-
-        &:focus {
-            outline: none;
-            border-color: #2db232;
-            background-color: #fff;
-        }
-    }
-}
-
-.modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-}
-
-.modal input,
-.modal button {
-    padding: 0.75rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.modal button {
-    font-family: "Orbitron", sans-serif;
+  label {
+    font-family: elements("modal", "font-family");
     display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: elements("modal", "color-text");
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
-    background-color: #167336;
-    color: white;
-    text-align: center;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: 2px solid #167336;
-    transition: background-color, border-color 0.3s ease;
+    padding: 0.5rem;
+    border: elements("modal", "thickness-border-button-input") solid elements("modal", "color-border-button-input");
+    border-radius: elements("modal", "radius-border-button");
+    background-color: elements("modal", "color-input");
 
-    &:hover {
-        background-color: #21BF58;
-        border-color: #dbc247;
+    &:focus {
+      outline: none;
+      border-color: elements("modal", "color-border-input-focus");
+      background-color: elements("modal", "color-input-focus");
     }
-}
-
-.modal .link {
-    margin-top: 1rem;
-    text-align: center;
-
-    a {
-        color: #dbc247;
-        text-decoration: none;
-        font-size: 0.875rem;
-        font-family: "Orbitron", sans-serif;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+  }
 }
 
 .hover-zoom {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-        box-shadow: 0 4px 12px rgba(39,242,110, 0.50);
-        transform: scale(1.05);
-        border: 2px solid #dbc247;
-    }
+    @include hover-zoom(elements("modal", "color-hover-zoom"));
 }

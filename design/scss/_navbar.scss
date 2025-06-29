@@ -2,16 +2,19 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
-// TODO
+@use "variables" as *;
+@use "mixin" as *;
+
 .navbar {
-  background-color: #060606FF;
-  color: #fff;
+  background-color: elements("navbar", "color-background");
+  color: elements("navbar", "color-text");
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 20;
-  box-shadow: 0 2px 4px rgba(219, 194, 71, 0.73);
+  box-shadow: 0 2px 4px elements("navbar", "color-shadow");
+  border-bottom: elements("navbar", "thickness-border") solid elements("navbar", "color-border");
 
   .navbar-container {
     display: flex;
@@ -28,13 +31,15 @@
       padding: 10px;
       text-decoration: none;
       border-radius: 0.25rem;
-      color: white;
+      color: elements("navbar", "color-text");
       border: 1px solid rgba(219, 194, 71, 0);
       transition: background-color, border 0.3s;
+      font-size: elements("navbar", "font-size-button");
+      font-family: elements("navbar", "font-family-button");
 
       &:hover {
-        background-color: #EE2F53;
-        border: 1px solid #dbc247;
+        background-color: elements("navbar", "color-button-hover");
+        border: 1px solid elements("navbar", "color-button-border-hover");
       }
     }
   }
@@ -50,12 +55,12 @@
 
       .navbar-link {
         text-decoration: none;
-        color: white;
+        color: elements("navbar", "color-text");
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
 
         &:hover {
-          background-color: #dbc247;
+          background-color: elements("navbar", "color-button-hover");
         }
       }
     }

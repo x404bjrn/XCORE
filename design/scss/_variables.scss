@@ -23,6 +23,11 @@ $colors: (
     light: #f0f0f0,
     dark: #0a0a0a,
   ),
+  "dark": (
+    first: #0B0D0B,
+    second: #0000007F,
+    third: #3f3f3f,
+  ),
   "first": (
     lighter: #0f0,
     light: #1CDA6A,
@@ -31,11 +36,11 @@ $colors: (
     darker: #104d23,
   ),
   "second": (
+    lightest: #fff9c7,
     light: #ffd640,
     base: #f1c40f,
     dark: #a2850b,
-    shadow: #BEA93E68,
-    border: #ffd640
+    shadow: #BEA93E68
   ),
   "third": (
     light: #6220bb,
@@ -83,3 +88,4 @@ $breakpoints: (
 // Wrapper-Breite ══════════════════════════════════════════════════════════════
 $container-max-width: 1200px;
 $markdown-max-width: 800px;
+$modal-max-width: 400px;
