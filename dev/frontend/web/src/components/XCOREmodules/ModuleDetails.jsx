@@ -9,8 +9,8 @@ const renderOptionWidget = (key, opt, value, setParams) => {
   const handleChange = (e) => {
     setParams((prev) => ({ ...prev, [key]: e.target.value }));
   };
-
   const widgetType = opt.widget_type || "entry";
+
 
   switch (widgetType) {
     case "checkbox":
@@ -84,6 +84,8 @@ const renderOptionWidget = (key, opt, value, setParams) => {
   }
 };
 
+const tableHeaders = ["Parameter", "Beschreibung", "Wert"];
+
 const ModuleDetails = ({ meta, params, setParams, onRun }) => (
   <div className="module-container">
     <div className="module-header">
@@ -96,7 +98,6 @@ const ModuleDetails = ({ meta, params, setParams, onRun }) => (
     </div>
 
     <div className="options-table">
-      <h3>Optionen</h3>
       <table>
         <thead>
           <tr>
@@ -108,9 +109,11 @@ const ModuleDetails = ({ meta, params, setParams, onRun }) => (
         <tbody>
           {Object.entries(meta.options).map(([key, opt]) => (
             <tr key={key}>
-              <td><code>{key}</code></td>
-              <td>{opt.desc}</td>
-              <td>{renderOptionWidget(key, opt, params[key] ?? opt.default, setParams)}</td>
+              <td data-label={tableHeaders[0]}><code>{key}</code></td>
+              <td data-label={tableHeaders[1]}>{opt.desc}</td>
+              <td data-label={tableHeaders[2]}>
+                {renderOptionWidget(key, opt, params[key] ?? opt.default, setParams)}
+              </td>
             </tr>
           ))}
         </tbody>
