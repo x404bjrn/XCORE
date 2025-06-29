@@ -20,7 +20,6 @@
 
     .sidelist-wrapper {
       width: elements("dashboard", "width-sidelist-wrapper");
-      //overflow-y: auto;
       background-color: elements("dashboard", "color-background-sidelist-wrapper");
       border-right: elements("dashboard", "thickness-border-right-sidelist-wrapper") solid elements("dashboard", "color-border-right-sidelist-wrapper");
     }

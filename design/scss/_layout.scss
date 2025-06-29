@@ -71,3 +71,78 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: clamp(1rem, 2vw, 2rem);
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  Responsive Design (Mobile)
+@include respond(sm) {
+  // Dashboard-Layout zurücksetzen
+  .dashboard-layout {
+    height: auto !important;
+  }
+
+  // Modulmodus sichtbar machen
+  .module-wrapper {
+    width: 100vw;
+    padding: 1rem;
+    margin: 0;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  // Modal-Formulare (Login & Signup) großflächig darstellen
+  .modal {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 500px;
+    background: #0B0D0B;
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 100vw;
+  }
+
+  .logo-container {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .logo-container .logo {
+    width: 150px !important;
+    margin-bottom: 1rem;
+  }
+
+  .hover-zoom {
+    transform: none !important;
+    box-shadow: none !important;
+    transition: none !important;
+    border: none !important;
+  }
+
+  .hover-zoom:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  // Alles andere ausblenden
+  header,
+  .sidelist,
+  .sidelist-wrapper,
+  .modal-form:not(.signup):not(.login),
+  .main-form:not(.module-wrapper),
+  .page-container,
+  .container,
+  .row,
+  .col,
+  .footer-x .list {
+    display: none !important;
+  }
+}

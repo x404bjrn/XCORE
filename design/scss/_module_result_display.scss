@@ -2,23 +2,24 @@
 // Copyright (C) 2025, Xeniorn | x404bjrn
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
+@use "variables" as *;
+@use "mixin" as *;
 
-
-
-// TODO
 .result-display {
   margin-top: 2rem;
-  background: #111;
-  color: #0f0;
-  border: 2px solid #1CDA6A;
+  background: elements("result-display", "color-background");
+  color: elements("result-display", "color-text");
+  border: elements("result-display", "thickness-border") solid elements("result-display", "color-border");
   padding: 1rem;
-  border-radius: 8px;
-  font-family: monospace;
+  border-radius: elements("result-display", "radius-border");
+  font-family: elements("result-display", "font-family");
   position: relative;
+  font-size: elements("result-display", "font-size");
 
   h2 {
-    font-family: "Orbitron", sans-serif;
-    color: #c6c6c6;
+    font-family: elements("result-display", "font-family-title-h2");
+    color: elements("result-display", "color-title-h2");
+    font-size: elements("result-display", "font-size-title-h2");
   }
 }
 
@@ -26,16 +27,16 @@
   position: absolute;
   border: none;
   padding: 5px;
-  border-radius: 10px;
+  border-radius: elements("result-display", "radius-border-button");
   top: 1rem;
   right: 1rem;
-  background: #111;
-  color: #0f0;
+  background: elements("result-display", "color-background-button");
+  color: elements("result-display", "color-text");
   cursor: pointer;
-  font-size: 1rem;
+  font-size: elements("result-display", "font-size-button");
   transition: background 0.3s;
 
   &:hover {
-    background: #DBC247FF;
+    background: elements("result-display", "color-background-hover-button");
   }
 }

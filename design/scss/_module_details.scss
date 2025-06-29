@@ -6,40 +6,40 @@
 @use "mixin" as *;
 
 .module-container {
-    background: elements("module-details", "color-background");
-    padding: 1.5rem;
-    border-radius: elements("module-details", "radius-border");
+  background: elements("module-details", "color-background");
+  padding: 1.5rem;
+  border-radius: elements("module-details", "radius-border");
 
-    box-shadow:
-        inset 0 0 15px rgba(0, 0, 0, 0.88),
-        0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.88),
+    0 0 15px rgba(0, 0, 0, 0.5);
 
-    color: elements("module-details", "color-text");
-    border: 3px solid elements("module-details", "color-border");
+  color: elements("module-details", "color-text");
+  border: 3px solid elements("module-details", "color-border");
 }
 
 .module-header h2 {
-    margin: 0 0 1rem;
-    color: elements("module-details", "color-text-title-h2");
-    font-size: elements("module-details", "font-size-title-h2");
+  margin: 0 0 1rem;
+  color: elements("module-details", "color-text-title-h2");
+  font-size: elements("module-details", "font-size-title-h2");
 }
 
 .module-header .description {
-    font-style: italic;
-    margin-bottom: 1rem;
-    font-size: elements("module-details", "font-size-description");
+  font-style: italic;
+  margin-bottom: 1rem;
+  font-size: elements("module-details", "font-size-description");
 }
 
 .meta-info {
-    display: flex;
-    gap: 2rem;
-    font-size: elements("module-details", "font-size-meta-info");
-    opacity: 0.8;
+  display: flex;
+  gap: 2rem;
+  font-size: elements("module-details", "font-size-meta-info");
+  opacity: 0.8;
 }
 
 .options-table {
-    margin-top: 2rem;
-    font-size: elements("module-details", "font-size-options-table");
+  margin-top: 2rem;
+  font-size: elements("module-details", "font-size-options-table");
 }
 
 
@@ -63,67 +63,64 @@
 }
 
 
-
-
-// TODO: Hier wieder ansetzen und Bearbeitung weiterführen..
 .options-table table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 2px solid;
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid elements("module-details", "color-border");
 }
 
 .options-table th,
 .options-table td {
-    padding: 0.75rem;
-    border: 1px solid #dbc247;
-    text-align: left;
+  padding: 0.75rem;
+  border: 1px solid elements("module-details", "color-border");
+  text-align: left;
 
-    input {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 0.25rem;
-        background-color: #1e1e1e;
-        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.88);
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid elements("module-details", "color-border-input");
+    border-radius: 0.25rem;
+    background-color: elements("module-details", "color-background-input");
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.88);
 
-        &:focus {
-            outline: none;
-            border: 2px solid #dbc247;
-            background-color: #167336;
-        }
+    &:focus {
+      outline: none;
+      border: 2px solid elements("module-details", "color-border");
+      color: black;
+      background-color: elements("module-details", "color-background-focus-input");
     }
+  }
 }
 
 .options-table input {
-    width: 100%;
-    padding: 0.3rem;
-    background: #2b2b40;
-    color: #fff;
-    border: 1px solid #444;
-    border-radius: 4px;
+  width: 100%;
+  padding: 0.3rem;
+  color: elements("module-details", "color-text");
+  border: 1px solid elements("module-details", "color-border-input");
+  border-radius: 4px;
 }
 
 .button-module-start {
-    font-family: "Orbitron", sans-serif;
-    display: block;
-    width: 100%;
-    background-color: #167336;
-    color: white;
-    text-align: center;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: 2px solid #DBC247FF;
-    transition: background-color, border-color 0.3s ease;
-    margin-top: 15px;
+  font-family: elements("module-details", "font-family-button");
+  display: block;
+  width: 100%;
+  background-color: elements("module-details", "color-background-button");
+  color: elements("module-details", "color-text");
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: elements("module-details", "radius-border-button");
+  font-weight: 600;
+  font-size: elements("module-details", "font-size-button");
+  cursor: pointer;
+  border: elements("module-details", "thickness-border-button") solid elements("module-details", "color-border-button");
+  transition: background-color, border-color 0.3s ease;
+  margin-top: 15px;
 
-    &:hover {
-        color: black;
-        background-color: #21BF58;
-        border: 2px solid #0B0D0B;
-    }
+  &:hover {
+    color: black;
+    background-color: elements("module-details", "color-background-hover-button");
+    border: elements("module-details", "thickness-border-button") solid elements("module-details", "color-border-hover-button");
+  }
 }
 
 // Responsive Darstellung für Tablet und Mobilgeräte
@@ -146,20 +143,18 @@
     }
 
     thead {
-      display: none; // Tabellenüberschrift ausblenden
+      display: none;
     }
 
     tr {
-      margin-bottom: 2rem; // Abstand zwischen den Einträgen
       padding-bottom: 1rem;
-      border-bottom: 1px dashed #555; // optional visuelle Trennung
     }
 
     td {
       position: relative;
       padding-left: 50%;
       text-align: left;
-      border: 1px solid #dbc247;
+      border: elements("module-details", "thickness-border") solid elements("module-details", "color-border");
       box-sizing: border-box;
 
       &::before {

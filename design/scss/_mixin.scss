@@ -24,9 +24,28 @@
   @return map.get($font-map, $shade);
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// Mixin ═══════════════════════════════════════════════════════════════════════
+// Media Query
+@mixin respond($breakpoint) {
+  @media (max-width: map.get(vars.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// Hover Zoom Effekt (Modals)
+@mixin hover-zoom($shadow-color: color("dark", "second"), $border-color: color("second", "light")) {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px $shadow-color;
+    transform: scale(1.05);
+    border: 2px solid $border-color;
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
 // Elemente/Komponenten konfigurationen
-// ─────────────────────────────────────────────────────────────────────────────S
+// ─────────────────────────────────────────────────────────────────────────────
 // Basis Übersicht zum schnellen Konfigurieren der Elemente/Komponenten.
 // Hinweis:
 // Für detailliertere Konfigurationen _*.scss Datei des Element bearbeiten
@@ -135,36 +154,45 @@ $elements: (
     font-size-module-item: font("size", "xxs"),
   ),
   "module-details": (
+    thickness-border-button: 2px,
+    thickness-border: 1px,
+    radius-border-button: 0.25rem,
     radius-border: 10px,
     color-text: color("text", "light"),
     color-text-title-h2: color("second", "light"),
     color-background: color("third", "base"),
-    color-border: color("first", "light"),
-    color-background-col-parameter: #2c1a3f,
-    color-background-col-description: #1f2a3f,
-    color-background-col-value: #1a3f2c,
+    color-border: color("second", "light"),
+    color-background-col-parameter: color("third", "darker-1"),
+    color-background-col-description: color("third", "darker-2"),
+    color-background-col-value: color("third", "darker-3"),
+    color-background-input: color("background", "darker"),
+    color-border-input: color("background", "lighter"),
+    color-background-focus-input: color("second", "base"),
+    color-background-button: color("first", "dark"),
+    color-background-hover-button: color("first", "light"),
+    color-border-hover-button: color("dark", "first"),
+    color-border-button: color("second", "light"),
+    font-family-button: font("family", "orbitron"),
+    fpnt-size-button: font("size", "xxs"),
     font-size-title-h2: font("size", "lg"),
     font-size-description: font("size", "xs"),
     font-size-meta-info: font("size", "xxs"),
     font-size-options-table: font("size", "xxs"),
-  )
+  ),
+  "result-display": (
+    thickness-border: 2px,
+    radius-border: 8px,
+    radius-border-button: 10px,
+    color-background: color("dark", "first"),
+    color-background-button: color("dark", "second"),
+    color-background-hover-button: color("second", "light"),
+    color-text: color("first", "lighter"),
+    color-border: color("first", "light"),
+    color-title-h2: color("background", "lighter"),
+    font-family: font("family", "fira"),
+    font-family-title-h2: font("family", "orbitron"),
+    font-size-button: font("size", "xxs"),
+    font-size: font("size", "xs"),
+    font-size-title-h2: font("size", "md"),
+  ),
 );
-
-// Mixin ═══════════════════════════════════════════════════════════════════════
-// Media Query
-@mixin respond($breakpoint) {
-  @media (max-width: map.get(vars.$breakpoints, $breakpoint)) {
-    @content;
-  }
-}
-
-// Hover Zoom Effekt (Modals)
-@mixin hover-zoom($shadow-color: color("dark", "second"), $border-color: color("second", "light")) {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 4px 12px $shadow-color;
-    transform: scale(1.05);
-    border: 2px solid $border-color;
-  }
-}
