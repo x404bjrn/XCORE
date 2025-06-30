@@ -26,6 +26,22 @@ export default defineConfig(({ command }) => {
           secure: false,
         }
       }
-    }
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              // Beispiel: Jede externe Bibliothek wird in einen eigenen Chunk gepackt
+              return id
+                .toString()
+                .split('node_modules/')[1]
+                .split('/')[0]
+                .toString();
+            }
+          },
+        },
+      },
+    },
   }
 })

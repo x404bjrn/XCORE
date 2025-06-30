@@ -6,6 +6,7 @@ import subprocess
 import os
 import shutil
 
+
 # sucht npx im Systempfad
 NPX_PATH = shutil.which("npx")
 
@@ -56,6 +57,7 @@ def compile_with_dart_sass():
 
     except FileNotFoundError:
         print("[x] Fehler: Stelle sicher, dass Node.js und Dart-Sass (npx sass) installiert sind!")
+
 
 if __name__ == "__main__":
     compile_with_dart_sass()
