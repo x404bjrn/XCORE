@@ -1,0 +1,12 @@
+{
+  "load": "Lädt...",
+
+  "username": "Benutzername",
+  "password": "Passwort",
+  "login": "Anmelden",
+
+  "input_username": "Benutzernamen eingeben",
+  "input_password": "Passwort eingeben",
+
+  "no_account": "Noch kein Konto? Zur Registrierung."
+}

@@ -6,12 +6,14 @@ import {Link, useNavigate} from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import xcore_logo from "@/assets/xcore-logo.svg";
+import { useTranslation } from "react-i18next";
 
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Default: base.json
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,16 +46,16 @@ export default function SignIn() {
       <h1>Login</h1>
       <form onSubmit={handleLogin} method="POST">
         <div className="form-group">
-          <label htmlFor="username">Benutzername</label>
-          <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Benutzernamen eingeben" required/>
+          <label htmlFor="username">{t("username", {}, { ns: "base" })}</label>
+          <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t("input_username", {}, { ns: "base" })} required/>
         </div>
         <div className="form-group">
-          <label htmlFor="password">Passwort</label>
-          <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Passwort eingeben" required/>
+          <label htmlFor="password">{t("password", {}, { ns: "base" })}</label>
+          <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("input_password", {}, { ns: "base" })} required/>
         </div>
-        <button type="submit" className="button">Anmelden</button>
+        <button type="submit" className="button">{t("login", {}, { ns: "base" })}</button>
         <div className="link">
-          <Link to="/sign-up">Noch kein Konto? Zur Registrierung.</Link>
+          <Link to="/sign-up">{t("no_account", {}, { ns: "base" })}</Link>
         </div>
       </form>
     </div>

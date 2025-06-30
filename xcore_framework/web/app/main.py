@@ -2,6 +2,8 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
+import os
+
 from flask import Blueprint, render_template, jsonify, redirect, current_app
 from flask_login import login_required, current_user
 from .models import User
@@ -26,6 +28,25 @@ def index():
         print("-- [ D E B U G - M O D E ] --")
         return redirect("http://localhost:5173/")
     return render_template("index.html")
+
+
+@main.route("/api/config", methods=["GET"])
+def api_config():
+    """
+    Stellt eine API-Endpunkt-Funktion bereit, um Konfigurationseinstellungen aus
+    Umgebungsvariablen zu laden und im JSON-Format zurückzugeben. Diese Funktion
+    ermöglicht es, spezifische Konfigurationswerte wie Sprache und andere
+    Einstellungen dynamisch abzurufen
+
+    Die zurückgegebene JSON-Datenstruktur enthält die folgenden Schlüssel:
+    - 'lang': Die eingestellte Sprache, standardmäßig 'de', wenn nicht festgelegt.
+    - 'other_setting': Eine weitere Konfigurationseinstellung, standardmäßig 'foo',
+      wenn nicht festgelegt.
+    """
+    return jsonify({
+        "lang": os.getenv("VITE_LANG", "de"),
+        "other_setting": os.getenv("VITE_OTHER_SETTING", "foo"),
+    })
 
 
 @main.route("/api/user", methods=["GET"])
