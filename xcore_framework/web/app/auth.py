@@ -69,7 +69,7 @@ def api_logout():
 
 
 @auth.route("/api/register", methods=["POST"])
-def register():
+def api_register():
     """
     Handle die Registrierung eines neuen Benutzers durch die Verarbeitung
     einer HTTP-POST-Anfrage. Überprüft, ob die erforderlichen Daten vorliegen,
@@ -96,7 +96,7 @@ def register():
         return jsonify({"error": "Benutzername bereits vergeben"}), 409
 
     hashed_pw = generate_password_hash(password)
-    new_user = User(username=username, password=hashed_pw)
+    new_user = User(username=username, password=hashed_pw, salt="salt")
     db.session.add(new_user)
     db.session.commit()
 
