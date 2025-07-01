@@ -29,7 +29,7 @@ console.log(`[+] __init__.py aktualisiert: ${newVersion}`);
 
 // Footer.jsx aktualisieren – gezielt nur bei Marker
 let footerContent = fs.readFileSync(footerPath, "utf8");
-const versionRegex = /(\/\* VERSION_AUTO_UPDATE \*\/\s*<Link className="link" to="\/changelog">)v[^\<]+(<\/Link>)/;
+const versionRegex = /({\/\* VERSION_AUTO_UPDATE \*\/}\s*<Link className="link" to="\/changelog">)v[^\<]+(<\/Link>)/;
 
 if (versionRegex.test(footerContent)) {
   footerContent = footerContent.replace(
