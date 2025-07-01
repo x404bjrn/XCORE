@@ -43,10 +43,12 @@ def api_config():
     - 'other_setting': Eine weitere Konfigurationseinstellung, standardmäßig 'foo',
       wenn nicht festgelegt.
     """
-    return jsonify({
-        "lang": os.getenv("SETTING_LANGUAGE", "de"),
-        "other_setting": os.getenv("VITE_OTHER_SETTING", "foo"),
-    })
+    return jsonify(
+        {
+            "lang": os.getenv("SETTING_LANGUAGE", "de"),
+            "other_setting": os.getenv("VITE_OTHER_SETTING", "foo"),
+        }
+    )
 
 
 @main.route("/api/user", methods=["GET"])
