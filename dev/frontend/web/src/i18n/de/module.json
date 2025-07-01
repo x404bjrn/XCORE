@@ -1,3 +1,13 @@
 {
-  "x": "x"
+  "module_details_parameter_th": "Parameter",
+  "module_details_description_th": "Beschreibung",
+  "module_details_value_th": "Wert",
+
+  "btn_module_start": "Modul ausführen",
+
+  "select_module": "Modul wählen..",
+
+  "choose_category": "Kategorie wählen..",
+
+  "result_display_title_h2": "Ergebnis"
 }

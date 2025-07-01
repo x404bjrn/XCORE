@@ -1,0 +1,15 @@
+{
+  "alert_login_failed": "Login Failed!",
+
+  "title_h1": "SignIn",
+
+  "input_label_username": "Username",
+  "input_label_password": "Password",
+
+  "input_placeholder_username": "Enter username",
+  "input_placeholder_password": "Enter password",
+
+  "btn_login": "Login",
+
+  "link_to_register": "Don't have an account yet? Register here."
+}

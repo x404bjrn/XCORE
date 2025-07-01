@@ -8,14 +8,18 @@ import { initReactI18next } from "react-i18next";
 // Übersetzungsdateien importieren
 import deModule from "@/i18n/de/module.json";
 import deBase from "@/i18n/de/base.json";
-import deError from "@/i18n/de/error.json";
+import deSignin from "@/i18n/de/signin.json";
+import deSignup from "@/i18n/de/signup.json";
+import deSidelist from "@/i18n/de/sidelist.json";
 
 import enModule from "@/i18n/en/module.json";
 import enBase from "@/i18n/en/base.json";
-import enError from "@/i18n/en/error.json";
+import enSignin from "@/i18n/en/signin.json";
+import enSignup from "@/i18n/en/signup.json";
+import enSidelist from "@/i18n/en/sidelist.json";
 
 // Lies die Sprache aus der ENV-Variable
-const lang = import.meta.env.VITE_LANG || "de";
+const lang = import.meta.env.SETTING_LANGUAGE || "de";
 
 i18n
   .use(initReactI18next)
@@ -24,18 +28,22 @@ i18n
       de: {
         module: deModule,
         base: deBase,
-        error: deError,
+        signin: deSignin,
+        signup: deSignup,
+        sidelist: deSidelist,
       },
       en: {
         module: enModule,
         base: enBase,
-        error: enError,
+        signin: enSignin,
+        signup: enSignup,
+        sidelist: enSidelist,
       },
     },
     lng: lang,
     fallbackLng: "de",
     // → Namespaces + Standard
-    ns: ["base", "module", "error"],
+    ns: ["module", "base", "signin", "signup", "sidelist"],
     defaultNS: "base",
     interpolation: { escapeValue: false },
   });

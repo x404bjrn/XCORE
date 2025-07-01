@@ -4,13 +4,13 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // TODO: Widgeteinbindung optimieren und Formatierungen updaten
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const renderOptionWidget = (key, opt, value, setParams) => {
   const handleChange = (e) => {
     setParams((prev) => ({ ...prev, [key]: e.target.value }));
   };
   const widgetType = opt.widget_type || "entry";
-
 
   switch (widgetType) {
     case "checkbox":
@@ -84,46 +84,53 @@ const renderOptionWidget = (key, opt, value, setParams) => {
   }
 };
 
-const tableHeaders = ["Parameter", "Beschreibung", "Wert"];
+const ModuleDetails = ({ meta, params, setParams, onRun }) => {
+  const {t} = useTranslation("module");
+  const tableHeaders = [
+    t("module_details_parameter_th"),
+    t("module_details_description_th"),
+    t("module_details_value_th")
+  ];
 
-const ModuleDetails = ({ meta, params, setParams, onRun }) => (
-  <div className="module-container">
-    <div className="module-header">
-      <h2>{meta.name}</h2>
-      <p className="description">{meta.description}</p>
-      <div className="meta-info">
-        <span><strong>Version:</strong> {meta.version}</span>
-        <span><strong>Autor:</strong> {meta.author}</span>
+  return (
+    <div className="module-container">
+      <div className="module-header">
+        <h2>{meta.name}</h2>
+        <p className="description">{meta.description}</p>
+        <div className="meta-info">
+          <span><strong>Version:</strong> {meta.version}</span>
+          <span><strong>Autor:</strong> {meta.author}</span>
+        </div>
       </div>
-    </div>
 
-    <div className="options-table">
-      <table>
-        <thead>
+      <div className="options-table">
+        <table>
+          <thead>
           <tr>
-            <th>Parameter</th>
-            <th>Beschreibung</th>
-            <th>Wert</th>
+            <th>{t("module_details_parameter_th")}</th>
+            <th>{t("module_details_description_th")}</th>
+            <th>{t("module_details_value_th")}</th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           {Object.entries(meta.options).map(([key, opt]) => (
-            <tr key={key}>
-              <td data-label={tableHeaders[0]}><code>{key}</code></td>
-              <td data-label={tableHeaders[1]}>{opt.desc}</td>
-              <td data-label={tableHeaders[2]}>
-                {renderOptionWidget(key, opt, params[key] ?? opt.default, setParams)}
-              </td>
-            </tr>
+              <tr key={key}>
+                <td data-label={tableHeaders[0]}><code>{key}</code></td>
+                <td data-label={tableHeaders[1]}>{opt.desc}</td>
+                <td data-label={tableHeaders[2]}>
+                  {renderOptionWidget(key, opt, params[key] ?? opt.default, setParams)}
+                </td>
+              </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
 
-    <button className="button-module-start" onClick={onRun}>
-      🚀 Modul ausführen
-    </button>
-  </div>
-);
+      <button className="button-module-start" onClick={onRun}>
+        {t("btn_module_start")}
+      </button>
+    </div>
+  );
+};
 
 export default ModuleDetails;

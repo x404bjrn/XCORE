@@ -3,15 +3,18 @@
 // Lizenziert - siehe LICENSE Datei für Details
 // ─────────────────────────────────────────────────────────────────────────────
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Sidelist({ modules, selectedCategory, onModuleSelect }) {
+  const { t } = useTranslation("sidelist");
+
   return (
     <aside className="sidelist">
-        <h1>Modulübersicht</h1>
+        <h1>{t("title_h1")}</h1>
       <ul className="sidelist-menu">
         <li className="sidelist-menu-item">
             <a href="#" onClick={() => onModuleSelect('')} className="sidelist-link">
-              Ansicht zurücksetzen
+              {t("btn_list_reset")}
             </a>
         </li>
         {/* Die Module dynamisch anzeigen */}

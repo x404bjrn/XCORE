@@ -13,7 +13,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { t } = useTranslation(); // Default: base.json
+  const { t } = useTranslation("signin");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ export default function SignIn() {
       );
       navigate("/dashboard");
     } else {
-      alert("Login fehlgeschlagen.");
+      alert(t("alert_login_failed"));
     }
   };
 
@@ -43,19 +43,19 @@ export default function SignIn() {
       <div className="logo-container">
         <img src={xcore_logo} alt="Logo" className="logo" />
       </div>
-      <h1>Login</h1>
+      <h1>{t("title_h1")}</h1>
       <form onSubmit={handleLogin} method="POST">
         <div className="form-group">
-          <label htmlFor="username">{t("username", {}, { ns: "base" })}</label>
-          <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t("input_username", {}, { ns: "base" })} required/>
+          <label htmlFor="username">{t("input_label_username")}</label>
+          <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t("input_placeholder_username")} required/>
         </div>
         <div className="form-group">
-          <label htmlFor="password">{t("password", {}, { ns: "base" })}</label>
-          <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("input_password", {}, { ns: "base" })} required/>
+          <label htmlFor="password">{t("input_label_password")}</label>
+          <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("input_placeholder_password")} required/>
         </div>
-        <button type="submit" className="button">{t("login", {}, { ns: "base" })}</button>
+        <button type="submit" className="button">{t("btn_login")}</button>
         <div className="link">
-          <Link to="/sign-up">{t("no_account", {}, { ns: "base" })}</Link>
+          <Link to="/sign-up">{t("link_to_register")}</Link>
         </div>
       </form>
     </div>

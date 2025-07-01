@@ -44,7 +44,7 @@ def api_config():
       wenn nicht festgelegt.
     """
     return jsonify({
-        "lang": os.getenv("VITE_LANG", "de"),
+        "lang": os.getenv("SETTING_LANGUAGE", "de"),
         "other_setting": os.getenv("VITE_OTHER_SETTING", "foo"),
     })
 

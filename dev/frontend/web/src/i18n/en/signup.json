@@ -1,0 +1,16 @@
+{
+  "alert_register_success": "Registration successful!",
+  "alert_register_failed": "Registration failed!",
+
+  "title_h1": "SignUp",
+
+  "input_label_username": "Username",
+  "input_label_password": "Password",
+
+  "input_placeholder_username": "Enter username",
+  "input_placeholder_password": "Enter password",
+
+  "btn_register": "Register",
+
+  "link_to_login": "Already registered? Log in."
+}

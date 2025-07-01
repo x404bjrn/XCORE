@@ -1,0 +1,15 @@
+{
+  "alert_login_failed": "Login fehlgeschlagen",
+
+  "title_h1": "Anmeldung",
+
+  "input_label_username": "Benutzername",
+  "input_label_password": "Passwort",
+
+  "input_placeholder_username": "Benutzernamen eingeben",
+  "input_placeholder_password": "Passwort eingeben",
+
+  "btn_login": "Anmelden",
+
+  "link_to_register": "Noch kein Konto? Zur Registrierung."
+}
