@@ -3,6 +3,7 @@
 /.idea/
 /.venv
 /xcore_framework/.env
+/xcore_framework/database/
 /build/
 /dist/
 /xcore_framework.egg-info/
@@ -10,4 +11,7 @@
 /.pypirc
 /dev/frontend/web/node_modules
 /dev/frontend/web/package-lock.json
-__pycache__/
+/__pycache__/
+/.pdm-python
+/.mypy_cache
+/.pytest_cache
