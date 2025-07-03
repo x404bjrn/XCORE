@@ -9,6 +9,7 @@
 <p align="center">
     <a href="../LICENSE"><img src="https://img.shields.io/badge/Code-MIT-yellow.svg" alt=""></a>
     <a href="https://pypi.org/project/xcore_framework/"><img src="https://img.shields.io/pypi/v/xcore_framework.svg" alt=""></a>
+    <a href="https://pdm-project.org"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fpdm-project%2F.github%2Fbadge.json" alt=""></a>
     <a href=""><img src="https://img.shields.io/badge/powered%20by-Xeniorn-4770DB" alt=""></a>
     <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/Media-CC%20BY%204.0-lightgrey.svg" alt=""></a>
     <a href="https://github.com/x404bjrn"><img src="https://img.shields.io/badge/written%20by-x404bjrn-8A2BE2" alt=""></a>
