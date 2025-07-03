@@ -31,6 +31,7 @@ dependencies = [
     "pillow~=11.2.1",
     "cryptography~=45.0.4",
     "flask-sqlalchemy~=3.1.1",
+    "click>=8.1.8",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -58,6 +59,32 @@ xcore = "xcore_framework.__main__:main"
 [tool.setuptools]
 packages = ['xcore_framework', 'xcore_framework.config', 'xcore_framework.core', 'xcore_framework.gui', 'xcore_framework.modules', 'xcore_framework.setpoint', 'xcore_framework.web', 'xcore_framework.config.i18n', 'xcore_framework.modules.ai', 'xcore_framework.modules.creative', 'xcore_framework.modules.exploitation', 'xcore_framework.modules.helper', 'xcore_framework.modules.monitor', 'xcore_framework.modules.osint', 'xcore_framework.modules.persistence', 'xcore_framework.modules.scanner', 'xcore_framework.modules.system', 'xcore_framework.modules.template', 'xcore_framework.modules.transfer', 'xcore_framework.modules.utilities', 'xcore_framework.web.app']
 include-package-data = true
+
+[tool.pdm.scripts]
+tests = "tox"
+npm-install-root = "npm install"
+npm-install-frontend = "python scripts/cmd_wrapper.py npm install dev/frontend/web"
+npm-install = { composite = ["npm-install-root", "npm-install-frontend"] }
+version-patch = "npm run version:patch"
+version-minor = "npm run version:minor"
+version-major = "npm run version:major"
+version-alpha = "npm run version:alpha"
+version-beta = "npm run version:beta"
+update-changelog = "npm run changelog"
+sync-version = "npm run sync-version"
+compile-scss = "python scripts/compile_scss.py"
+copy-docs = "python scripts/copy_docs.py"
+build-frontend = "python scripts/build_and_deploy_frontend.py"
+build-xcore-package = "pdm build"
+pypi-upload-test = "pdm publish --repository testpypi"
+pypi-upload = "pdm publish"
+clean-up = "python scripts/clean_up.py"
+build-all = { composite = ["sync-version", "compile-scss", "copy-docs", "build-frontend", "build-xcore-package"] }
+make-release-patch = { composite = ["version-patch", "build-all", "pypi-upload", "clean-up"] }
+make-release-minor = { composite = ["version-minor", "build-all", "pypi-upload", "clean-up"] }
+make-release-major = { composite = ["version-major", "build-all", "pypi-upload", "clean-up"] }
+make-release-alpha = { composite = ["version-alpha", "build-all", "pypi-upload", "clean-up"] }
+make-release-beta = { composite = ["version-beta", "build-all", "pypi-upload", "clean-up"] }
 
 [tool.mypy]
 ignore_missing_imports = true

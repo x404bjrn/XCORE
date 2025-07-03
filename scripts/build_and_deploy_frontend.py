@@ -2,28 +2,32 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
+import os
 import shutil
 import subprocess
 
 from pathlib import Path
 
 
+# Basisverzeichnis festlegen (Projekt-Root-Dir)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
 # Pfade definieren
-frontend_dir = Path("../dev/frontend/web").resolve()
+frontend_dir = Path(f"{BASE_DIR}/dev/frontend/web").resolve()
 dist_dir = frontend_dir / "dist"
-templates_dir = Path("../xcore_framework/web/app/templates").resolve()
-static_dir = Path("../xcore_framework/web/app/static").resolve()
+templates_dir = Path(f"{BASE_DIR}/xcore_framework/web/app/templates").resolve()
+static_dir = Path(f"{BASE_DIR}/xcore_framework/web/app/static").resolve()
 
 
 def run_command(command, cwd):
-    print(f"[*] 🚀 Führe Befehl aus: {command} (im Verzeichnis {cwd})")
+    print(f"[*] Führe Befehl aus: {command} (im Verzeichnis {cwd})")
     result = subprocess.run(command, cwd=cwd, shell=True)
     if result.returncode != 0:
-        raise RuntimeError(f"[!] ❌ Befehl fehlgeschlagen: {command}")
+        raise RuntimeError(f"[!] Befehl fehlgeschlagen: {command}")
 
 
 def clear_directory(path):
-    print(f"[*] 🧹 Leere Verzeichnis: {path}")
+    print(f"[*] Leere Verzeichnis: {path}")
     for item in path.iterdir():
         if item.name == ".gitignore":
             continue
@@ -34,11 +38,11 @@ def clear_directory(path):
 
 
 def copy_dist_files():
-    print("[*] 📁 Kopiere index.html nach Templates...")
+    print("[*] Kopiere index.html nach Templates...")
     index_file = dist_dir / "index.html"
     shutil.copy(index_file, templates_dir / "index.html")
 
-    print("[*] 📁 Kopiere restliche Dateien nach Static...")
+    print("[*] Kopiere restliche Dateien nach Static...")
     for item in dist_dir.iterdir():
         if item.name == "index.html":
             continue
@@ -65,10 +69,10 @@ def main():
     copy_dist_files()
 
     # Schritt 4: dist-Verzeichnis entfernen
-    print(f"[*] 🗑️ Entferne dist-Verzeichnis: {dist_dir}")
+    print(f"[*] Entferne dist-Verzeichnis: {dist_dir}")
     shutil.rmtree(dist_dir)
 
-    print("[+] ✅ Build und Deployment erfolgreich abgeschlossen!")
+    print("[+] Build und Deployment erfolgreich abgeschlossen!")
 
 
 if __name__ == "__main__":

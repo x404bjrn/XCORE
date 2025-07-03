@@ -6,7 +6,7 @@ import os
 import shutil
 
 
-# Basisverzeichnis ermitteln (wo das Skript ausgeführt wird)
+# Basisverzeichnis festlegen (Projekt-Root-Dir)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Zu kopierende Dateien und ihre Pfade relativ zum Basisverzeichnis
