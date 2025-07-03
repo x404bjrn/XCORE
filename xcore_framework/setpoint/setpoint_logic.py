@@ -3,7 +3,9 @@
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
 import os
+
 from dotenv import set_key, load_dotenv
+
 
 ENV_PATH = os.path.join(os.path.dirname(__file__), "..", ".env")
 
@@ -49,4 +51,5 @@ def load_config() -> dict:
         deren zugehörigen Inhalte sind.
     """
     load_dotenv(ENV_PATH)
+
     return {key: os.getenv(key) for key in os.environ if key.isupper()}

@@ -5,7 +5,6 @@
 import os
 import sys
 import argparse
-import webbrowser
 import subprocess
 
 from xcore_framework.core.initializer import initialize
@@ -14,12 +13,6 @@ from xcore_framework.core.commander import start_cli
 from xcore_framework.config.env import DIRECTORY_WEB_INTERFACE_DIR
 from xcore_framework.config.i18n import i18n
 from xcore_framework.config.banner import show_banner
-
-from xcore_framework.setpoint.setpoint_cli import start_setpoint_cli
-from xcore_framework.setpoint.setpoint_gui import start_setpoint_gui
-from xcore_framework.setpoint.setpoint_web import start_setpoint_web
-
-from xcore_framework.gui.gui import start_gui
 
 
 class CustomHelp(argparse.ArgumentParser):
@@ -69,6 +62,7 @@ def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
 
     # Browser öffnen (optional)
     if open_browser:
+        import webbrowser
         webbrowser.open(f"http://{host}:{port}")
     process.wait()
 
@@ -85,6 +79,7 @@ def start_gui_mode():
     """
     Startet die grafische Benutzeroberfläche (GUI) der Anwendung.
     """
+    from xcore_framework.gui.gui import start_gui
     initialize()
     start_gui()
 
@@ -105,15 +100,22 @@ def start_setpoint_mode(interface="cli"):
         Exception: Bei Ausführung einer nicht unterstützten Interfacevariante.
     """
     initialize()
+
     if interface == "cli":
+        from xcore_framework.setpoint.setpoint_cli import start_setpoint_cli
+
         # Startet Setpoint im CLI- / Konsolen-Modus
         start_setpoint_cli()
 
     elif interface == "gui":
+        from xcore_framework.setpoint.setpoint_gui import start_setpoint_gui
+
         # Startet Setpoint im GUI-Modus
         start_setpoint_gui()
 
     elif interface == "web":
+        from xcore_framework.setpoint.setpoint_web import start_setpoint_web
+
         # Startet Setpoint im Web-Modus
         start_setpoint_web()
 

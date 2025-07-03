@@ -3,8 +3,6 @@
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
 # TODO: GUI-Setpoint weiter ausarbeiten (Hiermit nur Basis geschaffen)
-import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
 from dotenv import dotenv_values
 
 from xcore_framework.config.env import DIRECTORY_ENV
@@ -16,6 +14,9 @@ def start_setpoint_gui():
     Startet eine grafische Benutzeroberfläche (GUI) zur Verwaltung von
     Konfigurationswerten in einer .env-Datei.
     """
+    import tkinter as tk
+    from tkinter import filedialog, messagebox, ttk
+
     config = dotenv_values(DIRECTORY_ENV)
 
     def on_entry_select(event=None):
