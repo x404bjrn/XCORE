@@ -5,7 +5,7 @@
 import os
 import sys
 import argparse
-import subprocess
+import platform
 
 from xcore_framework.core.initializer import initialize
 from xcore_framework.core.commander import start_cli
@@ -31,40 +31,30 @@ class CustomHelp(argparse.ArgumentParser):
 
 
 def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
-    """
-    Startet die Web-Schnittstelle unter einem angegebenen Host und Port. Die Methode erlaubt es,
-    den Modus (Debug) zu konfigurieren und optional einen Webbrowser mit der Schnittstellen-URL
-    zu öffnen. Es wird das Flask-Server-Skript ausgeführt, das die API bereitstellt.
-
-    :param host: Die Host-Adresse, unter der der Dienst erreichbar ist.
-    :param port: Der Port, auf dem der Dienst verfügbar ist.
-    :param debug: Aktiviert den Debug-Modus, wenn True.
-    :param open_browser: Öffnet nach dem Start der Schnittstelle einen Webbrowser.
-    :return: Nichts. Der Prozess wird gestartet und gewartet, bis er beendet wird.
-    """
     initialize()
-    run_path = os.path.join(DIRECTORY_WEB_INTERFACE_DIR, "run.py")
-    cmd = [sys.executable, run_path]
 
-    if debug:
-        cmd.append("--debug")
+    if platform.system() == "Windows":
+        from waitress import serve
+        from xcore_framework.web.app import create_app
 
-    if host != "127.0.0.1":
-        cmd.append("--host")
-        cmd.append(host)
+        app = create_app()
 
-    if port != 5000:
-        cmd.append("--port")
-        cmd.append(f"{port}")
+        if debug:
+            # Entwicklermodus (Debug-Mode) mit Flask starten
+            app.run(host=host, port=port, debug=debug, use_reloader=False)
+        else:
+            # Produktiv mit waitress auf dem Windowssystem
+            serve(app, host=host, port=port, threads=4, connection_limit=100)
+    else:
+        # Alternativ (auf anderen OS) mit gunicorn starten
+        import subprocess
 
-    # Starte Flask Server
-    process = subprocess.Popen(cmd)
+        subprocess.run(["gunicorn", "-w", "4", "-b", f"{host}:{port}", "xcore_framework.web.app:create_app()"])
 
     # Browser öffnen (optional)
     if open_browser:
         import webbrowser
         webbrowser.open(f"http://{host}:{port}")
-    process.wait()
 
 
 def start_cli_mode():
