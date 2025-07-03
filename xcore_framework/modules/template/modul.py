@@ -33,6 +33,9 @@ class Module(XCoreModule):
         """
         super().__init__()
 
+        # Logger initialisieren
+        self.init_logging(name=i18n.t("template_modul.modul_name"))
+
     name = i18n.t("template_modul.modul_name")
     description = i18n.t("template_modul.modul_desc")
     author = "Björn Häusermann | x404bjrn"
@@ -107,6 +110,9 @@ class Module(XCoreModule):
         Raises:
             Exception: Wenn ein unerwarteter Fehler während der Modulausführung auftritt.
         """
+        # Modul Logging
+        self.log("Modul gestartet")
+
         # Ausführungsmodus
         self.mode = mode
 
@@ -128,9 +134,15 @@ class Module(XCoreModule):
         except Exception as e:
             msg = i18n.t("template_modul.modul_error", error=e)
             self.feedback([msg])
+
+            # Fehler Logging
+            self.log(msg, level="error")
+
             return {"success": False, "error": msg, "output": [msg]}
 
         # Ergebnis / Abschluss (Modulskript Ende) Bereich
         self.feedback([i18n.t("template_modul.modul_done_message")])
+        self.log("Modul wurde ausgeführt")
+
         print()
         return {"success": True, "output": self.output, "data": self.results}

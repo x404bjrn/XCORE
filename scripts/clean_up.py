@@ -16,7 +16,9 @@ paths_to_check = [
     f"{BASE_DIR}/dist",
     f"{BASE_DIR}/build",
     f"{BASE_DIR}/xcore_framework/.env",
+    f"{BASE_DIR}/xcore_framework/.init.xcore",
     f"{BASE_DIR}/xcore_framework/database",
+    f"{BASE_DIR}/xcore_framework/logs",
     f"{BASE_DIR}/dev/frontend/web/dist"
 ]
 

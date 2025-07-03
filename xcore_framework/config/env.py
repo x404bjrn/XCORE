@@ -64,6 +64,7 @@ def ensure_env_file(path=DOTENV_PATH):
     default_env = [
         # Verzeichnisse
         f"DIRECTORY_FRAMEWORK={BASE_DIR}",
+        f"DIRECTORY_LOGGING={os.path.join(BASE_DIR, 'logs')}",
         f"DIRECTORY_ENV={os.path.join(BASE_DIR, '.env')}",
         f"DIRECTORY_CONFIG={os.path.dirname(os.path.abspath(__file__))}",
         f"DIRECTORY_I18N={os.path.join(BASE_DIR, 'config', 'i18n')}",
@@ -72,6 +73,8 @@ def ensure_env_file(path=DOTENV_PATH):
         f"DIRECTORY_DATABASE={os.path.join(BASE_DIR, 'database')}",
         f"DIRECTORY_GUI={os.path.join(BASE_DIR, 'gui')}",
         f"DIRECTORY_WEB_INTERFACE_DIR={os.path.join(BASE_DIR, 'web')}",
+        # Log-Dateien
+        f"LOG_FILE_XCORE={os.path.join(BASE_DIR, 'logs', 'xcore.log')}",
         # Einstellungen (für benutzernahe Einstellungen)
         f"SETTING_LANGUAGE={locale.getlocale()[0][:2] if locale.getlocale()[0] else 'en'}",
         "SETTING_WEB_INTERFACE_URL=http://0.0.0.0:5000",
@@ -107,6 +110,7 @@ ensure_env_file()
 # Zugriff auf ENV-Variablen
 # Anwendungsverzeichnisse _____________________________________________________
 DIRECTORY_FRAMEWORK = os.getenv("DIRECTORY_FRAMEWORK")
+DIRECTORY_LOGGING = os.getenv("DIRECTORY_LOGGING")
 DIRECTORY_ENV = os.getenv("DIRECTORY_ENV")
 DIRECTORY_CONFIG = os.getenv("DIRECTORY_CONFIG")
 DIRECTORY_I18N = os.getenv("DIRECTORY_I18N")
@@ -115,6 +119,9 @@ DIRECTORY_MODULES = os.getenv("DIRECTORY_MODULES")
 DIRECTORY_DATABASE = os.getenv("DIRECTORY_DATABASE")
 DIRECTORY_GUI = os.getenv("DIRECTORY_GUI")
 DIRECTORY_WEB_INTERFACE_DIR = os.getenv("DIRECTORY_WEB_INTERFACE_DIR")
+
+# Logdatei Pfade ______________________________________________________________
+LOG_FILE_XCORE = os.getenv("LOG_FILE_XCORE")
 
 # Anwendungseinstellungen / Benutzerkonfigurationen ___________________________
 SETTING_LANGUAGE = os.getenv("SETTING_LANGUAGE")

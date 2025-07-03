@@ -15,3 +15,5 @@
 /.pdm-python
 /.mypy_cache
 /.pytest_cache
+/xcore_framework/logs/
+/xcore_framework/.init-xcore

@@ -3,30 +3,78 @@
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
 from xcore_framework.config.formatting import strip_ansi
+from xcore_framework.core.logger import setup_logger
 
 
 class XCoreModule:
     """
-    Eine Basisklasse für die Verwaltung von Modulen im CLI-, GUI- und Web-Modus.
+    Repräsentiert ein Kernmodul mit Logging-, Feedback- und Betriebsmodi-Funktionalitäten.
 
-    Die Klasse stellt Mechanismen bereit, um Ausgaben und Ergebnisdaten je nach
-    Modus (CLI, GUI oder Web) zu verarbeiten und auszugeben. Dabei wird die Ausgabe
-    im Web-Modus entsprechend formatiert, und GUI-Komponenten können angepasst werden.
-    Die Klasse ermöglicht eine flexible Handhabung von Ausgabetypen und stellt die
-    Integration mit verschiedenen Benutzerschnittstellen bereit.
+    Diese Klasse bietet grundlegende Funktionen für Protokollierung und Feedback-Mechanismen
+    basierend auf verschiedenen Betriebsarten (CLI, Web, GUI). Sie dient als Basis, um die
+    Kommunikation zwischen unterschiedlichen Modulen und Benutzerschnittstellen zu verwalten.
 
-    Attribute:
-        - output: Liste der verarbeiteten Ausgaben (nur relevant im Web-Modus).
-        - results: Liste der im Web-Modus gespeicherten Ergebnisdaten.
-        - mode: Modus der Anwendung (z. B. "web", "gui" oder leer für CLI).
-        - console_widget: Referenz auf ein Widget zur Konsolenausgabe im GUI-Modus.
+    Attributes:
+        name (str): Der Name des Moduls zur Identifizierung in den Protokollen.
+        logger: Logger-Instanz für die Protokollierung von Nachrichten.
+        output (list): Liste für die Speicherung der Ausgabe, z. B. für den Web-Modus.
+        results (list): Liste zur Speicherung und Weitergabe von Web-Ergebnissen.
+        mode (str): Betriebsmodus des Moduls ('cli', 'web', 'gui').
+        console_widget: Widget für GUI-Interaktionen zur Anzeige von Ausgaben.
     """
 
     def __init__(self):
+        self.name = None
+        self.logger = None
         self.output = []
         self.results = []
         self.mode = ""
         self.console_widget = None
+
+
+    def init_logging(self, name):
+        """
+        Initialisiert das Logging für das angegebene Modul und erstellt einen Logger.
+
+        Das Modul wird mit einem benannten Logger eingerichtet. Der Logger wird verwendet,
+        um Debugging-Informationen und weitere Log-Einträge für das spezifizierte Modul
+        zu verwalten.
+
+        Args:
+            name: Der Name des Moduls, das geloggt werden soll. Wird zur Identifikation
+                  des Loggers verwendet.
+        """
+        self.name = strip_ansi(name)
+        self.logger = setup_logger(self.name, con_handler=False)
+        self.logger.debug(f"Initialisiere Modul {self.name}")
+
+
+    def log(self, msg, level="info"):
+        """
+        Schreibt eine Protokollnachricht mit dem angegebenen Niveau.
+
+        Die Methode ermöglicht das Protokollieren von Nachrichten auf verschiedenen
+        Protokollstufen, um die Zustände und Ereignisse in der Anwendung festzuhalten.
+
+        Args:
+            msg: Die Nachricht, die protokolliert werden soll.
+            level: Das Protokollstufen-Level für die Nachricht. Standard ist "info".
+        """
+        # ANSI Formatierungen vom String entfernen
+        msg = strip_ansi(msg)
+
+        if level == "debug":
+            self.logger.debug(msg)
+
+        elif level == "warning":
+            self.logger.warning(msg)
+
+        elif level == "error":
+            self.logger.error(msg)
+
+        else:
+            self.logger.info(msg)
+
 
     def feedback(self, output: list = None, result: dict = None):
         """
