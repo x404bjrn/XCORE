@@ -11,7 +11,7 @@ name = "xcore_framework"
 version = "0.1.0a4"
 description = "CLI- und Webframework für modulare Anwendungen mit interaktiver Shell, GUI und Webinterface."
 readme = "README.md"
-requires-python = ">=3.9.2"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [
     { name = "x404bjrn (Björn Häusermann)", email = "void@insomnialegion.xyz" },
@@ -20,7 +20,6 @@ urls = { Homepage = "https://github.com/x404bjrn/XCORE" }
 dependencies = [
     "setuptools~=78.1.0",
     "python-dotenv~=1.1.0",
-    "googletrans~=4.0.0rc1",
     "Flask~=3.1.1",
     "Flask-Login~=0.6.3",
     "Werkzeug~=3.1.3",
@@ -32,13 +31,17 @@ dependencies = [
     "cryptography~=45.0.4",
     "flask-sqlalchemy~=3.1.1",
     "click>=8.1.8",
+    "gunicorn>=23.0.0",
+    "waitress>=3.0.2",
+    "httpx>=0.28.0",
+    "httpcore>=1.0.6",
+    "h11>=0.16.0",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
@@ -62,6 +65,8 @@ include-package-data = true
 
 [tool.pdm.scripts]
 tests = "tox"
+export-req = "pdm export --format requirements --without-hashes -o requirements.txt"
+export-dev-req = "pdm export --dev --format requirements --without-hashes -o requirements-dev.txt"
 npm-install-root = "npm install"
 npm-install-frontend = "python scripts/cmd_wrapper.py npm install dev/frontend/web"
 npm-install = { composite = ["npm-install-root", "npm-install-frontend"] }
