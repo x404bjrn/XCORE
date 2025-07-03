@@ -32,8 +32,10 @@ def test_list_modules_success(client):
     mock_module.name = "Testmodul"
     mock_module.description = "Beschreibung"
 
-    with patch("xcore_framework.web.app.modules.loader") as mock_loader, \
-         patch("xcore_framework.web.app.modules.strip_ansi", side_effect=lambda x: x):
+    with (
+        patch("xcore_framework.web.app.modules.loader") as mock_loader,
+        patch("xcore_framework.web.app.modules.strip_ansi", side_effect=lambda x: x),
+    ):
         mock_loader.search_modules.return_value = ["category1/mod1", "category2/mod2"]
         mock_loader.load_module.side_effect = [mock_module, mock_module]
 
@@ -66,7 +68,10 @@ def test_get_module_meta_found(client):
     for k, v in mod_attrs.items():
         setattr(mock_module, k, v)
 
-    with patch("xcore_framework.web.app.modules.loader") as mock_loader, patch("xcore_framework.web.app.modules.strip_ansi", side_effect=lambda x: x):
+    with (
+        patch("xcore_framework.web.app.modules.loader") as mock_loader,
+        patch("xcore_framework.web.app.modules.strip_ansi", side_effect=lambda x: x),
+    ):
         mock_loader.load_module.return_value = mock_module
         resp = client.get("/api/module/testmod/meta")
         assert resp.status_code == 200

@@ -2,15 +2,12 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
-import os
-import sys
 import argparse
 import platform
 
 from xcore_framework.core.initializer import initialize
 from xcore_framework.core.commander import start_cli
 
-from xcore_framework.config.env import DIRECTORY_WEB_INTERFACE_DIR
 from xcore_framework.config.i18n import i18n
 from xcore_framework.config.banner import show_banner
 
@@ -31,6 +28,21 @@ class CustomHelp(argparse.ArgumentParser):
 
 
 def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
+    """
+    Startet den Webmodus der Anwendung mit verschiedenen Optionen je nach Betriebssystem.
+
+    In Windows-Systemen wird die Anwendung entweder im Entwicklermodus (Debug-Mode) mit Flask
+    oder produktiv mit Waitress gestartet. Auf anderen Betriebssystemen wird die Anwendung
+    mit Gunicorn ausgeführt. Optional kann ein Browser automatisch geöffnet werden, um die
+    Anwendung direkt zu öffnen.
+
+    Args:
+        host (str): Die Host-Adresse, auf der die Anwendung läuft. Standard ist '127.0.0.1'.
+        port (int): Der Port, auf dem die Anwendung verfügbar ist. Standard ist 5000.
+        debug (bool): Ob die Anwendung im Debug-Mode laufen soll. Standard ist True.
+        open_browser (bool): Ob nach dem Start automatisch ein Browser geöffnet werden soll.
+            Standard ist True.
+    """
     initialize()
 
     if platform.system() == "Windows":
@@ -49,11 +61,21 @@ def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
         # Alternativ (auf anderen OS) mit gunicorn starten
         import subprocess
 
-        subprocess.run(["gunicorn", "-w", "4", "-b", f"{host}:{port}", "xcore_framework.web.app:create_app()"])
+        subprocess.run(
+            [
+                "gunicorn",
+                "-w",
+                "4",
+                "-b",
+                f"{host}:{port}",
+                "xcore_framework.web.app:create_app()",
+            ]
+        )
 
     # Browser öffnen (optional)
     if open_browser:
         import webbrowser
+
         webbrowser.open(f"http://{host}:{port}")
 
 
@@ -70,6 +92,7 @@ def start_gui_mode():
     Startet die grafische Benutzeroberfläche (GUI) der Anwendung.
     """
     from xcore_framework.gui.gui import start_gui
+
     initialize()
     start_gui()
 
