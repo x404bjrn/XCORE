@@ -1,0 +1,13 @@
+{
+  "modul_name": "{LGN}scanner/nmap{X}",
+  "modul_desc": "Führt einen Nmap-Portscan mit konfigurierbaren Parametern durch.",
+  "modul_headline": "\n{LBE}NMAP PORT SCANNER{X}\n",
+  "modul_option_target_desc": "Ziel-IP oder Hostname",
+  "modul_option_ports_desc": "Zu scannende Ports (z. B. 1-1000 oder 22,80)",
+  "modul_option_service_detection_desc": "Service-Erkennung (-sV)",
+  "modul_option_os_detection_desc": "OS-Erkennung (-O)",
+  "modul_option_ping_skip_desc": "Ping überspringen (-Pn)",
+  "modul_nmap_binary_not_found": "{FAIL} Nmap wurde nicht gefunden. Bitte stelle sicher, dass es installiert ist.",
+  "modul_nmap_cmd": "\uD83D\uDCE1 Befehl: {cmd}\\n",
+  "modul_error": "FEHLER: {error}"
+}

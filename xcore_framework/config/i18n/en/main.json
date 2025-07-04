@@ -21,7 +21,7 @@
   "start_web_flask": "{NEUTRAL} Flask Dev Server started at http://{LRD}{host}{X}:{LBE}{port}{X} ({GN}Debug mode{X})...",
   "start_web_waitress": "{NEUTRAL} {LGN}XCORE{X} {YW}Web{X}-Interface started at http://{LRD}{host}{X}:{LBE}{port}{X} ...",
   "start_web_gunicorn": "{NEUTRAL} {LGN}XCORE{X} {YW}Web{X}-Interface started with gunicorn at http://{LRD}{host}{X}:{LBE}{port}{X} ...",
-  "web_mode_stop_server": "{NEUTRAL} Press [{LYW}Enter{X}] to {LRD}stop the server{X} ...",
+  "web_mode_stop_server": "{NEUTRAL} Press [{LYW}Enter{X}] to {LRD}stop the server{X} ...\n",
   "web_mode_server_is_stopped": "{NEUTRAL} Server is {LRD}stopping{X}. {LYW}Please wait ...{X}",
   "start_gui_msg": "{NEUTRAL} Start {LMA}GUI{X} mode ...",
   "start_setpoint_msg": "{NEUTRAL} Start {LBE}SET{LYW}PO{LMA}INT{X} with {interface} interface ...",
