@@ -73,8 +73,6 @@ def ensure_env_file(path=DOTENV_PATH):
         f"DIRECTORY_DATABASE={os.path.join(BASE_DIR, 'database')}",
         f"DIRECTORY_GUI={os.path.join(BASE_DIR, 'gui')}",
         f"DIRECTORY_WEB_INTERFACE_DIR={os.path.join(BASE_DIR, 'web')}",
-        # Log-Dateien
-        f"LOG_FILE_XCORE={os.path.join(BASE_DIR, 'logs', 'xcore.log')}",
         # Einstellungen (für benutzernahe Einstellungen)
         f"SETTING_LANGUAGE={locale.getlocale()[0][:2] if locale.getlocale()[0] else 'en'}",
         "SETTING_WEB_INTERFACE_URL=http://0.0.0.0:5000",
@@ -119,9 +117,6 @@ DIRECTORY_MODULES = os.getenv("DIRECTORY_MODULES")
 DIRECTORY_DATABASE = os.getenv("DIRECTORY_DATABASE")
 DIRECTORY_GUI = os.getenv("DIRECTORY_GUI")
 DIRECTORY_WEB_INTERFACE_DIR = os.getenv("DIRECTORY_WEB_INTERFACE_DIR")
-
-# Logdatei Pfade ______________________________________________________________
-LOG_FILE_XCORE = os.getenv("LOG_FILE_XCORE")
 
 # Anwendungseinstellungen / Benutzerkonfigurationen ___________________________
 SETTING_LANGUAGE = os.getenv("SETTING_LANGUAGE")

@@ -17,9 +17,14 @@
 
 
   "start_cli_msg": "{NEUTRAL} Starte {BE}CLI{X}-Modus ...",
-  "start_web_msg": "{NEUTRAL} \uD83D\uDE80 {LGN}XCORE{X} {YW}Web{X}-Interface gestartet auf http://{LRD}{host}{X}:{LBE}{port}{X} ...",
+  "start_web_msg": "{NEUTRAL} \uD83D\uDE80 {LGN}XCORE{X} {YW}Web{X}-Interface wird gestartet ...",
+  "start_web_flask": "{NEUTRAL} Flask-Dev-Server gestartet unter http://{LRD}{host}{X}:{LBE}{port}{X} ({GN}Debug-Modus{X}) ...",
+  "start_web_waitress": "{NEUTRAL} {LGN}XCORE{X} {YW}Web{X}-Interface gestartet unter http://{LRD}{host}{X}:{LBE}{port}{X} ...",
+  "start_web_gunicorn": "{NEUTRAL} {LGN}XCORE{X} {YW}Web{X}-Interface mit gunicorn gestartet unter http://{LRD}{host}{X}:{LBE}{port}{X} ...",
+  "web_mode_stop_server": "{NEUTRAL} Drücke [{LYW}Enter{X}], um den Server zu {LRD}stoppen{X} ...",
+  "web_mode_server_is_stopped": "{NEUTRAL} Server wird {LRD}beendet{X}. {LYW}Bitte warten ...{X}",
   "start_gui_msg": "{NEUTRAL} Starte {LMA}GUI{X}-Modus ...",
-  "start_setpoint_msg": "{NEUTRAL} Starte {LBE}SET{LYW}PO{LMA}INT{X}-Modus mit {interface}-Interface ...",
+  "start_setpoint_msg": "{NEUTRAL} Starte {LBE}SET{LYW}PO{LMA}INT{X}-Modus mit {interface}-Interface...",
 
   "fail_start_cli_msg": "{FAIL} Keine weiteren Optionen erlaubt mit --{BE}cli{X}.",
   "fail_start_web_msg": "{FAIL} --{LYW}interface{X} ist nur mit --{LBE}set{LYW}po{LMA}int{X} erlaubt.",

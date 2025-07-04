@@ -28,55 +28,63 @@ class CustomHelp(argparse.ArgumentParser):
 
 
 def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
-    """
-    Startet den Webmodus der Anwendung mit verschiedenen Optionen je nach Betriebssystem.
+    """"""
+    import threading
+    import sys
+    import time
 
-    In Windows-Systemen wird die Anwendung entweder im Entwicklermodus (Debug-Mode) mit Flask
-    oder produktiv mit Waitress gestartet. Auf anderen Betriebssystemen wird die Anwendung
-    mit Gunicorn ausgeführt. Optional kann ein Browser automatisch geöffnet werden, um die
-    Anwendung direkt zu öffnen.
-
-    Args:
-        host (str): Die Host-Adresse, auf der die Anwendung läuft. Standard ist '127.0.0.1'.
-        port (int): Der Port, auf dem die Anwendung verfügbar ist. Standard ist 5000.
-        debug (bool): Ob die Anwendung im Debug-Mode laufen soll. Standard ist True.
-        open_browser (bool): Ob nach dem Start automatisch ein Browser geöffnet werden soll.
-            Standard ist True.
-    """
     initialize()
 
+    # Windows Betriebssystem
     if platform.system() == "Windows":
-        from waitress import serve
         from xcore_framework.web.app import create_app
-
         app = create_app()
 
         if debug:
-            # Entwicklermodus (Debug-Mode) mit Flask starten
-            app.run(host=host, port=port, debug=debug, use_reloader=False)
+            # Im Debug Modus wird 'Flask' verwendet
+            print(i18n.t("main.start_web_flask", host=host, port=port))
+            app.run(host=host, port=port, debug=True, use_reloader=False)
+
         else:
-            # Produktiv mit waitress auf dem Windowssystem
-            serve(app, host=host, port=port, threads=4, connection_limit=100)
+            # Produktiv 'waitress'
+            from waitress import serve
+
+            def run_server():
+                print(i18n.t("main.start_web_waitress", host=host, port=port))
+                serve(app, host=host, port=port, threads=8, connection_limit=100)
+
+            thread = threading.Thread(target=run_server, daemon=True)
+            thread.start()
+
+            # Optional: Browser öffnen
+            if open_browser:
+                import webbrowser
+                webbrowser.open(f"http://{host}:{port}")
+
+            try:
+                input(i18n.t("main.web_mode_stop_server"))
+            except KeyboardInterrupt:
+                pass
+
+            print(i18n.t("main.web_mode_server_is_stopped"))
+            time.sleep(1)
+            sys.exit(0)
+
     else:
-        # Alternativ (auf anderen OS) mit gunicorn starten
+        # Linux/macOS: gunicorn
         import subprocess
 
-        subprocess.run(
-            [
-                "gunicorn",
-                "-w",
-                "4",
-                "-b",
-                f"{host}:{port}",
-                "xcore_framework.web.app:create_app()",
-            ]
-        )
+        print(i18n.t("main.start_web_gunicorn", host=host, port=port))
+        if open_browser:
+            import webbrowser
+            webbrowser.open(f"http://{host}:{port}")
 
-    # Browser öffnen (optional)
-    if open_browser:
-        import webbrowser
-
-        webbrowser.open(f"http://{host}:{port}")
+        subprocess.run([
+            "gunicorn",
+            "-w", "4",
+            "-b", f"{host}:{port}",
+            "xcore_framework.web.app:create_app()"
+        ])
 
 
 def start_cli_mode():
