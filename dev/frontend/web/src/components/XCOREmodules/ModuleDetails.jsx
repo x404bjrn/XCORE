@@ -75,7 +75,17 @@ const renderOptionWidget = (key, opt, value, setParams) => {
       return (
         <input
           type="file"
-          onChange={(e) => setParams((prev) => ({ ...prev, [key]: e.target.files[0]?.name }))}
+          accept=".txt"
+          onChange={e => {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = ev => {
+                setParams(prev => ({ ...prev, [key]: ev.target.result }));
+              };
+              reader.readAsText(file, "UTF-8");
+            }
+          }}
         />
       );
 
