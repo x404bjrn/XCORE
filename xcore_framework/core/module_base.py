@@ -44,7 +44,7 @@ class XCoreModule:
             name: Der Name des Moduls, das geloggt werden soll. Wird zur Identifikation
                   des Loggers verwendet.
         """
-        self.name = strip_ansi(name)
+        self.name = strip_ansi(name).replace("/", "_")
         self.logger = setup_logger(self.name, con_handler=False)
         self.logger.debug(f"Initialisiere Modul {self.name}")
 
