@@ -1,0 +1,9 @@
+{
+  "modul_name": "{LGN}creative/ascii_qrcode{X}",
+  "modul_desc": "Generates an ASCII QR code based on a text.",
+  "modul_headline": "{LBE}ASCII QRCODE{X}",
+  "modul_done_message": "{SUCCESS} 'creative/ascii_qrcode' completed...",
+  "modul_error": "{FAIL} {error}",
+  "modul_option_text_desc": "Text to be converted",
+  "custom_484210": "{NEUTRAL} start generating ASCII QR code..."
+}

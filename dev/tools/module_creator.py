@@ -160,7 +160,7 @@ def export_translation_json(base_path, module_name, module_desc, options, senten
         "modul_name": "{LGN}" + full_module_name + "{X}",
         "modul_desc": module_desc,
         "modul_headline": "\n{LBE}" + module_name.upper().replace("_", " ") + "{X}\n",
-        "modul_done_message": "{SUCCESS} " + f"'{full_module_name}' " + "completed..." if SETTING_LANGUAGE == "en" else "abgeschlossen...",
+        "modul_done_message": ("{SUCCESS} " + f"'{full_module_name}' ") + ("completed..." if SETTING_LANGUAGE == "en" else "abgeschlossen..."),
         "modul_error": "{FAIL} {error}"
     }
 
@@ -276,7 +276,7 @@ class Module(XCoreModule):
             code += f'{indent*3}"min": {opt["min"]},\n'
         if "max" in opt:
             code += f'{indent*3}"max": {opt["max"]},\n'
-        code += f'{indent*3}"desc": i18n.t("{mod_id}.option_{opt["name"]}_desc")\n'
+        code += f'{indent*3}"desc": i18n.t("{mod_id}.modul_option_{opt["name"]}_desc")\n'
         code += f"{indent*2}}},\n"
 
     code += f"{indent}}}\n\n"
@@ -289,13 +289,13 @@ class Module(XCoreModule):
 
 {indent*2}try:
 {indent*3}# Hier [HAUPTROUTINE] eintragen...
-
+{indent*3}# ...
 
 """
     for satz in translations:
         code += f"{indent * 3}# i18n.t('{mod_id}.custom_{str(abs(hash(satz)))[:6]}')" + f" | {satz}" + "\n"
 
-    code += f"""\n
+    code += f"""
 {indent*3}self.feedback([i18n.t("{mod_id}.modul_done_message")])
 {indent*3}self.log(i18n.t("{mod_id}.modul_done_message"))
 {indent*3}print()
@@ -310,7 +310,6 @@ class Module(XCoreModule):
 {indent*3}print()
 
 {indent*3}return {{"success": False, "error": msg, "output": [msg]}}
-
 """
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
