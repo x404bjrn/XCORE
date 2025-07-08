@@ -46,27 +46,27 @@ class Module(XCoreModule):
             "widget_type": "entry",
             "required": True,
             "default": "default text",
-            "desc": "Ein einfacher Texteingabe-Parameter",
+            "desc": i18n.t("template_modul.modul_option_example_entry_desc"),
         },
         "enable_feature": {
             "widget_type": "checkbox",
             "required": False,
             "default": "False",
-            "desc": "Ein-/Ausschalter für Funktionalität",
+            "desc": i18n.t("template_modul.modul_option_enable_feature_desc"),
         },
         "color_choice": {
             "widget_type": "radiobutton",
             "required": False,
             "default": "Blau",
             "values": ["Rot", "Grün", "Blau"],
-            "desc": "Wähle eine Farbe",
+            "desc": i18n.t("template_modul.modul_option_color_choice_desc"),
         },
         "security_level": {
             "widget_type": "listbox",
             "required": False,
             "default": "Mittel",
             "values": ["Niedrig", "Mittel", "Hoch"],
-            "desc": "Sicherheitsstufe auswählen",
+            "desc": i18n.t("template_modul.modul_option_security_level_desc"),
         },
         "thread_count": {
             "widget_type": "spinbox",
@@ -74,7 +74,7 @@ class Module(XCoreModule):
             "default": 3,
             "min": 1,
             "max": 10,
-            "desc": "Anzahl Threads",
+            "desc": i18n.t("template_modul.modul_option_thread_count_desc"),
         },
         "size_percentage": {
             "widget_type": "scale",
@@ -82,13 +82,13 @@ class Module(XCoreModule):
             "default": 50,
             "min": 0,
             "max": 100,
-            "desc": "Größe (0–100%)",
+            "desc": i18n.t("template_modul.modul_option_size_percentage_desc"),
         },
         "config_path": {
             "widget_type": "fileexplorer",
             "required": False,
             "default": "",
-            "desc": "Pfad zur Konfigurationsdatei",
+            "desc": i18n.t("template_modul.modul_option_config_path_desc"),
         },
     }
 
