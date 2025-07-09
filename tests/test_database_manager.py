@@ -21,6 +21,7 @@ def setup_database(tmp_path):
 
 def test_connect(setup_database):
     db = setup_database
+    db.connect()
     assert db.conn is not None
     assert db.cursor is not None
 
@@ -28,6 +29,7 @@ def test_connect(setup_database):
 def test_create_user(setup_database):
     db = setup_database
     db.create_user("testuser", "password123")
+    db.connect()
     db.cursor.execute("SELECT * FROM users WHERE username = ?", ("testuser",))
     user = db.cursor.fetchone()
     assert user is not None
@@ -40,6 +42,7 @@ def test_delete_user(setup_database):
     db.create_user("testuser", "password123")
     result = db.delete_user("testuser", "password123")
     assert result is True
+    db.connect()
     db.cursor.execute("SELECT * FROM users WHERE username = ?", ("testuser",))
     user = db.cursor.fetchone()
     assert user is None
@@ -59,6 +62,7 @@ def test_duplicate_user(setup_database):
     db.create_user("testuser", "password123")
     result = db.create_user("testuser", "newpassword456")  # Sollte fehlschlagen
     assert result is False
+    db.connect()
     db.cursor.execute("SELECT COUNT(*) FROM users WHERE username = ?", ("testuser",))
     count = db.cursor.fetchone()[0]
     assert count == 1
