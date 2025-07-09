@@ -63,6 +63,7 @@ function XcoreModules({
 
       {meta && (
         <ModuleDetails
+          modules={selectedModule}
           meta={meta}
           params={params}
           setParams={setParams}

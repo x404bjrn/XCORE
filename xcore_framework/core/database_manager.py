@@ -17,7 +17,7 @@ from xcore_framework.config.i18n import i18n
 
 
 class DatabaseManager:
-    """Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen."""
+    """ Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen. """
 
     def __init__(self, db_path=DIRECTORY_DATABASE):
         """
@@ -39,6 +39,7 @@ class DatabaseManager:
         self.logged_in_user = None
         self.session_key = None
         self.user_salt = None
+
 
     @staticmethod
     def _derive_key(password: str, salt: bytes) -> bytes:
@@ -64,6 +65,7 @@ class DatabaseManager:
         )
         return base64.urlsafe_b64encode(kdf.derive(password.encode()))
 
+
     def encrypt_for_user(self, plaintext: str) -> str:
         """
         Verschlüsselt einen Klartext für den Benutzer unter Verwendung eines Sitzungsschlüssels.
@@ -85,6 +87,7 @@ class DatabaseManager:
             raise ValueError(i18n.t("database.no_encryption_key_found"))
         f = Fernet(self.session_key)
         return f.encrypt(plaintext.encode()).decode()
+
 
     def decrypt_for_user(self, encrypted_text: str) -> str:
         """
@@ -112,6 +115,7 @@ class DatabaseManager:
         f = Fernet(self.session_key)
         return f.decrypt(encrypted_text.encode()).decode()
 
+
     def connect(self):
         """
         Verbindet sich mit der SQLite-Datenbank, falls noch keine Verbindung besteht.
@@ -136,6 +140,7 @@ class DatabaseManager:
             except sqlite3.Error:
                 print(i18n.t("database.connection_error"))
 
+
     def close(self):
         """
         Schließt die aktive Verbindung zur Datenbank.
@@ -154,6 +159,7 @@ class DatabaseManager:
             self.cursor = None
             print(i18n.t("database.disconnected"))
 
+
     def delete(self):
         """
         Löscht die Datenbankdatei, falls sie existiert, und schließt die Verbindung zur Datenbank.
@@ -171,6 +177,7 @@ class DatabaseManager:
             print(i18n.t("database.deleted", path=self.db_path))
         else:
             print(i18n.t("database.no_found"))
+
 
     def init_user_table(self):
         """
@@ -198,6 +205,8 @@ class DatabaseManager:
         )
         self.conn.commit()
         print(i18n.t("database.users_table_created"))
+        self.close()
+
 
     def init_content_table(self):
         """
@@ -232,6 +241,7 @@ class DatabaseManager:
         )
         self.conn.commit()
         print(i18n.t("database.user_content_table_created"))
+        self.close()
 
     def create_user(self, username, password):
         """
@@ -265,10 +275,14 @@ class DatabaseManager:
             )
             self.conn.commit()
             print(i18n.t("database.user_created", username=username))
+            self.close()
             return True
+
         except sqlite3.IntegrityError:
             print(i18n.t("database.already_exists", username=username))
+            self.close()
             return False
+
 
     def delete_user(self, username, password):
         """
@@ -290,6 +304,7 @@ class DatabaseManager:
         if self.logged_in_user == username:
             print(i18n.t("database.user_delete_failed"))
             return False
+
         self.connect()
         self.cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
         user = self.cursor.fetchone()
@@ -299,13 +314,17 @@ class DatabaseManager:
                 self.cursor.execute("DELETE FROM users WHERE username = ?", (username,))
                 self.conn.commit()
                 print(i18n.t("database.user_deleted", username=username))
+                self.close()
                 return True
             else:
                 print(i18n.t("database.password_failed"))
+                self.close()
                 return False
         else:
             print(i18n.t("database.user_not_found"))
+            self.close()
             return False
+
 
     def login(self, username, password):
         """
@@ -328,7 +347,9 @@ class DatabaseManager:
         """
         self.connect()
         self.cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+
         user = self.cursor.fetchone()
+
         if user:
             stored_hash = user[2]
             user_salt = user[3]  # Salt aus der Datenbank lesen
@@ -340,13 +361,18 @@ class DatabaseManager:
                 salt_bytes = base64.b64decode(user_salt.encode("utf-8"))
                 self.session_key = self._derive_key(password, salt_bytes)
                 print(i18n.t("database.login_success", username=username))
+                self.close()
                 return True
+
             else:
                 print(i18n.t("database.password_failed"))
+                self.close()
                 return False
         else:
             print(i18n.t("database.user_not_found"))
+            self.close()
             return False
+
 
     def logout(self):
         """
@@ -365,6 +391,7 @@ class DatabaseManager:
         self.logged_in_user = None
         self.session_key = None
         self.user_salt = None
+
 
     def save_content(self, content: str, designation: str = "default") -> bool:
         """
@@ -394,20 +421,53 @@ class DatabaseManager:
         if not self.logged_in_user:
             print(i18n.t("database.no_login_user"))
             return False
+
         if not self.session_key:
             print(i18n.t("database.no_encryption_key_found"))
             return False
 
+        self.connect()
+
         encrypted = self.encrypt_for_user(content)
+
+        # Prüfen, ob Eintrag schon existiert
         self.cursor.execute(
-            "INSERT INTO user_contents (username, designation, encrypted_content) VALUES (?, ?, ?)",
-            (self.logged_in_user, designation, encrypted),
+            "SELECT id FROM user_contents WHERE username = ? AND designation = ?",
+            (self.logged_in_user, designation)
         )
+        existing = self.cursor.fetchone()
+
+        if existing:
+            # Update des vorhandenen Eintrags
+            self.cursor.execute(
+                "UPDATE user_contents SET encrypted_content = ? WHERE id = ?",
+                (encrypted, existing[0])
+            )
+        else:
+            # Neuer Eintrag
+            self.cursor.execute(
+                "INSERT INTO user_contents (username, designation, encrypted_content) VALUES (?, ?, ?)",
+                (self.logged_in_user, designation, encrypted)
+            )
+
         self.conn.commit()
-        print(
-            i18n.t("database.content_save_success", logged_in_user=self.logged_in_user)
-        )
+        print(i18n.t("database.content_save_success", logged_in_user=self.logged_in_user))
+
+        self.close()
         return True
+
+        #self.cursor.execute(
+        #    "INSERT INTO user_contents (username, designation, encrypted_content) VALUES (?, ?, ?)",
+        #    (self.logged_in_user, designation, encrypted),
+        #)
+        #self.conn.commit()
+        #print(
+        #    i18n.t("database.content_save_success", logged_in_user=self.logged_in_user)
+        #)
+        #
+        #self.close()
+        #return True
+
 
     def load_content(self, designation_filter: str = None) -> list:
         """
@@ -432,6 +492,8 @@ class DatabaseManager:
             print(i18n.t("database.no_login_user"))
             return []
 
+        self.connect()
+
         if designation_filter:
             self.cursor.execute(
                 "SELECT designation, encrypted_content "
@@ -455,12 +517,15 @@ class DatabaseManager:
             try:
                 decrypted = self.decrypt_for_user(enc)
                 contents.append((designation, decrypted))
+
             except Exception as e:
                 contents.append(
                     (designation, i18n.t("database.decryption_failed", e=str(e)))
                 )
 
+        self.close()
         return contents
+
 
     def get_user(self):
         """
@@ -474,6 +539,7 @@ class DatabaseManager:
         :rtype: object
         """
         return self.logged_in_user
+
 
     def get_all_users(self) -> list:
         """
@@ -489,4 +555,5 @@ class DatabaseManager:
         self.connect()
         self.cursor.execute("SELECT username FROM users ORDER BY username ASC")
         rows = self.cursor.fetchall()
+        self.close()
         return [row[0] for row in rows]

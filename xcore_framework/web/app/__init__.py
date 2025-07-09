@@ -3,6 +3,7 @@
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
 import os
+
 from flask import Flask
 from flask_login import LoginManager
 from .models import db, User
@@ -11,6 +12,7 @@ from flask_cors import CORS
 
 from xcore_framework.config.env import DIRECTORY_DATABASE
 from xcore_framework.config.i18n import i18n
+from xcore_framework.core.database_manager import DatabaseManager
 
 
 def create_app():
@@ -54,6 +56,9 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    # DB Manager global einhängbar machen
+    app.db_manager = DatabaseManager()
 
     # Registrierte Blueprints
     from .auth import auth

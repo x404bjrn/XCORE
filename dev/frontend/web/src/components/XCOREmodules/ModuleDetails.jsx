@@ -4,6 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // TODO: Widgeteinbindung optimieren und Formatierungen updaten
 import React from "react";
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 const renderOptionWidget = (key, opt, value, setParams) => {
@@ -94,13 +95,40 @@ const renderOptionWidget = (key, opt, value, setParams) => {
   }
 };
 
-const ModuleDetails = ({ meta, params, setParams, onRun }) => {
-  const {t} = useTranslation("module");
+const ModuleDetails = ({ modules, meta, params, setParams, onRun }) => {
+  const { t } = useTranslation("module");
   const tableHeaders = [
     t("module_details_parameter_th"),
     t("module_details_description_th"),
     t("module_details_value_th")
   ];
+
+  const handleSaveOptions = async () => {
+    try {
+      await axios.post(`/api/module/${modules}/save-options`, {
+        options: params
+      });
+      alert("Optionen gespeichert!");
+    } catch (err) {
+      console.error(err);
+      alert("Fehler beim Speichern");
+    }
+  };
+
+  const handleLoadOptions = async () => {
+    try {
+      const res = await axios.get(`/api/module/${modules}/load-options`);
+      if (res.data.options) {
+        setParams(res.data.options);
+        alert("Optionen geladen!");
+      } else {
+        alert("Keine gespeicherten Optionen gefunden.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Fehler beim Laden");
+    }
+  };
 
   return (
     <div className="module-container">
@@ -116,14 +144,14 @@ const ModuleDetails = ({ meta, params, setParams, onRun }) => {
       <div className="options-table">
         <table>
           <thead>
-          <tr>
-            <th>{t("module_details_parameter_th")}</th>
-            <th>{t("module_details_description_th")}</th>
-            <th>{t("module_details_value_th")}</th>
-          </tr>
+            <tr>
+              <th>{t("module_details_parameter_th")}</th>
+              <th>{t("module_details_description_th")}</th>
+              <th>{t("module_details_value_th")}</th>
+            </tr>
           </thead>
           <tbody>
-          {Object.entries(meta.options).map(([key, opt]) => (
+            {Object.entries(meta.options).map(([key, opt]) => (
               <tr key={key}>
                 <td data-label={tableHeaders[0]}><code>{key}</code></td>
                 <td data-label={tableHeaders[1]}>{opt.desc}</td>
@@ -131,14 +159,18 @@ const ModuleDetails = ({ meta, params, setParams, onRun }) => {
                   {renderOptionWidget(key, opt, params[key] ?? opt.default, setParams)}
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </table>
       </div>
 
-      <button className="button-module-start" onClick={onRun}>
-        {t("btn_module_start")}
-      </button>
+      <div className="button-group">
+        <button className="button-module-start" onClick={onRun}>
+          {t("btn_module_start")}
+        </button>
+        <button className="button-module-details" onClick={handleSaveOptions}>Optionen speichern</button>
+        <button className="button-module-details" onClick={handleLoadOptions}>Optionen laden</button>
+      </div>
     </div>
   );
 };

@@ -2,10 +2,11 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
-from flask import Blueprint, redirect, url_for, request, jsonify
+from flask import Blueprint, redirect, url_for, request, jsonify, current_app, session
 from .models import db, User
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
+
 
 auth = Blueprint("auth", __name__)
 
@@ -45,7 +46,14 @@ def api_login():
     user = User.query.filter_by(username=username).first()
 
     if user and check_password_hash(user.password, password):
+        # Login in Flask Instanz
         login_user(user)
+
+        # Login mit DatabaseManager
+        db_manager = current_app.db_manager
+        db_manager.login(username, password)
+        #session["session_key"] = db_manager.session_key
+
         return jsonify({"message": "Login erfolgreich", "username": user.username})
     else:
         return jsonify({"message": "Login fehlgeschlagen"}), 401
@@ -64,7 +72,13 @@ def api_logout():
     :return: Eine Umleitung zur Haupt-API-Benutzerseite.
     :rtype: flask.wrappers.Response
     """
+    # Logout in Flask Instanz
     logout_user()
+
+    # Logout im DatabaseManager
+    db_manager = current_app.db_manager
+    db_manager.logout()
+
     return redirect(url_for("main.api_user"))
 
 

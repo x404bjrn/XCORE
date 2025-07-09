@@ -2,13 +2,15 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
-from flask import request, jsonify
-from flask import Blueprint
+import json
 import traceback
+
+from flask import request, jsonify, Blueprint, current_app
 
 # XCORE Framework Module Loader
 from xcore_framework.core.module_loader import ModuleLoader
 from xcore_framework.config.formatting import strip_ansi
+
 
 modules = Blueprint("modules", __name__)
 
@@ -23,22 +25,25 @@ def list_modules():
     Informationen wie den Modulnamen und die Beschreibung.
 
     :param loader: Ein Modul-Lademechanismus, der die Suche und das
-        Laden von Modulen ermöglicht.
+                   Laden von Modulen ermöglicht.
     :return: Eine JSON-Repräsentation einer baumartigen Struktur,
-        die die geladenen Module nach Kategorien gruppiert und für
-        jedes Modul Informationen wie Pfad, Name und Beschreibung enthält.
-        Im Falle eines Fehlers wird eine JSON-Antwort mit Fehlermeldung
-        und HTTP-Statuscode 500 zurückgegeben.
+             die die geladenen Module nach Kategorien gruppiert und für
+             jedes Modul Informationen wie Pfad, Name und Beschreibung enthält.
+             Im Falle eines Fehlers wird eine JSON-Antwort mit Fehlermeldung
+             und HTTP-Statuscode 500 zurückgegeben.
     """
     try:
         tree = {}
         for path in loader.search_modules(""):  # alle Module laden
             category = path.split("/")[0]
             mod = loader.load_module(path)
+
             if not mod:
                 continue
+
             if category not in tree:
                 tree[category] = []
+
             tree[category].append(
                 {
                     "path": path,
@@ -47,6 +52,7 @@ def list_modules():
                 }
             )
         return jsonify(tree)
+
     except Exception:
         return jsonify({"error": traceback.format_exc()}), 500
 
@@ -75,6 +81,7 @@ def get_module_meta(module_path):
         mod = loader.load_module(module_path)
         if not mod:
             return jsonify({"error": "Modul nicht gefunden"}), 404
+
         return jsonify(
             {
                 "name": strip_ansi(mod.name),
@@ -108,8 +115,56 @@ def run_module(module_path):
         mod = loader.load_module(module_path)
         if not mod:
             return jsonify({"error": "Modul nicht gefunden"}), 404
+
         params = request.json or {}
         result = mod.run(params, mode="web")
+
         return jsonify(result)
+
+    except Exception:
+        return jsonify({"error": traceback.format_exc()}), 500
+
+
+@modules.route("/api/module/<path:module_path>/save-options", methods=["POST"])
+def save_module_options(module_path):
+    try:
+        mod = loader.load_module(module_path)
+        if not mod:
+            return jsonify({"error": "Modul nicht gefunden"}), 404
+
+        db_manager = current_app.db_manager
+
+        if not db_manager.get_user():
+            return jsonify({"error": "Kein Benutzer angemeldet"}), 403
+
+        options = request.json.get("options", {})
+        designation = f"options::{mod.name}"
+        content = json.dumps(options)
+        success = db_manager.save_content(content, designation=designation)
+
+        return jsonify({"success": success})
+
+    except Exception:
+        return jsonify({"error": traceback.format_exc()}), 500
+
+
+@modules.route("/api/module/<path:module_path>/load-options", methods=["GET"])
+def load_module_options(module_path):
+    try:
+        mod = loader.load_module(module_path)
+        if not mod:
+            return jsonify({"error": "Modul nicht gefunden"}), 404
+
+        db_manager = current_app.db_manager
+
+        if not db_manager.get_user():
+            return jsonify({"error": "Kein Benutzer angemeldet"}), 403
+
+        designation = f"options::{mod.name}"
+        for _, content in db_manager.load_content(designation_filter=designation):
+            return jsonify({"options": json.loads(content)})
+
+        return jsonify({"options": None})  # nichts gespeichert
+
     except Exception:
         return jsonify({"error": traceback.format_exc()}), 500

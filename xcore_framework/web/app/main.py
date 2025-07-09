@@ -8,6 +8,7 @@ from flask import Blueprint, render_template, jsonify, redirect, current_app
 from flask_login import login_required, current_user
 from .models import User
 
+
 main = Blueprint("main", __name__)
 
 
@@ -95,8 +96,8 @@ def get_all_users():
     :raises RuntimeError: Wenn die Benutzerobjekte nicht korrekt serialisiert werden können.
     :param method: HTTP-Methoden, die für diesen Endpunkt erlaubt sind, in diesem Fall GET.
     :type method: list[str]
-    :return: Eine JSON-Liste aller Benutzer, wobei jeder Benutzer durch seine ID, E-Mail,
-             Benutzernamen und Namen repräsentiert wird.
+    :return: Eine JSON-Liste aller Benutzer, wobei jeder Benutzer durch seine ID und
+             Benutzernamen repräsentiert wird.
     :rtype: flask.Response
     """
     users = User.query.all()
