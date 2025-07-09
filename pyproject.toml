@@ -37,6 +37,7 @@ dependencies = [
     "httpcore>=1.0.6",
     "h11>=0.16.0",
     "translate>=3.6.1",
+    "tox>=4.27.0",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
