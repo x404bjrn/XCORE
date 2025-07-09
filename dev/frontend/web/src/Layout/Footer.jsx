@@ -19,7 +19,7 @@ const Footer = () => {
           <Link className="link" to="/contributing">Contributing</Link>
 
           {/* VERSION_AUTO_UPDATE */}
-          <Link className="link" to="/changelog">v0.1.0a4</Link>
+          <Link className="link" to="/changelog">v0.1.0a5</Link>
 
           {/* Bedingte Anzeige: Zeige Logout nur, wenn user eingeloggt ist */}
           {user && (

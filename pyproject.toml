@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xcore_framework"
-version = "0.1.0a4"
+version = "0.1.0a5"
 description = "CLI- und Webframework für modulare Anwendungen mit interaktiver Shell, GUI und Webinterface."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -78,7 +78,7 @@ version-major = "npm run version:major"
 version-alpha = "npm run version:alpha"
 version-beta = "npm run version:beta"
 update-changelog = "npm run changelog"
-sync-version = "npm run sync-version"
+sync-version = "npm run sync:version"
 compile-scss = "python scripts/compile_scss.py"
 copy-docs = "python scripts/copy_docs.py"
 build-frontend = "python scripts/build_and_deploy_frontend.py"
@@ -86,6 +86,7 @@ build-xcore-package = "pdm build"
 pypi-upload-test = "pdm publish --repository testpypi"
 pypi-upload = "pdm publish"
 clean-up = "python scripts/clean_up.py"
+project-update = { composite = ["sync-version", "update-changelog", "compile-scss", "copy-docs", "build-frontend", "clean-up"] }
 build-all = { composite = ["sync-version", "compile-scss", "copy-docs", "build-frontend", "build-xcore-package"] }
 make-release-patch = { composite = ["version-patch", "build-all", "pypi-upload", "clean-up"] }
 make-release-minor = { composite = ["version-minor", "build-all", "pypi-upload", "clean-up"] }
