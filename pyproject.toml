@@ -48,7 +48,6 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
     "Environment :: Console",
-    "Environment :: GUI",
     "Environment :: Web Environment",
     "Framework :: Flask",
     "Natural Language :: English",
