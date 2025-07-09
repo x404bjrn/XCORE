@@ -21,6 +21,10 @@
     color: elements("result-display", "color-title-h2");
     font-size: elements("result-display", "font-size-title-h2");
   }
+
+  pre {
+    text-wrap: auto;
+  }
 }
 
 .copy-btn {

@@ -138,6 +138,10 @@
     border-radius: elements("module-details", "radius-border-button");
     font-weight: 600;
   }
+
+  @include respond(xs) {
+    flex-wrap: wrap;
+  }
 }
 
 .button-module-details {
