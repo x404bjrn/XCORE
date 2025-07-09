@@ -104,7 +104,7 @@
   font-family: elements("module-details", "font-family-button");
   display: block;
   width: 100%;
-  background-color: elements("module-details", "color-background-button");
+  background-color: elements("module-details", "color-background-button-start");
   color: elements("module-details", "color-text");
   text-align: center;
   padding: 0.75rem;
@@ -114,7 +114,35 @@
   cursor: pointer;
   border: elements("module-details", "thickness-border-button") solid elements("module-details", "color-border-button");
   transition: background-color, border-color 0.3s ease;
+
+  &:hover {
+    color: black;
+    background-color: elements("module-details", "color-background-hover-button-start");
+    border: elements("module-details", "thickness-border-button") solid elements("module-details", "color-border-hover-button");
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
   margin-top: 15px;
+
+  button {
+    font-family: elements("module-details", "font-family-button");
+    display: block;
+    width: 100%;
+    color: elements("module-details", "color-text");
+    text-align: center;
+    padding: 0.75rem;
+    border: elements("module-details", "thickness-border-button") solid elements("module-details", "color-border-button");
+    border-radius: elements("module-details", "radius-border-button");
+    font-weight: 600;
+  }
+}
+
+.button-module-details {
+  background-color: elements("module-details", "color-background-button");
+  transition: background-color, border-color 0.3s ease;
 
   &:hover {
     color: black;
