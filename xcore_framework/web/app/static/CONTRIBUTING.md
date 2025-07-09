@@ -54,14 +54,42 @@ git clone https://github.com/x404bjrn/XCORE.git
 cd XCORE
 ```
 
-### Empfohlen: virtuelle Umgebung
+### Empfohlen: PDM (Python Dependency Manager)
+PDM ist das bevorzugte Tool für die Verwaltung von Abhängigkeiten in diesem Projekt. Es bietet eine bessere Isolierung, genauere Abhängigkeitsverwaltung und vereinfacht die Entwicklungsworkflows.
+
+#### PDM installieren (falls noch nicht vorhanden)
+```
+pip install pdm
+```
+
+#### Abhängigkeiten mit PDM installieren
+```
+pdm install
+```
+
+#### PDM-Umgebung aktivieren
+```
+# Für eine Shell-Sitzung
+pdm run <command>
+
+# Oder eine neue Shell mit aktivierter PDM-Umgebung starten
+pdm shell
+```
+
+#### Nützliche PDM-Befehle
+```
+pdm add <package>        # Neue Abhängigkeit hinzufügen
+pdm remove <package>     # Abhängigkeit entfernen
+pdm update               # Alle Abhängigkeiten aktualisieren
+pdm run tests            # Tests ausführen
+pdm run export-req       # requirements.txt generieren
+```
+
+### Alternative: Klassische virtuelle Umgebung
+Falls du PDM nicht verwenden möchtest:
 ```
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-```
-
-### Abhängigkeiten installieren
-```
 pip install -r requirements.txt
 ```
 
