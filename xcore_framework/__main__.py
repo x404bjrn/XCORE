@@ -38,6 +38,7 @@ def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
     # Windows Betriebssystem
     if platform.system() == "Windows":
         from xcore_framework.web.app import create_app
+
         app = create_app()
 
         if debug:
@@ -59,6 +60,7 @@ def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
             # Optional: Browser öffnen
             if open_browser:
                 import webbrowser
+
                 webbrowser.open(f"http://{host}:{port}")
 
             try:
@@ -77,14 +79,19 @@ def start_web_mode(host="127.0.0.1", port=5000, debug=True, open_browser=True):
         print(i18n.t("main.start_web_gunicorn", host=host, port=port))
         if open_browser:
             import webbrowser
+
             webbrowser.open(f"http://{host}:{port}")
 
-        subprocess.run([
-            "gunicorn",
-            "-w", "4",
-            "-b", f"{host}:{port}",
-            "xcore_framework.web.app:create_app()"
-        ])
+        subprocess.run(
+            [
+                "gunicorn",
+                "-w",
+                "4",
+                "-b",
+                f"{host}:{port}",
+                "xcore_framework.web.app:create_app()",
+            ]
+        )
 
 
 def start_cli_mode():

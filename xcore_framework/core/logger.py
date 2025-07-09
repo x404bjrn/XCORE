@@ -20,27 +20,30 @@ def setup_logger(name: str, file_handler=True, con_handler=False):
     # Check: Hat der Logger bereits einen passenden FileHandler?
     log_path = os.path.join(DIRECTORY_LOGGING, f"{name}.log")
     has_file_handler = any(
-        isinstance(h, RotatingFileHandler) and h.baseFilename == os.path.abspath(log_path)
+        isinstance(h, RotatingFileHandler)
+        and h.baseFilename == os.path.abspath(log_path)
         for h in logger.handlers
     )
 
     if file_handler and not has_file_handler:
-        file_log_handler = RotatingFileHandler(log_path, maxBytes=1_000_000, backupCount=5)
-        file_log_handler.setFormatter(logging.Formatter(
-            '%(asctime)s - %(levelname)s - %(message)s'
-        ))
+        file_log_handler = RotatingFileHandler(
+            log_path, maxBytes=1_000_000, backupCount=5
+        )
+        file_log_handler.setFormatter(
+            logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+        )
         logger.addHandler(file_log_handler)
 
     if con_handler:
         # Prüfen, ob schon ein StreamHandler existiert
         if not any(isinstance(h, logging.StreamHandler) for h in logger.handlers):
             console_handler = logging.StreamHandler()
-            console_handler.setFormatter(logging.Formatter(
-                '%(name)s - %(levelname)s - %(message)s'
-            ))
+            console_handler.setFormatter(
+                logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+            )
             logger.addHandler(console_handler)
 
     # INFO: DEBUG_DEV Kommentar (Kann auskommentiert werden wenn nicht benötigt)
-    #print(f"[DEBUG] Logger {name} initialized with handlers: {[type(h).__name__ for h in logger.handlers]}")
+    # print(f"[DEBUG] Logger {name} initialized with handlers: {[type(h).__name__ for h in logger.handlers]}")
 
     return logger

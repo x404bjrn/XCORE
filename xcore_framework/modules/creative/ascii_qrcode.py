@@ -28,19 +28,19 @@ class Module(XCoreModule):
             "widget_type": "entry",
             "required": True,
             "default": "https://github.com/x404bjrn/XCORE",
-            "desc": i18n.t("creative_ascii_qrcode.modul_option_text_desc")
+            "desc": i18n.t("creative_ascii_qrcode.modul_option_text_desc"),
         },
     }
 
     def run(self, params: dict, mode="cli", gui_console=None) -> dict | None:
-        self.log("Modul gestartet")    
+        self.log("Modul gestartet")
         self.mode = mode
         self.console_widget = gui_console
         self.feedback([i18n.t("creative_ascii_qrcode.modul_headline")])
 
         try:
             text = params.get("text", self.options["text"].get("default"))
-            self.feedback([i18n.t('creative_ascii_qrcode.custom_484210')])
+            self.feedback([i18n.t("creative_ascii_qrcode.custom_484210")])
             qr = qrcode.QRCode(border=1)
             qr.add_data(text)
             qr.make(fit=True)

@@ -2,7 +2,7 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
-from flask import Blueprint, redirect, url_for, request, jsonify, current_app, session
+from flask import Blueprint, redirect, url_for, request, jsonify, current_app
 from .models import db, User
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -52,7 +52,7 @@ def api_login():
         # Login mit DatabaseManager
         db_manager = current_app.db_manager
         db_manager.login(username, password)
-        #session["session_key"] = db_manager.session_key
+        # session["session_key"] = db_manager.session_key
 
         return jsonify({"message": "Login erfolgreich", "username": user.username})
     else:

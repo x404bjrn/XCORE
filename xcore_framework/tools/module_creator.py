@@ -10,7 +10,11 @@ import json
 from tkinter import ttk, messagebox
 from translate import Translator as AltTranslator
 
-from xcore_framework.config.env import DIRECTORY_I18N, DIRECTORY_MODULES, SETTING_LANGUAGE
+from xcore_framework.config.env import (
+    DIRECTORY_I18N,
+    DIRECTORY_MODULES,
+    SETTING_LANGUAGE,
+)
 from xcore_framework import __version__
 
 
@@ -28,7 +32,7 @@ SAVE_LOCATIONS = {
     "system": os.path.join(DIRECTORY_MODULES, "system"),
     "template": os.path.join(DIRECTORY_MODULES, "template"),
     "transfer": os.path.join(DIRECTORY_MODULES, "transfer"),
-    "utilities": os.path.join(DIRECTORY_MODULES, "utilities")
+    "utilities": os.path.join(DIRECTORY_MODULES, "utilities"),
 }
 
 
@@ -69,7 +73,7 @@ def add_option():
         "required": required,
         "default": default,
         "desc": desc,
-        "widget_type": widget_type
+        "widget_type": widget_type,
     }
 
     if widget_type in ["radiobutton", "listbox"]:
@@ -80,7 +84,9 @@ def add_option():
             option["min"] = int(entry_min.get())
             option["max"] = int(entry_max.get())
         except ValueError:
-            messagebox.showerror("Fehler", "Min/Max muss bei scale/spinbox gesetzt werden.")
+            messagebox.showerror(
+                "Fehler", "Min/Max muss bei scale/spinbox gesetzt werden."
+            )
             return
 
     options.append(option)
@@ -131,7 +137,14 @@ def add_translation():
         entry_translation.delete(0, tk.END)
 
 
-def export_translation_json(base_path, module_name, module_desc, options, sentences, json_base_path=DIRECTORY_I18N):
+def export_translation_json(
+    base_path,
+    module_name,
+    module_desc,
+    options,
+    sentences,
+    json_base_path=DIRECTORY_I18N,
+):
     """
     Generiert und exportiert JSON-Dateien mit Übersetzungen aus gegebenen Eingabedaten.
     Diese Funktion generiert Übersetzungsdateien im JSON-Format für ein spezifisches Modul.
@@ -160,8 +173,9 @@ def export_translation_json(base_path, module_name, module_desc, options, senten
         "modul_name": "{LGN}" + full_module_name + "{X}",
         "modul_desc": module_desc,
         "modul_headline": "\n{LBE}" + module_name.upper().replace("_", " ") + "{X}\n",
-        "modul_done_message": ("{SUCCESS} " + f"'{full_module_name}' ") + ("completed..." if SETTING_LANGUAGE == "en" else "abgeschlossen..."),
-        "modul_error": "{FAIL} {error}"
+        "modul_done_message": ("{SUCCESS} " + f"'{full_module_name}' ")
+        + ("completed..." if SETTING_LANGUAGE == "en" else "abgeschlossen..."),
+        "modul_error": "{FAIL} {error}",
     }
 
     for opt in options:
@@ -180,7 +194,7 @@ def export_translation_json(base_path, module_name, module_desc, options, senten
         to_language = "de"
 
     # DEBUG Print
-    #print(f"Übersetzung von {from_language} nach {to_language}")
+    # print(f"Übersetzung von {from_language} nach {to_language}")
     translator = AltTranslator(from_lang=from_language, to_lang=to_language)
 
     translations_to = {}
@@ -193,10 +207,22 @@ def export_translation_json(base_path, module_name, module_desc, options, senten
     os.makedirs(os.path.join(json_base_path, "de"), exist_ok=True)
     os.makedirs(os.path.join(json_base_path, "en"), exist_ok=True)
 
-    with open(os.path.join(json_base_path, from_language, f"{full_module_name.replace('/', '_')}.json"), "w", encoding="utf-8") as f:
+    with open(
+        os.path.join(
+            json_base_path, from_language, f"{full_module_name.replace('/', '_')}.json"
+        ),
+        "w",
+        encoding="utf-8",
+    ) as f:
         json.dump(translations_from, f, indent=2, ensure_ascii=False)
 
-    with open(os.path.join(json_base_path, to_language, f"{full_module_name.replace('/', '_')}.json"), "w", encoding="utf-8") as f:
+    with open(
+        os.path.join(
+            json_base_path, to_language, f"{full_module_name.replace('/', '_')}.json"
+        ),
+        "w",
+        encoding="utf-8",
+    ) as f:
         json.dump(translations_to, f, indent=2, ensure_ascii=False)
 
 
@@ -276,13 +302,15 @@ class Module(XCoreModule):
             code += f'{indent*3}"min": {opt["min"]},\n'
         if "max" in opt:
             code += f'{indent*3}"max": {opt["max"]},\n'
-        code += f'{indent*3}"desc": i18n.t("{mod_id}.modul_option_{opt["name"]}_desc")\n'
+        code += (
+            f'{indent*3}"desc": i18n.t("{mod_id}.modul_option_{opt["name"]}_desc")\n'
+        )
         code += f"{indent*2}}},\n"
 
     code += f"{indent}}}\n\n"
 
     code += f"""{indent}def run(self, params: dict, mode="cli", gui_console=None) -> dict | None:
-{indent*2}self.log("Modul gestartet")    
+{indent*2}self.log("Modul gestartet")
 {indent*2}self.mode = mode
 {indent*2}self.console_widget = gui_console
 {indent*2}self.feedback([i18n.t("{mod_id}.modul_headline")])
@@ -293,7 +321,11 @@ class Module(XCoreModule):
 
 """
     for satz in translations:
-        code += f"{indent * 3}# i18n.t('{mod_id}.custom_{str(abs(hash(satz)))[:6]}')" + f" | {satz}" + "\n"
+        code += (
+            f"{indent * 3}# i18n.t('{mod_id}.custom_{str(abs(hash(satz)))[:6]}')"
+            + f" | {satz}"
+            + "\n"
+        )
 
     code += f"""
 {indent*3}self.feedback([i18n.t("{mod_id}.modul_done_message")])
@@ -348,7 +380,13 @@ entry_module_version.pack()
 
 ttk.Label(root, text="Speicherort").pack()
 save_path_var = tk.StringVar(value=list(SAVE_LOCATIONS.keys())[0])
-ttk.Combobox(root, textvariable=save_path_var, values=list(SAVE_LOCATIONS.keys()), width=60, state="readonly").pack()
+ttk.Combobox(
+    root,
+    textvariable=save_path_var,
+    values=list(SAVE_LOCATIONS.keys()),
+    width=60,
+    state="readonly",
+).pack()
 
 ttk.Separator(root).pack(pady=6, fill="x")
 ttk.Label(root, text="Option hinzufügen").pack()
@@ -369,9 +407,20 @@ entry_desc.pack(side="left", padx=2)
 entry_desc.insert(0, "description")
 
 widget_type_var = tk.StringVar(value="entry")
-ttk.Combobox(frame_opt, textvariable=widget_type_var, values=[
-    "entry", "checkbox", "radiobutton", "listbox", "scale", "spinbox", "fileexplorer"],
-             width=12).pack(side="left", padx=2)
+ttk.Combobox(
+    frame_opt,
+    textvariable=widget_type_var,
+    values=[
+        "entry",
+        "checkbox",
+        "radiobutton",
+        "listbox",
+        "scale",
+        "spinbox",
+        "fileexplorer",
+    ],
+    width=12,
+).pack(side="left", padx=2)
 
 entry_values = ttk.Entry(frame_opt, width=12)
 entry_values.pack(side="left", padx=2)
@@ -385,16 +434,22 @@ entry_max.pack(side="left")
 entry_max.insert(0, "max")
 
 var_required = tk.BooleanVar()
-ttk.Checkbutton(frame_opt, text="Pflicht", variable=var_required).pack(side="left", padx=2)
+ttk.Checkbutton(frame_opt, text="Pflicht", variable=var_required).pack(
+    side="left", padx=2
+)
 
 ttk.Button(root, text="Option hinzufügen", command=add_option).pack()
-ttk.Button(root, text="Ausgewählte Option entfernen", command=remove_selected_option).pack(pady=4)
+ttk.Button(
+    root, text="Ausgewählte Option entfernen", command=remove_selected_option
+).pack(pady=4)
 
 listbox = tk.Listbox(root, width=100, height=8)
 listbox.pack(pady=6)
 
 ttk.Separator(root).pack(pady=6, fill="x")
-ttk.Label(root, text="Übersetzungssätze (werden automatisch i18n.t() zugeordnet)").pack()
+ttk.Label(
+    root, text="Übersetzungssätze (werden automatisch i18n.t() zugeordnet)"
+).pack()
 
 entry_translation = ttk.Entry(root, width=60)
 entry_translation.pack(pady=2)

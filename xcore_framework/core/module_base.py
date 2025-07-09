@@ -31,7 +31,6 @@ class XCoreModule:
         self.mode = ""
         self.console_widget = None
 
-
     def init_logging(self, name):
         """
         Initialisiert das Logging für das angegebene Modul und erstellt einen Logger.
@@ -47,7 +46,6 @@ class XCoreModule:
         self.name = strip_ansi(name).replace("/", "_")
         self.logger = setup_logger(self.name, con_handler=False)
         self.logger.debug(f"Initialisiere Modul {self.name}")
-
 
     def log(self, msg, level="info"):
         """
@@ -74,7 +72,6 @@ class XCoreModule:
 
         else:
             self.logger.info(msg)
-
 
     def feedback(self, output: list = None, result: dict = None):
         """

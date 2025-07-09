@@ -29,47 +29,44 @@ class Module(XCoreModule):
             "desc": i18n.t("scanner_nmap.modul_option_target_desc"),
             "required": True,
             "default": "127.0.0.1",
-            "widget_type": "entry"
+            "widget_type": "entry",
         },
         "ports": {
             "desc": i18n.t("scanner_nmap.modul_option_ports_desc"),
             "required": False,
             "default": "",
-            "widget_type": "entry"
+            "widget_type": "entry",
         },
         "service_detection": {
             "desc": i18n.t("scanner_nmap.modul_option_service_detection_desc"),
             "required": False,
             "default": False,
-            "widget_type": "checkbox"
+            "widget_type": "checkbox",
         },
         "os_detection": {
             "desc": i18n.t("scanner_nmap.modul_option_os_detection_desc"),
             "required": False,
             "default": False,
-            "widget_type": "checkbox"
+            "widget_type": "checkbox",
         },
         "ping_skip": {
             "desc": i18n.t("scanner_nmap.modul_option_ping_skip_desc"),
             "required": False,
             "default": False,
-            "widget_type": "checkbox"
+            "widget_type": "checkbox",
         },
     }
 
     @staticmethod
     def _detect_nmap() -> str:
-        """ Findet das nmap-Binary plattformübergreifend. """
+        """Findet das nmap-Binary plattformübergreifend."""
         system = platform.system().lower()
         candidates = ["nmap.exe", "nmap"] if system.startswith("win") else ["nmap"]
 
         for nmap_bin in candidates:
             try:
                 res = subprocess.run(
-                    [nmap_bin, "--version"],
-                    capture_output=True,
-                    text=True,
-                    timeout=5
+                    [nmap_bin, "--version"], capture_output=True, text=True, timeout=5
                 )
                 if res.returncode == 0 and "Nmap version" in res.stdout:
                     return nmap_bin
@@ -114,7 +111,7 @@ class Module(XCoreModule):
             return {"success": True, "output": self.output, "data": self.results}
 
         command = [nmap_bin] + flags + [target]
-        self.feedback([i18n.t("scanner_nmap.modul_nmap_cmd", cmd=' '.join(command))])
+        self.feedback([i18n.t("scanner_nmap.modul_nmap_cmd", cmd=" ".join(command))])
 
         try:
             result = subprocess.run(command, capture_output=True, text=True)

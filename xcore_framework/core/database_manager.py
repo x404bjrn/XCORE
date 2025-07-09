@@ -17,7 +17,7 @@ from xcore_framework.config.i18n import i18n
 
 
 class DatabaseManager:
-    """ Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen. """
+    """Verwaltet eine SQLite-Datenbank mit Benutzer- und Inhaltstabellen."""
 
     def __init__(self, db_path=DIRECTORY_DATABASE):
         """
@@ -39,7 +39,6 @@ class DatabaseManager:
         self.logged_in_user = None
         self.session_key = None
         self.user_salt = None
-
 
     @staticmethod
     def _derive_key(password: str, salt: bytes) -> bytes:
@@ -65,7 +64,6 @@ class DatabaseManager:
         )
         return base64.urlsafe_b64encode(kdf.derive(password.encode()))
 
-
     def encrypt_for_user(self, plaintext: str) -> str:
         """
         Verschlüsselt einen Klartext für den Benutzer unter Verwendung eines Sitzungsschlüssels.
@@ -87,7 +85,6 @@ class DatabaseManager:
             raise ValueError(i18n.t("database.no_encryption_key_found"))
         f = Fernet(self.session_key)
         return f.encrypt(plaintext.encode()).decode()
-
 
     def decrypt_for_user(self, encrypted_text: str) -> str:
         """
@@ -115,7 +112,6 @@ class DatabaseManager:
         f = Fernet(self.session_key)
         return f.decrypt(encrypted_text.encode()).decode()
 
-
     def connect(self):
         """
         Verbindet sich mit der SQLite-Datenbank, falls noch keine Verbindung besteht.
@@ -140,7 +136,6 @@ class DatabaseManager:
             except sqlite3.Error:
                 print(i18n.t("database.connection_error"))
 
-
     def close(self):
         """
         Schließt die aktive Verbindung zur Datenbank.
@@ -159,7 +154,6 @@ class DatabaseManager:
             self.cursor = None
             print(i18n.t("database.disconnected"))
 
-
     def delete(self):
         """
         Löscht die Datenbankdatei, falls sie existiert, und schließt die Verbindung zur Datenbank.
@@ -177,7 +171,6 @@ class DatabaseManager:
             print(i18n.t("database.deleted", path=self.db_path))
         else:
             print(i18n.t("database.no_found"))
-
 
     def init_user_table(self):
         """
@@ -206,7 +199,6 @@ class DatabaseManager:
         self.conn.commit()
         print(i18n.t("database.users_table_created"))
         self.close()
-
 
     def init_content_table(self):
         """
@@ -283,7 +275,6 @@ class DatabaseManager:
             self.close()
             return False
 
-
     def delete_user(self, username, password):
         """
         Löscht einen Benutzer aus der Datenbank, wenn die Anmeldeinformationen korrekt sind.
@@ -324,7 +315,6 @@ class DatabaseManager:
             print(i18n.t("database.user_not_found"))
             self.close()
             return False
-
 
     def login(self, username, password):
         """
@@ -373,7 +363,6 @@ class DatabaseManager:
             self.close()
             return False
 
-
     def logout(self):
         """
         Loggt den aktuell angemeldeten Benutzer aus.
@@ -391,7 +380,6 @@ class DatabaseManager:
         self.logged_in_user = None
         self.session_key = None
         self.user_salt = None
-
 
     def save_content(self, content: str, designation: str = "default") -> bool:
         """
@@ -433,7 +421,7 @@ class DatabaseManager:
         # Prüfen, ob Eintrag schon existiert
         self.cursor.execute(
             "SELECT id FROM user_contents WHERE username = ? AND designation = ?",
-            (self.logged_in_user, designation)
+            (self.logged_in_user, designation),
         )
         existing = self.cursor.fetchone()
 
@@ -441,33 +429,34 @@ class DatabaseManager:
             # Update des vorhandenen Eintrags
             self.cursor.execute(
                 "UPDATE user_contents SET encrypted_content = ? WHERE id = ?",
-                (encrypted, existing[0])
+                (encrypted, existing[0]),
             )
         else:
             # Neuer Eintrag
             self.cursor.execute(
                 "INSERT INTO user_contents (username, designation, encrypted_content) VALUES (?, ?, ?)",
-                (self.logged_in_user, designation, encrypted)
+                (self.logged_in_user, designation, encrypted),
             )
 
         self.conn.commit()
-        print(i18n.t("database.content_save_success", logged_in_user=self.logged_in_user))
+        print(
+            i18n.t("database.content_save_success", logged_in_user=self.logged_in_user)
+        )
 
         self.close()
         return True
 
-        #self.cursor.execute(
+        # self.cursor.execute(
         #    "INSERT INTO user_contents (username, designation, encrypted_content) VALUES (?, ?, ?)",
         #    (self.logged_in_user, designation, encrypted),
-        #)
-        #self.conn.commit()
-        #print(
+        # )
+        # self.conn.commit()
+        # print(
         #    i18n.t("database.content_save_success", logged_in_user=self.logged_in_user)
-        #)
+        # )
         #
-        #self.close()
-        #return True
-
+        # self.close()
+        # return True
 
     def load_content(self, designation_filter: str = None) -> list:
         """
@@ -526,7 +515,6 @@ class DatabaseManager:
         self.close()
         return contents
 
-
     def get_user(self):
         """
         Gibt den aktuell angemeldeten Benutzer zurück.
@@ -539,7 +527,6 @@ class DatabaseManager:
         :rtype: object
         """
         return self.logged_in_user
-
 
     def get_all_users(self) -> list:
         """
