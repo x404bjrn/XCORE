@@ -7,14 +7,14 @@ import shutil
 
 
 # Basisverzeichnis definieren (Projekt-Root-Verzeichnis)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BASE_DIR = os.path.expanduser('~/.xcore/')
 
 # Die vier Runtime-Verzeichnisse, deren Inhalte gelöscht werden sollen
 runtime_dirs = [
-    os.path.join(BASE_DIR, "xcore_framework/runtimes/bash"),
-    os.path.join(BASE_DIR, "xcore_framework/runtimes/node"),
-    os.path.join(BASE_DIR, "xcore_framework/runtimes/java"),
-    os.path.join(BASE_DIR, "xcore_framework/runtimes/powershell"),
+    os.path.join(BASE_DIR, "runtimes", "bash"),
+    os.path.join(BASE_DIR, "runtimes", "node"),
+    os.path.join(BASE_DIR, "runtimes", "java"),
+    os.path.join(BASE_DIR, "runtimes", "powershell"),
 ]
 
 
