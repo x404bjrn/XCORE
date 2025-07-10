@@ -63,6 +63,7 @@ def ensure_env_file(path=DOTENV_PATH):
     # ...
     default_env = [
         # Verzeichnisse
+        f"DIRECTORY_XCORE_BASE={os.path.expanduser('~/.xcore/')}",
         f"DIRECTORY_FRAMEWORK={BASE_DIR}",
         f"DIRECTORY_LOGGING={os.path.join(BASE_DIR, 'logs')}",
         f"DIRECTORY_ENV={os.path.join(BASE_DIR, '.env')}",
@@ -72,12 +73,22 @@ def ensure_env_file(path=DOTENV_PATH):
         f"DIRECTORY_MODULES={os.path.join(BASE_DIR, 'modules')}",
         f"DIRECTORY_DATABASE={os.path.join(BASE_DIR, 'database')}",
         f"DIRECTORY_GUI={os.path.join(BASE_DIR, 'gui')}",
+        f"DIRECTORY_RUNTIMES={os.path.abspath(os.path.join(os.path.expanduser('~/.xcore/'), 'runtimes'))}",
         f"DIRECTORY_WEB_INTERFACE_DIR={os.path.join(BASE_DIR, 'web')}",
         # Einstellungen (für benutzernahe Einstellungen)
         f"SETTING_LANGUAGE={locale.getlocale()[0][:2] if locale.getlocale()[0] else 'en'}",
         "SETTING_WEB_INTERFACE_URL=http://0.0.0.0:5000",
         # Konfigurationen (für technische Konfigurationen)
         # CONFIGURATION_ ...
+        # Runtime / Interpreter Pfade
+        f"RUNTIME_BASH={os.path.abspath(os.path.join(os.path.expanduser('~/.xcore/'), 'runtimes', 'bash'))}",
+        f"RUNTIME_JAVA={os.path.abspath(os.path.join(os.path.expanduser('~/.xcore/'), 'runtimes', 'java'))}",
+        f"RUNTIME_NODE={os.path.abspath(os.path.join(os.path.expanduser('~/.xcore/'), 'runtimes', 'node'))}",
+        f"RUNTIME_POWERSHELL={os.path.abspath(os.path.join(os.path.expanduser('~/.xcore/'), 'runtimes', 'powershell'))}",
+        # Runtime Versionen
+        f"RUNTIME_VERSION_BASH=2.50.0",
+        f"RUNTIME_VERSION_NODE=v20.11.1",
+        f"RUNTIME_VERSION_POWERSHELL=7.4.1",
         # Fonts (GUI)
         f"FONT_FIRACODE_BOLD={os.path.join(BASE_DIR, 'gui', 'fonts', 'FiraCode-Bold.ttf')}",
         f"FONT_FIRACODE_LIGHT={os.path.join(BASE_DIR, 'gui', 'fonts', 'FiraCode-Light.ttf')}",
@@ -107,6 +118,7 @@ ensure_env_file()
 
 # Zugriff auf ENV-Variablen
 # Anwendungsverzeichnisse _____________________________________________________
+DIRECTORY_XCORE_BASE = os.getenv("DIRECTORY_XCORE_BASE")
 DIRECTORY_FRAMEWORK = os.getenv("DIRECTORY_FRAMEWORK")
 DIRECTORY_LOGGING = os.getenv("DIRECTORY_LOGGING")
 DIRECTORY_ENV = os.getenv("DIRECTORY_ENV")
@@ -116,11 +128,24 @@ DIRECTORY_CORE = os.getenv("DIRECTORY_CORE")
 DIRECTORY_MODULES = os.getenv("DIRECTORY_MODULES")
 DIRECTORY_DATABASE = os.getenv("DIRECTORY_DATABASE")
 DIRECTORY_GUI = os.getenv("DIRECTORY_GUI")
+DIRECTORY_RUNTIMES = os.getenv("DIRECTORY_RUNTIMES")
 DIRECTORY_WEB_INTERFACE_DIR = os.getenv("DIRECTORY_WEB_INTERFACE_DIR")
 
 # Anwendungseinstellungen / Benutzerkonfigurationen ___________________________
 SETTING_LANGUAGE = os.getenv("SETTING_LANGUAGE")
 SETTING_WEB_INTERFACE_URL = os.getenv("SETTING_WEB_INTERFACE_URL")
+
+# System- / Interpreter Pfade & Versionen _____________________________________
+RUNTIME_PACKAGE = {
+    "DIRECTORY_RUNTIMES": os.getenv("DIRECTORY_RUNTIMES"),
+    "RUNTIME_BASH": os.getenv("RUNTIME_BASH"),
+    "RUNTIME_JAVA": os.getenv("RUNTIME_JAVA"),
+    "RUNTIME_NODE": os.getenv("RUNTIME_NODE"),
+    "RUNTIME_POWERSHELL": os.getenv("RUNTIME_POWERSHELL"),
+    "RUNTIME_VERSION_BASH": os.getenv("RUNTIME_VERSION_BASH"),
+    "RUNTIME_VERSION_NODE": os.getenv("RUNTIME_VERSION_NODE"),
+    "RUNTIME_VERSION_POWERSHELL": os.getenv("RUNTIME_VERSION_POWERSHELL")
+}
 
 # Verwendete Fonts (Schriftarten) _____________________________________________
 FONT_PACKAGE = {
