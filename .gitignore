@@ -4,6 +4,10 @@
 /.venv
 /xcore_framework/.env
 /xcore_framework/database/
+/xcore_framework/runtimes/bash/*
+/xcore_framework/runtimes/java/*
+/xcore_framework/runtimes/node/*
+/xcore_framework/runtimes/powershell/*
 /build/
 /dist/
 /xcore_framework.egg-info/
@@ -17,3 +21,4 @@
 /.pytest_cache
 /xcore_framework/logs/
 /xcore_framework/.init.xcore
+/tmp/

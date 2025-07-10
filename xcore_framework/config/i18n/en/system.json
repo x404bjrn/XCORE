@@ -2,6 +2,9 @@
   "init": "\n{NEUTRAL} {LYW}Initialize system{X}...\n",
   "init_error": "{FAIL} {LYW}Initialization {LRD}failed{X}...",
   "init_success": "{SUCCESS} {LYW}Initialization {LGN}successful{X}...",
+  "init_dir_created": "{SUCCESS} Application directory '{path}' {LGN}successfully{X} created...",
+  "init_dir_not_found": "{FAIL} Application directory not found!...\n{NEUTRAL} Creating application directory...",
+  "init_dir_created_error": "{FAIL} An error occurred while creating the application directory!...\n{FAIL} Error: {error}",
 
 
   "cli_welcome": "\nWelcome to {LMA}XCore{X}.\nType '{YW}help{X}' or '{YW}?{X}' for commands.\n",

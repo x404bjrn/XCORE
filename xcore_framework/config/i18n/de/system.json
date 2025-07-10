@@ -2,6 +2,9 @@
   "init": "\n{NEUTRAL} {LYW}Initialisiere System{X}...\n",
   "init_error": "{FAIL} {LYW}Initialisierung {LRD}fehlgeschlagen{X}...",
   "init_success": "{SUCCESS} {LYW}Initialisierung {LGN}erfolgreich{X}...",
+  "init_dir_created": "{SUCCESS} Anwendungsverzeichnis '{path}' {LGN}erfolgreich{X} erstellt...",
+  "init_dir_not_found": "{FAIL} Anwendungsverzeichnis wurde nicht gefunden!...\n{NEUTRAL} Anwendungsverzeichnis wird erstellt...",
+  "init_dir_created_error": "{FAIL} Beim erstellen des Anwendungsverzeichnisses ist ein Fehler aufgetreten!...\n{FAIL} Fehler: {error}",
 
 
   "cli_welcome": "\nWillkommen bei {LMA}XCore{X}.\nTippe '{YW}help{X}' oder '{YW}?{X}' für Befehle.\n",
