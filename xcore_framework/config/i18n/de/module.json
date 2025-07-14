@@ -21,5 +21,7 @@
 
   "no_active_module": "\n{NEUTRAL} Es ist kein Modul aktiv.\n",
 
-  "execution_started": "\n{NEUTRAL} Modul {module} wird gestartet..\n"
+  "execution_started": "\n{NEUTRAL} Modul {module} wird gestartet..\n",
+
+  "execution_failed": "\n{FAIL} Ausführen des Moduls ist fehlgeschlagen!..\n{FAIL} Fehler: {e}\n"
 }
