@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:ddef8c77f258473ebd240a8665fd85fa4103bf3ac402e227a0c327262854edee"
+content_hash = "sha256:ec31b733f2fa2de21c775d487950763fa527d36aa8dae533eaf59bcde20843f1"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -1019,6 +1019,20 @@ files = [
     {file = "sqlalchemy-2.0.41-cp39-cp39-win_amd64.whl", hash = "sha256:5e22575d169529ac3e0a120cf050ec9daa94b6a9597993d1702884f6954a7d71"},
     {file = "sqlalchemy-2.0.41-py3-none-any.whl", hash = "sha256:57df5dc6fdb5ed1a88a1ed2195fd31927e705cad62dedd86b46972752a80f576"},
     {file = "sqlalchemy-2.0.41.tar.gz", hash = "sha256:edba70118c4be3c2b1f90754d308d0b79c6fe2c0fdc52d8ddf603916f83f4db9"},
+]
+
+[[package]]
+name = "tkcode"
+version = "0.1.6"
+requires_python = ">=3.6"
+summary = "A code editor and code block widget for tkinter with syntax highlighting, and some other useful stuff"
+groups = ["default"]
+dependencies = [
+    "pygments",
+]
+files = [
+    {file = "tkcode-0.1.6-py3-none-any.whl", hash = "sha256:d0706b0e94a7081ec86d197c734d4284c7e292740331015e7703b10988ba5fa4"},
+    {file = "tkcode-0.1.6.tar.gz", hash = "sha256:6b3f37583eb494f8e06730a1b970658319b1a81ca0ba4e06452cf75556b42b3f"},
 ]
 
 [[package]]
