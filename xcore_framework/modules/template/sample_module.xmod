@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "name": "sample_module",
+    "description": "Ermittelt Verzeichnisinhalte (Python) und gibt die Namen aus (Java).",
+    "author": "x404bjrn",
+    "version": "1.0.0",
+    "created": "2025-07-14",
+    "category": "template"
+  },
+  "options": {
+    "target_folder": {
+      "widget_type": "fileexplorer",
+      "required": true,
+      "default": "",
+      "desc": "Zielverzeichnis für Dateiumbenennung"
+    }
+  },
+  "sections": [
+    {
+      "id": "scan_files",
+      "language": "python",
+      "description": "Ermittelt alle Dateien im Zielverzeichnis.",
+      "code": "import os\n\ndef run(params, state):\n    folder = params['target_folder']\n    files = os.listdir(folder)\n    state['files'] = [f for f in files if os.path.isfile(os.path.join(folder, f))]\n    return state"
+    },
+    {
+      "id": "state_control",
+      "language": "java",
+      "description": "Gibt Dateien basierend auf übergebenen Namen aus.",
+      "code": "import java.io.*;\nimport java.util.regex.*;\nimport java.util.*;\n\npublic class RenameFiles {\n    public static void main(String[] args) throws Exception {\n        System.out.println(\">>> Java gestartet\");\n\n        String paramFile = args[0];\n        String stateFile = args[1];\n\n        System.out.println(\">> PARAMETER:\");\n        try (BufferedReader br = new BufferedReader(new FileReader(paramFile))) {\n            String line;\n            while ((line = br.readLine()) != null) {\n                System.out.println(\"  \" + line);\n            }\n        }\n\n        System.out.println(\">> STATE:\");\n        try (BufferedReader br = new BufferedReader(new FileReader(stateFile))) {\n            String line;\n            while ((line = br.readLine()) != null) {\n                System.out.println(\"  \" + line);\n            }\n        }\n\n        // Beispiel: State könnte auch modifiziert werden (hier optional)\n        try (PrintWriter writer = new PrintWriter(stateFile)) {\n            writer.println(\"{\");\n            writer.println(\"  \\\"status\\\": \\\"checked by Java\\\"\");\n            writer.println(\"}\");\n        }\n\n        System.out.println(\">>> Java beendet\");\n    }\n}\n"
+    }
+  ]
+}

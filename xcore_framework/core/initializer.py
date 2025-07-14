@@ -51,6 +51,14 @@ def initialize():
             # (Wenn nicht, dann downloaden und ablegen)
             check_runtimes()
 
+            # Prüfen ob XCORE Arbeitsverzeichnis (der Module) existiert
+            if not os.path.exists(os.path.join(XCORE_BASE_DIRECTORY, "workspace")):
+                os.makedirs(os.path.join(XCORE_BASE_DIRECTORY, "workspace"), exist_ok=True)
+                # TODO Statt Print LOGGER einarbeiten
+                print(
+                    i18n.t("system.init_module_dir_created", path=os.path.join(XCORE_BASE_DIRECTORY, "workspace")),
+                )
+
             # INFO: Hier weitere Initialisierungen bei Bedarf hinzufügen
             # ...
 

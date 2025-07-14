@@ -3,13 +3,14 @@
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
 import cmd
+import os.path
 
 from xcore_framework.config.banner import show_banner, show_basic_banner
 from xcore_framework.config.i18n import i18n
 from xcore_framework.config.formatting import formatter, strip_ansi
 from xcore_framework.config.env import set_env_key
 
-from xcore_framework.core.module_loader import ModuleLoader
+from xcore_framework.core import xmod_manager
 from xcore_framework.core.database_manager import DatabaseManager
 
 try:
@@ -51,7 +52,7 @@ class XCoreShell(cmd.Cmd):
         """
         super().__init__()
         self.db = DatabaseManager()
-        self.loader = ModuleLoader()
+        self.loader = xmod_manager
         self.current_module = None
         self.options = {}
 
@@ -60,7 +61,7 @@ class XCoreShell(cmd.Cmd):
         """Rückgabe des Prompts."""
         return i18n.t(
             "system.cli_prompt",
-            current_module=self.current_module.name if self.current_module else "xcore",
+            current_module=self.current_module.get_name() if self.current_module else "xcore",
         )
 
     def default(self, line):
@@ -68,17 +69,11 @@ class XCoreShell(cmd.Cmd):
         self.stdout.write(i18n.t("system.error_unknown_command", line=line) + "\n")
 
     def do_search(self, arg):
-        """
-        Durchsucht verfügbare Module nach einem Suchbegriff.
-        Gibt eine Liste aller Module aus, deren Name den übergebenen Begriff enthält.
-        """
         results = self.loader.search_modules(arg)
-
-        # Ausgabe der Suchergebnisse (Banner)
         show_basic_banner(i18n.t("header.search_results"))
 
-        for module in results:
-            print(i18n.t("module.found", module=module))
+        for rel_path, name in results:
+            print(i18n.t("module.found", module=f"{rel_path}/{name}"))
 
         print("╚" + ("═" * 58) + "╝\n")
 
@@ -95,16 +90,14 @@ class XCoreShell(cmd.Cmd):
         return [m for m in self.loader.search_modules("") if m.startswith(text)]
 
     def do_use(self, path):
-        """
-        Lädt ein Modul anhand seines Pfads.
-        Nach dem Laden wird das Modul aktiviert und seine Optionen stehen zur Verfügung.
-        """
-        module = self.loader.load_module(path)
+        module = self.loader.load_module(path, as_instance=True)
         if module:
             self.current_module = module
-            self.options = {k: v["default"] for k, v in module.options.items()}
-            print(i18n.t("module.loaded", module=module.name))
-
+            self.options = {
+                key: val.get("default", "")
+                for key, val in module.options.items()
+            }
+            print(i18n.t("module.loaded", module=module.get_name()))
         else:
             print(i18n.t("module.not_found"))
 
@@ -121,27 +114,21 @@ class XCoreShell(cmd.Cmd):
         return [m for m in self.loader.search_modules("") if m.startswith(text)]
 
     def do_list(self, arg):
-        """
-        Zeigt eine Übersicht aller verfügbaren Module mit Kurzbeschreibung.
-        """
-        modules = self.loader.search_modules("")
+        modules = self.loader.get_all_modules()
         if not modules:
             print(i18n.t("module.no_modules_found"))
             return
 
-        # Ausgabe der XCORE Modulliste (Banner)
         show_basic_banner(i18n.t("header.module_list"))
 
-        for mod_path in sorted(modules):
-            mod = self.loader.load_module(mod_path)
+        for rel_path, name in sorted(modules):
+            mod = self.loader.load_module(str(os.path.join(rel_path, name)))
             if mod:
-                print(
-                    "  {LBE}▶{X} {name}\n    - {desc}".format(
-                        name=f"{mod.name:<30}",
-                        desc=f"{mod.description[:49]}...",
-                        **formatter,
-                    )
-                )
+                print("  {LBE}▶{X} {name}\n    - {desc}".format(
+                    name=f"{mod['meta']['name']:<30}",
+                    desc=f"{mod['meta']['description'][:49]}...",
+                    **formatter,
+                ))
 
         print("╚" + ("═" * 58) + "╝\n")
 
@@ -156,7 +143,7 @@ class XCoreShell(cmd.Cmd):
         Bei leerem Argument wird das aktuell geladene Modul verwendet.
         """
         if arg:
-            module = self.loader.load_module(arg)
+            module = self.loader.load_module(arg, as_instance=True)
             if not module:
                 print(i18n.t("module.not_found"))
                 return
@@ -171,11 +158,11 @@ class XCoreShell(cmd.Cmd):
         # Ausgabe der Modulinformationen (Banner)
         show_banner(
             "cli_module_info_banner",
-            name=module.name,
-            desc=module.description,
-            author=getattr(module, "author", "Unbekannt"),
-            version=getattr(module, "version", "1.0.0"),
-            created=getattr(module, "created", "n/a"),
+            name=module.get_name(),
+            desc=module.get_description()[:49] + "...",
+            author=module.get_author(),
+            version=module.get_version(),
+            created=module.get_created(),
         )
 
     @staticmethod
@@ -281,20 +268,14 @@ class XCoreShell(cmd.Cmd):
         return [k for k in self.options.keys() if k.startswith(text)]
 
     def do_run(self, arg):
-        """
-        Führt das aktuell geladene Modul mit den gesetzten Parametern aus.
-        Vor der Ausführung wird geprüft, ob alle Pflichtparameter gesetzt sind.
-        """
         if not self.current_module:
             print(i18n.t("module.no_module"))
             return
 
         missing = [
-            k
-            for k, v in self.current_module.options.items()
-            if v["required"] and not self.options.get(k)
+            k for k, v in self.current_module.options.items()
+            if v.get("required") and not self.options.get(k)
         ]
-
         if missing:
             print(i18n.t("module.missing_fields", fields=", ".join(missing)))
             return
@@ -311,7 +292,7 @@ class XCoreShell(cmd.Cmd):
         Beendet das aktuell geladene Modul und kehrt zum vorherigen Zustand zurück.
         """
         if self.current_module:
-            print(i18n.t("module.module_closed", module=self.current_module.name))
+            print(i18n.t("module.module_closed", module=self.current_module.get_name()))
             self.current_module = None
             self.options = {}
 
@@ -477,7 +458,7 @@ class XCoreShell(cmd.Cmd):
                 print()
                 return
 
-            designation = f"options::{strip_ansi(self.current_module.name)}"
+            designation = f"options::{strip_ansi(self.current_module.get_name())}"
             try:
                 import json
 
@@ -486,7 +467,7 @@ class XCoreShell(cmd.Cmd):
                 if success:
                     print(
                         i18n.t(
-                            "database.options_saved", module=self.current_module.name
+                            "database.options_saved", module=self.current_module.get_name()
                         )
                     )
             except Exception as e:
@@ -542,7 +523,7 @@ class XCoreShell(cmd.Cmd):
                 print()
                 return
 
-            designation = f"options::{strip_ansi(self.current_module.name)}"
+            designation = f"options::{strip_ansi(self.current_module.get_name())}"
             import json
 
             for name, content in self.db.load_content(designation_filter=designation):
@@ -551,7 +532,7 @@ class XCoreShell(cmd.Cmd):
                     self.options.update(loaded)
                     print(
                         i18n.t(
-                            "database.options_loaded", module=self.current_module.name
+                            "database.options_loaded", module=self.current_module.get_name()
                         )
                     )
                     print()
@@ -560,7 +541,7 @@ class XCoreShell(cmd.Cmd):
                     print(i18n.t("database.options_load_failed", e=str(e)))
                     print()
                     return
-            print(i18n.t("database.no_saved_options", module=self.current_module.name))
+            print(i18n.t("database.no_saved_options", module=self.current_module.get_name()))
 
         # INFO: Hier können weitere Unterbefehle für den 'load' Befehl hinzugefügt werden..
         else:

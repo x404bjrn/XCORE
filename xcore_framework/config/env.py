@@ -64,6 +64,7 @@ def ensure_env_file(path=DOTENV_PATH):
     default_env = [
         # Verzeichnisse
         f"DIRECTORY_XCORE_BASE={os.path.expanduser('~/.xcore/')}",
+        f"DIRECTORY_WORKSPACE={os.path.join(os.path.expanduser('~/.xcore/'), 'workspace')}",
         f"DIRECTORY_FRAMEWORK={BASE_DIR}",
         f"DIRECTORY_LOGGING={os.path.join(BASE_DIR, 'logs')}",
         f"DIRECTORY_ENV={os.path.join(BASE_DIR, '.env')}",
@@ -119,6 +120,7 @@ ensure_env_file()
 # Zugriff auf ENV-Variablen
 # Anwendungsverzeichnisse _____________________________________________________
 DIRECTORY_XCORE_BASE = os.getenv("DIRECTORY_XCORE_BASE")
+DIRECTORY_WORKSPACE = os.getenv("DIRECTORY_WORKSPACE")
 DIRECTORY_FRAMEWORK = os.getenv("DIRECTORY_FRAMEWORK")
 DIRECTORY_LOGGING = os.getenv("DIRECTORY_LOGGING")
 DIRECTORY_ENV = os.getenv("DIRECTORY_ENV")

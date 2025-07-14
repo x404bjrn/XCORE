@@ -9,7 +9,7 @@ from functools import partial
 from PIL import ImageTk, Image
 from tkinter import ttk, messagebox
 
-from xcore_framework.core.module_loader import ModuleLoader
+from xcore_framework.core import xmod_manager
 from xcore_framework.gui.widget_factory import create_widget_by_meta
 from xcore_framework.core.database_manager import DatabaseManager
 from xcore_framework.config.env import DIRECTORY_GUI, SETTING_LANGUAGE, FONT_PACKAGE
@@ -121,7 +121,7 @@ class XCoreGUI:
         self._dcoords = dcoords
         self._dimages = dimages
         self.db = DatabaseManager()
-        self.loader = ModuleLoader()
+        self.loader = xmod_manager
         self.current_module = None
         self.option_widgets = {}
 
@@ -834,8 +834,8 @@ class XCoreGUI:
         self.clear_frame(self.options_frame)
         self.option_widgets.clear()
 
-        mod_id = self.module_var.get()
-        mod = self.loader.load_module(mod_id)
+        mod_id = self.module_var.get().split(" ")
+        mod = self.loader.load_module(f"{mod_id[0]}/{mod_id[1]}", as_instance=True)
         if not mod:
             return
 
@@ -879,7 +879,7 @@ class XCoreGUI:
             values[name] = val if not isinstance(val, bool) else str(val)
         try:
             result = self.current_module.run(
-                values, mode="gui", gui_console=self.console_output
+                params=values, mode="gui", gui_console=self.console_output
             )
             if result.get("success"):
                 messagebox.showinfo(
