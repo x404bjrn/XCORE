@@ -27,7 +27,7 @@ def setup_logger(name: str, file_handler=True, con_handler=False):
 
     if file_handler and not has_file_handler:
         file_log_handler = RotatingFileHandler(
-            log_path, maxBytes=1_000_000, backupCount=5
+            log_path, maxBytes=1_000_000, backupCount=5, encoding="utf-8"
         )
         file_log_handler.setFormatter(
             logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")

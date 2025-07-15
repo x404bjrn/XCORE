@@ -2,17 +2,42 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
+# TODO: Pakete / Modul installationen (npm, pip etc. - ermöglichen und sinnvoll einarbeiten)
 import os
 import json
-import tempfile
-import subprocess
-import importlib.util
+import platform
 
 from typing import Optional
 
-from xcore_framework.config.env import RUNTIME_PACKAGE, DIRECTORY_MODULES
+from xcore_framework.config.env import DIRECTORY_WORKSPACE, DIRECTORY_MODULES
 from xcore_framework.config.formatting import strip_ansi
 from xcore_framework.core.logger import setup_logger
+
+
+def get_current_os() -> str:
+    system = platform.system().lower()
+    if "windows" in system:
+        return "windows"
+    elif "darwin" in system:
+        return "osx"
+    elif "linux" in system:
+        return "linux"
+    else:
+        return "unknown"
+
+
+def is_module_os_compatible(meta: dict) -> bool:
+    current_os = get_current_os()
+    os_list = meta.get("os")
+
+    if not os_list:
+        # Kein OS definiert → Modul gilt als global kompatibel
+        return True
+
+    if isinstance(os_list, str):
+        os_list = [os_list]
+
+    return current_os in [entry.lower() for entry in os_list]
 
 
 class Xmod:
@@ -21,6 +46,9 @@ class Xmod:
         self.meta = data.get("meta", {})
         self.options = data.get("options", {})
         self.sections = data.get("sections", [])
+
+        # Deklariere und initialisiere globales Arbeitsverzeichnis
+        self.workdir = DIRECTORY_WORKSPACE
 
         # Initialisiere Logger Objekt
         self.logger = None
@@ -48,6 +76,20 @@ class Xmod:
             self.logger.error(msg)
         else:
             self.logger.info(msg)
+
+
+    def log_exec_info(self, state: dict, section_id: str):
+        exec_info = state.get("__exec__", {})
+
+        if not exec_info.get("success"):
+            # Direkt Fehler abfangen und im Log protokollieren
+            self.log(f"❌ Fehler in Section <{section_id}>: {exec_info.get('stderr')}", level="error")
+
+        elif exec_info.get("success"):
+            # Erfolgreiche Ausführung der Section im Log protokollieren
+            self.log(f"✅ Section <{section_id}> erfolgreich ausgeführt")
+
+        self.log(f"🔙 Rückgabecode: {exec_info.get('returncode')}")
 
 
     def save(self, path: str) -> None:
@@ -83,6 +125,10 @@ class Xmod:
         return self.meta.get("category", "n/a")
 
 
+    def get_os(self) -> str:
+        return self.meta.get("os", "n/a")
+
+
     def get_languages(self) -> list[str]:
         return list({s.get("language", "n/a") for s in self.sections})
 
@@ -108,16 +154,33 @@ class Xmod:
 
 
     def run(self, params: dict, initial_state: Optional[dict] = None, mode="cli", gui_console=None) -> dict:
-        self.log("Methode 'run' wird gestartet")
+        self.log("▶️ Methode 'run' wird gestartet")
         state = initial_state or {}
 
-        for section in self.sections:
-            self.log(f"lade 'section' <{section['id']}>")
-            state = run_section(section, params, state, mode, gui_console)
-            self.log(f"'section' <{section['id']}> abgeschlossen")
+        from xcore_framework.core.runtime_executor import XCoreRuntimeExecutor
+        runtime_executor = XCoreRuntimeExecutor(working_dir=self.workdir)
 
-        self.log("Methode 'run' abgeschlossen")
+        for section in self.sections:
+            self.log(f"🚀 lade 'section' <{section['id']}>")
+
+            # Section für Section ausführen mit jeweiligem Runtime (Interpreter)
+            state = runtime_executor.execute(section, params, state, mode, gui_console)
+            self.log_exec_info(state, section['id'])
+
+            # INFO: Ausgabe der Ausführungsinformationen (Wenn nicht gewünscht, dann auskommentieren)
+            print_exec_info(state)
+
+        self.log("⏹️ Methode 'run' abgeschlossen")
         return state
+
+
+def print_exec_info(state):
+    info = state.get("__exec__", {})
+    print("✅ Erfolgreich:", info.get("success"))
+    print("📤 stdout:", info.get("stdout"))
+    print("📥 stderr:", info.get("stderr"))
+    print("⏎ Rückgabecode:", info.get("returncode"))
+    print()
 
 
 def load_xmod(path: str):
@@ -144,9 +207,15 @@ def get_all_modules(base_dir=DIRECTORY_MODULES):
                     path = os.path.join(root, file)
                     with open(path, "r", encoding="utf-8") as f:
                         content = json.load(f)
-                        modulname = content.get("meta", {}).get("name", os.path.splitext(file)[0])
+
+                        meta = content.get("meta", {})
+                        if not is_module_os_compatible(meta):
+                            continue  # überspringen, wenn OS inkompatibel
+
+                        modulname = meta.get("name", os.path.splitext(file)[0])
                         relative_root = os.path.relpath(root, base_dir)
                         found.append((relative_root, modulname))
+
                 except Exception as e:
                     print(f"Fehler beim Lesen von {file}: {e}")
     return found
@@ -162,147 +231,20 @@ def search_modules(keyword: str, base_dir=DIRECTORY_MODULES):
                     path = os.path.join(root, file)
                     with open(path, "r", encoding="utf-8") as f:
                         content = json.load(f)
+
                         meta = content.get("meta", {})
+                        if not is_module_os_compatible(meta):
+                            continue
+
                         name = meta.get("name", "")
                         desc = meta.get("description", "")
                         cat = meta.get("category", "")
                         author = meta.get("author", "")
+
                         if any(keyword in val.lower() for val in [name, desc, cat, author]):
                             relative_root = os.path.relpath(root, base_dir)
                             results.append((relative_root, name))
+
                 except Exception as e:
                     print(f"Fehler beim Lesen von {file}: {e}")
     return results
-
-
-def run_section(section, params, state, mode="cli", gui_console=None):
-    lang = section["language"]
-    code = section["code"]
-
-    if lang == "python":
-        return run_python_section(code, params, state, mode, gui_console)
-
-    elif lang == "java":
-        return run_java_section(code, params, state)
-
-    elif lang == "bash":
-        return run_bash_section(code, params, state)
-
-    elif lang == "powershell":
-        return run_powershell_section(code, params, state)
-
-    else:
-        raise ValueError(f"Nicht unterstützte Sprache: {lang}")
-
-
-def run_bash_section(code: str, params: dict, state: dict):
-    tempdir = tempfile.mkdtemp()
-    bash_file = os.path.join(tempdir, "script.sh")
-    param_file = os.path.join(tempdir, "params.json")
-    state_file = os.path.join(tempdir, "state.json")
-
-    with open(bash_file, "w", encoding="utf-8") as f:
-        f.write(code)
-
-    os.chmod(bash_file, 0o755)
-
-    with open(param_file, "w") as f:
-        json.dump(params, f)
-
-    with open(state_file, "w") as f:
-        json.dump(state, f)
-
-    subprocess.run([
-        "bash",
-        bash_file,
-        param_file,
-        state_file
-    ], check=True)
-
-    with open(state_file) as f:
-        return json.load(f)
-
-
-def run_powershell_section(code: str, params: dict, state: dict):
-    tempdir = tempfile.mkdtemp()
-    ps1_file = os.path.join(tempdir, "script.ps1")
-    param_file = os.path.join(tempdir, "params.json")
-    state_file = os.path.join(tempdir, "state.json")
-
-    with open(ps1_file, "w", encoding="utf-8") as f:
-        f.write(code)
-
-    with open(param_file, "w") as f:
-        json.dump(params, f)
-
-    with open(state_file, "w") as f:
-        json.dump(state, f)
-
-    subprocess.run([
-        "powershell",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        ps1_file,
-        param_file,
-        state_file
-    ], check=True)
-
-    with open(state_file) as f:
-        return json.load(f)
-
-
-def run_python_section(code: str, params: dict, state: dict, mode="cli", gui_console=None):
-    with tempfile.NamedTemporaryFile(suffix=".py", delete=False, mode="w") as temp:
-        temp.write(code + "\n\nresult = run(params, state)")
-        temp_path = temp.name
-
-    spec = importlib.util.spec_from_file_location("mod", temp_path)
-    mod = importlib.util.module_from_spec(spec)
-
-    # Übergabe von Variablen
-    mod.params = params
-    mod.state = state
-    mod.mode = mode
-    mod.gui_console = gui_console
-
-    spec.loader.exec_module(mod)
-    os.unlink(temp_path)
-
-    return mod.result
-
-
-def run_java_section(code: str, params: dict, state: dict):
-    # Temporäre Datei schreiben
-    tempdir = tempfile.mkdtemp()
-    java_file = os.path.join(tempdir, "RenameFiles.java")
-
-    with open(java_file, "w", encoding="utf-8") as f:
-        f.write(code)
-
-    # Kompilieren
-    subprocess.run([
-        rf"{RUNTIME_PACKAGE['DIRECTORY_RUNTIMES']}\java\jdk-20.0.2+9\bin\javac.exe",
-        java_file
-    ], check=True)
-
-    # Daten über temporäre JSON-Dateien austauschen
-    with open(os.path.join(tempdir, "params.json"), "w") as f:
-        json.dump(params, f)
-
-    with open(os.path.join(tempdir, "state.json"), "w") as f:
-        json.dump(state, f)
-
-    # Java ausführen (z. B. mit Übergabe von Dateipfaden)
-    subprocess.run([
-        rf"{RUNTIME_PACKAGE['DIRECTORY_RUNTIMES']}\java\jdk-20.0.2+9\bin\java.exe",
-        "-cp",
-        tempdir,
-        "RenameFiles",
-        os.path.join(tempdir, "params.json"),
-        os.path.join(tempdir, "state.json")
-    ], check=True)
-
-    # Ergebnisse wieder einlesen
-    with open(os.path.join(tempdir, "state.json")) as f:
-        return json.load(f)
