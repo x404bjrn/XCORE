@@ -5,7 +5,7 @@
 from xcore_framework.config.formatting import strip_ansi
 
 
-class ResultFeedbackSystem:
+class XmodResultFeedbackSystem:
     def __init__(self):
         self.output = []
         self.results = []
