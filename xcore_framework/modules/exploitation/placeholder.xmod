@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "name": "",
+    "description": "",
+    "author": "",
+    "version": "",
+    "created": "",
+    "category": "",
+    "os": ["windows", "linux", "osx"]
+  },
+  "options": {
+    "target_folder": {
+      "type": "",
+      "widget_type": "",
+      "required": true,
+      "default": "",
+      "desc": ""
+    }
+  },
+  "sections": [
+    {
+      "id": "",
+      "language": "",
+      "description": "",
+      "code": ""
+    }
+  ]
+}
