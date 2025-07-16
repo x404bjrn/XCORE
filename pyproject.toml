@@ -41,6 +41,7 @@ dependencies = [
     "datetime>=5.5",
     "tqdm>=4.67.1",
     "tkcode>=0.1.6",
+    "chlorophyll>=0.4.2",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -64,7 +65,7 @@ dev = ["pytest", "flake8", "black", "mypy"]
 xcore = "xcore_framework.__main__:main"
 
 [tool.setuptools]
-packages = ['xcore_framework', 'xcore_framework.config', 'xcore_framework.core', 'xcore_framework.gui', 'xcore_framework.modules', 'xcore_framework.setpoint', 'xcore_framework.web', 'xcore_framework.config.i18n', 'xcore_framework.modules', 'xcore_framework.modules.ai', 'xcore_framework.modules.creative', 'xcore_framework.modules.exploitation', 'xcore_framework.modules.helper', 'xcore_framework.modules.monitor', 'xcore_framework.modules.osint', 'xcore_framework.modules.persistence', 'xcore_framework.modules.scanner', 'xcore_framework.modules.system', 'xcore_framework.modules.template', 'xcore_framework.modules.transfer', 'xcore_framework.modules.utilities', 'xcore_framework.editor', 'xcore_framework.web.app', 'xcore_framework.runtimes', 'xcore_framework.runtimes.feedback']
+packages = ['xcore_framework', 'xcore_framework.config', 'xcore_framework.core', 'xcore_framework.gui', 'xcore_framework.modules', 'xcore_framework.setpoint', 'xcore_framework.web', 'xcore_framework.config.i18n', 'xcore_framework.modules', 'xcore_framework.modules.ai', 'xcore_framework.modules.creative', 'xcore_framework.modules.exploitation', 'xcore_framework.modules.helper', 'xcore_framework.modules.monitor', 'xcore_framework.modules.osint', 'xcore_framework.modules.persistence', 'xcore_framework.modules.scanner', 'xcore_framework.modules.system', 'xcore_framework.modules.template', 'xcore_framework.modules.transfer', 'xcore_framework.modules.utilities', 'xcore_framework.editor', 'xcore_framework.web.app']
 include-package-data = true
 
 [tool.pdm.scripts]
