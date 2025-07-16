@@ -2,88 +2,117 @@
 # Copyright (C) 2025, Xeniorn | x404bjrn
 # Lizenziert - siehe LICENSE Datei für Details
 # ─────────────────────────────────────────────────────────────────────────────
-# INFO: Eine Sammlung von Modul (Code) Templates der verschiedenen
+# INFO: Eine Sammlung von Moduleditor Templates der verschiedenen
 #  Programmiersprachen. Diese können hier ganz einfach und flexibel erweiter
 #  werden.
 
 
 SECTION_TEMPLATES = {
-    "python": """from xcore_framework.runtime.feedback.python_feedback import XmodResultFeedbackSystem
-
-def run(params, state):
-    fb = XmodResultFeedbackSystem()
-    fb.mode = params.get("_mode", "cli")
-
+    "python": """def run(params, state):
+    
+    # Modul-Arbeitsverzeichnis abrufen
     workdir = params['_working_dir']
+    
     output = ["Python section started in " + workdir]
 
+    # Gruß hinzufügen zum State
     state['greeting'] = "Hey!"
-
-    fb.feedback(output, state)
-    return state""",
+    
+    # Printausgaben
+    print([state['greeting']])
+    print(output, state)
+    
+    # State zurückschreiben
+    return state
+""",
 
     "bash": """#!/bin/bash
-source ./xcore_framework/runtime/feedback/bash_feedback.sh
 
-params_file=\"$1\"
-state_file=\"$2\"
+PARAM_FILE="$1"
+STATE_FILE="$2"
 
-params=$(<\"$params_file\")
-state=$(<\"$state_file\")
+WORKDIR=$(jq -r '._working_dir' "$PARAM_FILE")
+echo "Bash section started in $WORKDIR"
 
-workdir=$(echo \"$params\" | jq -r '._working_dir')
-output=(\"Bash section started in $workdir\")
+# Aktuellen State laden
+STATE=$(cat "$STATE_FILE")
 
-state_json='{"greeting":"Hey!"}'
+# Gruß hinzufügen
+STATE=$(echo "$STATE" | jq '.greeting = "Hey!"')
 
-feedback output[@] \"$state_json\" \"cli\"""",
+# Ausgabe der Begrüßung
+echo "[\"$(echo "$STATE" | jq -r '.greeting')\"]"
 
-    "powershell": """. .\\xcore_framework\\runtime\\feedback\\ps_feedback.ps1
+# Neue Ausgabe + State anzeigen
+echo "$STATE"
 
-$params = Get-Content $args[0] | ConvertFrom-Json
-$state = Get-Content $args[1] | ConvertFrom-Json
+# State zurückschreiben
+echo "$STATE" > "$STATE_FILE"
+""",
+
+    "powershell": """param (
+    [string]$paramFile,
+    [string]$stateFile
+)
+
+$params = Get-Content $paramFile | ConvertFrom-Json
+$state = Get-Content $stateFile | ConvertFrom-Json
 
 $workdir = $params._working_dir
-$output = @("PowerShell section started in $workdir")
+Write-Host "PowerShell section started in $workdir"
 
+# Gruß setzen
 $state.greeting = "Hey!"
 
-$fb = New-Object XmodResultFeedbackSystem
-$fb.mode = $params._mode
-$fb.feedback($output, $state)""",
+# Ausgabe der Begrüßung
+Write-Host "[$($state.greeting)]"
+
+# State anzeigen
+$state | ConvertTo-Json -Depth 10 | Write-Host
+
+# Zurückschreiben
+$state | ConvertTo-Json -Depth 10 | Set-Content $stateFile
+""",
 
     "java": """import java.io.*;
 import java.nio.file.*;
 import org.json.*;
-import xcore_framework.runtime.feedback.JavaFeedback;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         JSONObject params = new JSONObject(Files.readString(Path.of(args[0])));
-        JSONObject state  = new JSONObject(Files.readString(Path.of(args[1])));
+        JSONObject state = new JSONObject(Files.readString(Path.of(args[1])));
 
         String workdir = params.getString("_working_dir");
-        String[] output = {"Java section started in " + workdir};
+        System.out.println("Java section started in " + workdir);
 
-        JavaFeedback fb = new JavaFeedback();
-        fb.mode = "cli";
-        fb.feedback(output, "{\'greeting\': \'Hey!\'}");
+        state.put("greeting", "Hey!");
+
+        System.out.println("[\"" + state.getString("greeting") + "\"]");
+
+        System.out.println(state.toString(2));
+
+        Files.writeString(Path.of(args[1]), state.toString(2));
     }
-}""",
+}
+""",
 
-    "node": """import { XmodResultFeedbackSystem } from \"./xcore_framework/runtime/feedback/node_feedback.js\";
+    "node": """const fs = require("fs");
 
-const fb = new XmodResultFeedbackSystem();
-fb.mode = process.env._MODE || \"cli\";
-
-const fs = require("fs");
+// Argumente: [0]=node, [1]=scriptname, [2]=params, [3]=state
 const [,, paramPath, statePath] = process.argv;
 
 const params = JSON.parse(fs.readFileSync(paramPath, "utf8"));
 const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
 
-const output = ["Node section started in " + params._working_dir];
+const workdir = params._working_dir;
+console.log("Node.js section started in " + workdir);
+
 state.greeting = "Hey!";
 
-fb.feedback(output, state);"""
+console.log([state.greeting]);
+console.log(JSON.stringify(state, null, 2));
+
+fs.writeFileSync(statePath, JSON.stringify(state, null, 2));
+"""
 }

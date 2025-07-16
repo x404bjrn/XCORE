@@ -5,9 +5,10 @@
 # TODO: Fertigstellen / erweitern / optimieren
 import json
 import tkinter as tk
+import pygments.lexers
 
 from tkinter import ttk, filedialog, messagebox
-from tkcode import CodeEditor
+from chlorophyll import CodeView
 
 from xcore_framework.editor.module_templates import SECTION_TEMPLATES
 
@@ -27,8 +28,19 @@ class ScrollableFrame(ttk.Frame):
         canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
 
-        canvas.pack(side="left", fill="both", expand=True)
+        canvas.pack(side="left", fill="both", expand=True, padx=8)
         scrollbar.pack(side="right", fill="y")
+
+        def _on_mousewheel(event):
+            """
+            Scrollen mit dem Mausrad.
+            """
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        self.scrollable_frame.bind(
+            "<Enter>", lambda e: canvas.bind_all("<MouseWheel>", _on_mousewheel)
+        )
+        self.scrollable_frame.bind("<Leave>", lambda e: canvas.unbind_all("<MouseWheel>"))
 
 
 class ModuleCreatorGUI:
@@ -158,6 +170,18 @@ class ModuleCreatorGUI:
         self.option_entries.append(fields)
         self.resize_to_fit()
 
+        remove_btn = ttk.Button(row, text="✕", width=2, command=lambda: self.remove_option(row))
+        remove_btn.pack(side="left", padx=2)
+
+
+    def remove_option(self, row):
+        for opt in self.option_entries:
+            if opt["name"].master == row:
+                self.option_entries.remove(opt)
+                break
+        row.destroy()
+        self.resize_to_fit()
+
 
     def resize_to_fit(self):
         self.root.update_idletasks()
@@ -190,7 +214,7 @@ class ModuleCreatorGUI:
         desc_entry = ttk.Entry(desc_row)
         desc_entry.pack(fill="x", expand=True)
 
-        editor = CodeEditor(section_frame, language="python", height=12, width=80, highlighter="dracula", blockcursor=True)
+        editor = CodeView(section_frame, lexer=pygments.lexers.RustLexer, color_scheme="monokai", linenums_border=True, font=("monospace", 9))
         editor.pack(fill="x", expand=True, padx=5, pady=5)
 
         # Callback: Wenn Sprache geändert wird, aktualisiere Code
@@ -224,6 +248,102 @@ class ModuleCreatorGUI:
 
             # Fenstergröße automatisch anpassen
             self.resize_to_fit()
+
+        # Button-Reihe für Aktionen
+        btn_row = ttk.Frame(section_frame)
+        btn_row.pack(fill="x", padx=5, pady=5)
+
+        ttk.Button(btn_row, text="⬆️", width=2, command=lambda: self.move_section_up(section)).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="⬇️", width=2, command=lambda: self.move_section_down(section)).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="🗑️", width=3, command=lambda: self.remove_section(section)).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="▶️ Test", command=lambda: self.test_section_code(section)).pack(side="left", padx=10)
+
+
+    def remove_section(self, section):
+        if messagebox.askyesno("Bestätigen", "Diese Section wirklich löschen?"):
+            section["frame"].destroy()
+            self.sections.remove(section)
+            self.refresh_section_titles()
+
+
+    def move_section_up(self, section):
+        idx = self.sections.index(section)
+        if idx > 0:
+            self.sections[idx], self.sections[idx - 1] = self.sections[idx - 1], self.sections[idx]
+            self.refresh_sections()
+
+
+    def move_section_down(self, section):
+        idx = self.sections.index(section)
+        if idx < len(self.sections) - 1:
+            self.sections[idx], self.sections[idx + 1] = self.sections[idx + 1], self.sections[idx]
+            self.refresh_sections()
+
+
+    def refresh_sections(self):
+        for sec in self.sections:
+            sec["frame"].pack_forget()
+        for sec in self.sections:
+            sec["frame"].pack(fill="x", expand=True, padx=5, pady=5)
+        self.refresh_section_titles()
+
+
+    def refresh_section_titles(self):
+        for idx, sec in enumerate(self.sections):
+            sec["frame"].configure(text=f"Section {idx + 1}")
+
+
+    def open_result_window(self, result_state):
+        win = tk.Toplevel(self.root)
+        win.title("Section Execution Result")
+        win.geometry("800x400")
+
+        text_area = tk.Text(win, wrap="word", bg="#1e1e1e", fg="#ffffff", insertbackground="white")
+        text_area.pack(fill="both", expand=True)
+
+        exec_info = result_state.get("__exec__", {})
+        stdout = exec_info.get("stdout", "")
+        stderr = exec_info.get("stderr", "")
+        code = exec_info.get("returncode", "?")
+        success = exec_info.get("success", False)
+
+        # Weitergabe-Daten anzeigen (alles außer __exec__)
+        payload = {k: v for k, v in result_state.items() if k != "__exec__"}
+        if payload:
+            xx = json.dumps(payload, indent=2, ensure_ascii=False)
+        else:
+            xx = "– (nichts)"
+
+        text_area.insert("end", "✅ Erfolgreich: " + str(success) + "\n\n")
+        text_area.insert("end", "📤 stdout:\n" + (stdout or "–") + "\n\n")
+        text_area.insert("end", "📥 stderr:\n" + (stderr or "–") + "\n\n")
+        text_area.insert("end", "⏎ Rückgabecode: " + str(code) + "\n\n")
+        text_area.insert("end", "State:\n" + xx + "\n\n")
+
+        text_area.configure(state="disabled")
+
+
+    def test_section_code(self, section):
+        from xcore_framework.core.runtime_executor import XCoreRuntimeExecutor
+
+        lang = section["language"].get()
+        code = section["code_widget"].get("1.0", "end-1c")
+
+        params = {"_mode": "gui"}  # Dummy-Params
+        state = {}
+
+        # Section-Daten übergeben
+        executor = XCoreRuntimeExecutor()
+        section_dict = {
+            "id": section["id"].get(),
+            "language": lang,
+            "description": section["description"].get(),
+            "code": code
+        }
+
+        result_state = executor.execute(section_dict, params, state, mode="gui")
+
+        self.open_result_window(result_state)
 
 
     def generate_module(self):

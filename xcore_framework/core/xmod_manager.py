@@ -165,10 +165,21 @@ class Xmod:
 
             # Section für Section ausführen mit jeweiligem Runtime (Interpreter)
             state = runtime_executor.execute(section, params, state, mode, gui_console)
+
+            # INFO: Log Eintrag
             self.log_exec_info(state, section['id'])
 
             # INFO: Ausgabe der Ausführungsinformationen (Wenn nicht gewünscht, dann auskommentieren)
             print_exec_info(state)
+
+            # Wenn GUI-Mode, dann Ausgabe in Konsolen Widget
+            if mode == "gui" and gui_console is not None:
+                info = state.get("__exec__", {})
+                gui_console.configure(state="normal")
+                gui_console.insert("end", info.get("stdout") + "\n")
+                gui_console.update()
+                gui_console.see("end")  # automatisch scrollen
+                gui_console.configure(state="disabled")
 
         self.log("⏹️ Methode 'run' abgeschlossen")
         return state
@@ -176,11 +187,20 @@ class Xmod:
 
 def print_exec_info(state):
     info = state.get("__exec__", {})
+
     print("✅ Erfolgreich:", info.get("success"))
-    print("📤 stdout:", info.get("stdout"))
-    print("📥 stderr:", info.get("stderr"))
+    print("📤 stdout:\n", info.get("stdout") or "-")
+    print("📥 stderr:\n", info.get("stderr") or "-")
     print("⏎ Rückgabecode:", info.get("returncode"))
-    print()
+
+    # Weitergabe-Daten anzeigen (alles außer __exec__)
+    payload = {k: v for k, v in state.items() if k != "__exec__"}
+
+    print("🔄 Weitergabe:")
+    if payload:
+        print(json.dumps(payload, indent=2, ensure_ascii=False))
+    else:
+        print("– (nichts)")
 
 
 def load_xmod(path: str):
