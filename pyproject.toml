@@ -11,7 +11,7 @@ name = "xcore_framework"
 version = "0.1.0a5"
 description = "CLI- und Webframework für modulare Anwendungen mit interaktiver Shell, GUI und Webinterface."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.14"
 license = { file = "LICENSE" }
 authors = [
     { name = "x404bjrn (Björn Häusermann)", email = "void@insomnialegion.xyz" },
@@ -27,7 +27,7 @@ dependencies = [
     "colorama~=0.4.6",
     "pytest~=8.4.0",
     "qrcode>=8.2",
-    "pillow~=11.2.1",
+    "pillow==11.3.0",
     "cryptography~=45.0.4",
     "flask-sqlalchemy~=3.1.1",
     "click>=8.1.8",
@@ -42,6 +42,8 @@ dependencies = [
     "tqdm>=4.67.1",
     "tkcode>=0.1.6",
     "chlorophyll>=0.4.2",
+    "qtpy>=2.4.3",
+    "PySide6>=6.9.1",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
